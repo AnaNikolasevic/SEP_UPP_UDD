@@ -1,0 +1,45 @@
+version: "3"
+services:
+  eureka-service:
+    build: ./Payment Concentrator/Eureka Service
+    container_name: eureka-service
+    ports:
+      - "8761:8761"
+    tty: true
+
+  secutiry-service:
+    build: ./Payment Concentrator/Security Service
+    ports:
+      - "8082:8082"
+    environment:
+      REGISTRY_HOST: eureka-service
+    tty: true
+    depends_on:
+      - eureka-service
+
+  zuul:
+    build: ./Payment Concentrator/Zuul Service
+    ports:
+      - "8662:8662"
+    environment:
+      REGISTRY_HOST: eureka-service
+    tty: true
+    depends_on:
+      - eureka-service
+
+  card-payment:
+    build: ./Card Payment
+    ports:
+      - "8083:8083"
+    tty: true
+    depends_on:
+      - eureka-service
+
+  online-library:
+    build: ./Library
+    ports:
+      - "8081:8081"
+    tty: true
+    depends_on:
+      - eureka-service
+

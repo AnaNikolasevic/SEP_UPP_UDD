@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Payment Concentrator.iml" filepath="$PROJECT_DIR$/.idea/Payment Concentrator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Eureka Service/eureka.iml" filepath="$PROJECT_DIR$/Eureka Service/eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Security Service/security_service.iml" filepath="$PROJECT_DIR$/Security Service/security_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Zuul Service/zuul.iml" filepath="$PROJECT_DIR$/Zuul Service/zuul.iml" />
+    </modules>
+  </component>
+</project>
