@@ -1,4 +1,4 @@
-package com.project.security_service;
+package com.project.seller_service.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
