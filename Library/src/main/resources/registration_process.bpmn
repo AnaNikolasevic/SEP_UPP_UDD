@@ -41,15 +41,15 @@
           </camunda:formField>
           <camunda:formField id="username" label="Username" type="string">
             <camunda:validation>
-              <camunda:constraint name="maxlength" config="10" />
-              <camunda:constraint name="minlength" config="6" />
+              <camunda:constraint name="maxlength" config="20" />
+              <camunda:constraint name="minlength" config="3" />
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="password" label="Password" type="string">
             <camunda:validation>
-              <camunda:constraint name="maxlength" config="10" />
-              <camunda:constraint name="minlength" config="6" />
+              <camunda:constraint name="maxlength" config="20" />
+              <camunda:constraint name="minlength" config="3" />
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
@@ -58,20 +58,21 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
+          <camunda:formField id="userType" label="Register as" type="enum">
+                      <camunda:validation>
+                        <camunda:constraint name="required" />
+                      </camunda:validation>
+                      <camunda:value id="reader" name="reader" />
+                      <camunda:value id="beta-reader" name="beta-reader" />
+                      <camunda:value id="writer" name="writer" />
+                    </camunda:formField>
           <camunda:formField id="genreBeta" label="Genre for beta readers" type="enum">
             <camunda:value id="fiction" name="Fiction" />
             <camunda:value id="mystery" name="Mystery" />
             <camunda:value id="thriller" name="Thriller" />
             <camunda:value id="romance" name="Romance" />
           </camunda:formField>
-          <camunda:formField id="userType" label="Register as" type="enum">
-	    <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-            <camunda:value id="reader" name="reader" />
-            <camunda:value id="beta-reader" name="beta-reader" />
-            <camunda:value id="writer" name="writer" />
-          </camunda:formField>
+
         </camunda:formData>
         <camunda:taskListener delegateExpression="${genreListener}" event="create" />
       </bpmn:extensionElements>
@@ -105,13 +106,13 @@
     <bpmn:boundaryEvent id="Event_1qrfv7c" attachedToRef="Verification">
       <bpmn:outgoing>Flow_1y7orh6</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1gu1xqs">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT24H</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT20S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:endEvent id="Event_02v26ce">
-      <bpmn:incoming>Flow_1y7orh6</bpmn:incoming>
+      <bpmn:incoming>Flow_1giej4b</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1y7orh6" sourceRef="Event_1qrfv7c" targetRef="Event_02v26ce" />
+    <bpmn:sequenceFlow id="Flow_1y7orh6" sourceRef="Event_1qrfv7c" targetRef="TokenExpiredMail" />
     <bpmn:sequenceFlow id="Flow_019y5c1" sourceRef="SaveUser" targetRef="Gateway_1ss2hsr" />
     <bpmn:serviceTask id="SaveUser" name="Save User" camunda:class="com.project.online_library.service.UserService">
       <bpmn:incoming>Flow_1a83tw6</bpmn:incoming>
@@ -139,6 +140,11 @@
       <bpmn:incoming>Flow_18mdrno</bpmn:incoming>
       <bpmn:outgoing>Flow_1ad9b2s</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1giej4b" sourceRef="TokenExpiredMail" targetRef="Event_02v26ce" />
+    <bpmn:serviceTask id="TokenExpiredMail" name="Token expired mail" camunda:class="com.project.online_library.camundaServices.MailExpirationDelegate">
+      <bpmn:incoming>Flow_1y7orh6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1giej4b</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="registration_process">
@@ -171,8 +177,8 @@
         <di:waypoint x="1065" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y7orh6_di" bpmnElement="Flow_1y7orh6">
-        <di:waypoint x="820" y="175" />
-        <di:waypoint x="820" y="232" />
+        <di:waypoint x="840" y="175" />
+        <di:waypoint x="840" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1a83tw6_di" bpmnElement="Flow_1a83tw6">
         <di:waypoint x="890" y="117" />
@@ -194,6 +200,10 @@
         <di:waypoint x="215" y="117" />
         <di:waypoint x="290" y="117" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1giej4b_di" bpmnElement="Flow_1giej4b">
+        <di:waypoint x="840" y="300" />
+        <di:waypoint x="840" y="362" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -212,9 +222,6 @@
       <bpmndi:BPMNShape id="Activity_05rd7jh_di" bpmnElement="Verification">
         <dc:Bounds x="790" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_02v26ce_di" bpmnElement="Event_02v26ce">
-        <dc:Bounds x="802" y="232" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0e9g06q_di" bpmnElement="SaveUser">
         <dc:Bounds x="930" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -227,8 +234,14 @@
       <bpmndi:BPMNShape id="Activity_1swnhff_di" bpmnElement="TaskA">
         <dc:Bounds x="1160" y="190" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02v26ce_di" bpmnElement="Event_02v26ce">
+        <dc:Bounds x="822" y="362" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sx88q8_di" bpmnElement="TokenExpiredMail">
+        <dc:Bounds x="790" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_13m79ih_di" bpmnElement="Event_1qrfv7c">
-        <dc:Bounds x="802" y="139" width="36" height="36" />
+        <dc:Bounds x="822" y="139" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

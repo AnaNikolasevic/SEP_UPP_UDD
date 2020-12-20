@@ -83,8 +83,7 @@ export default {
           this.poruka = "Doslo je do greske prilikom aktivacije vaseg naloga";
           console.log(error);
           this.snackbarDanger = true;
-          this.snackbarDangerText =
-            "Something went wrong. You are not registered.";
+          this.snackbarDangerText = error;
           this.close();
         });
     },
