@@ -33,7 +33,7 @@
       <v-card hover elevation="2" class="text-center ma-6">
         <div class="cardBorderColor">
           <v-card-title class="primary--text font-weight-bold headline">Summary</v-card-title>
-          <v-card-text>Total price: {{orderRequest.price}}</v-card-text>
+          <v-card-text aria-disabled v-model="orderRequest.price">Total price: {{totalPrice}}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-combobox
@@ -42,6 +42,7 @@
                 label="Currency"
                 outlined
                 dense
+                @change="changeValue(orderRequest.currency)"
             ></v-combobox>
           </v-card-actions>
           <v-card-actions>
@@ -79,7 +80,7 @@ export default {
       ],
       orderRequest: {
           price: "",
-          currency: "",
+          currency: "DIN",
           sellerId: 1,
       },
       totalPrice: 0,
@@ -98,8 +99,13 @@ export default {
     orderCars() {
       
     },
-    deleteCar() {
-
+    changeValue(currency) {
+        if(currency == "EUR")
+            this.totalPrice = (this.orderRequest.price / 104).toFixed(2)
+        else if (currency == "USD")
+            this.totalPrice = (this.orderRequest.price / 100).toFixed(2)
+        else if (currency == "DIN")
+            this.totalPrice = this.orderRequest.price
     },
     sendRequest() {
       axios
@@ -123,11 +129,10 @@ export default {
     }
   },
   mounted() {
-      this.orderRequest.price = 0;
       this.books.forEach(element => {
-          this.orderRequest.price += element.price;
-          console.log(this.orderRequest.price);
+          this.totalPrice += element.price;
       });
+      this.orderRequest.price = this.totalPrice;
   },
   computed: {
 
