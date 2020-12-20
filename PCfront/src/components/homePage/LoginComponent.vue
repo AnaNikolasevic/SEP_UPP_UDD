@@ -102,7 +102,7 @@ export default {
       console.log(this.token.data);
       axios
         .post(
-          "http://localhost:8081/payments",
+          "http://localhost:8081/pay",
           { action: "dashboard" },
           {
             headers: {

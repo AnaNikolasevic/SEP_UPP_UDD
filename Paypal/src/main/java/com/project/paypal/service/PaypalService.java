@@ -6,6 +6,7 @@ import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 import com.project.paypal.dto.PaymentRequestDTO;
 import com.project.paypal.model.PaymentOrder;
+import com.project.paypal.model.PaymentOrderStatus;
 import com.project.paypal.model.Seller;
 import com.project.paypal.repository.PaymentOrderRepository;
 import com.project.paypal.repository.SellerRepository;
@@ -32,8 +33,8 @@ public class PaypalService {
     @Autowired
     private SellerRepository sellerRepository;
 
-    public static final String SUCCESS_URL = "payments/success";
-    public static final String CANCEL_URL = "payments/cancel";
+    public static final String SUCCESS_URL = "/success";
+    public static final String CANCEL_URL = "/cancel";
 
     @Value("${paypal.mode}")
     private String mode;
@@ -71,8 +72,8 @@ public class PaypalService {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8082/" + CANCEL_URL);
-        redirectUrls.setReturnUrl("http://localhost:8082/" + SUCCESS_URL);
+        redirectUrls.setCancelUrl("http://localhost:8081" + CANCEL_URL);
+        redirectUrls.setReturnUrl("http://localhost:8081" + SUCCESS_URL);
         payment.setRedirectUrls(redirectUrls);
 
         payment = payment.create(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()));
@@ -91,6 +92,24 @@ public class PaypalService {
         APIContext context = new APIContext(new OAuthTokenCredential(clientId, clientSecret, configMap).getAccessToken());
         context.setConfigurationMap(configMap);
         return context;
+    }
+
+    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException{
+
+        PaymentOrder po = paymentOrderRepository.findOneByPaymentId(paymentId);
+        Seller seller = po.getSeller();
+
+        Payment payment = new Payment();
+
+        payment.setId(paymentId);
+        PaymentExecution paymentExecute = new PaymentExecution();
+        paymentExecute.setPayerId(payerId);
+
+        payment = payment.execute(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()), paymentExecute);
+
+        paymentOrderRepository.save(po);
+
+        return payment;
     }
 
 }

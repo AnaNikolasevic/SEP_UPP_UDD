@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PaymentOrderRepository extends JpaRepository<PaymentOrder, Long> {
 
-    PaymentOrder findOneById(String id);
+    PaymentOrder findOneByPaymentId(String id);
 
 }

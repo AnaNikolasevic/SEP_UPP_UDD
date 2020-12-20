@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/payments")
 public class PaypalController {
 
     @Autowired
@@ -22,7 +21,7 @@ public class PaypalController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(path= "/pay", consumes = "application/json", produces = "application/json")
     public ResponseEntity createPayment(@RequestHeader(value = "Authorization") String token) throws Throwable{
 
         System.out.println(token);
@@ -39,5 +38,22 @@ public class PaypalController {
         }
 
         return new ResponseEntity<>("redirect:/", HttpStatus.OK);
+    }
+
+    @GetMapping("/success")
+    public String  successfullPayment(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+
+        System.out.println("usao");
+
+        try {
+            Payment payment = payPalService.executePayment(paymentId, payerId);
+            System.out.println(payment.toJSON());
+            if (payment.getState().equals("approved")) {
+                return "Payment via paypal successful!";
+            }
+        } catch (PayPalRESTException e) {
+            System.out.println(e.getMessage());
+        }
+        return "Payment via paypal failed!";
     }
 }
