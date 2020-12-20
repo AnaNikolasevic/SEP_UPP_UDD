@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import ActivationLink from '../views/ActivationLink.vue'
+import Cart from '../components/Cart.vue'
+
 
 
 Vue.use(VueRouter)
@@ -16,6 +18,11 @@ const routes = [
     path: "/activationForm/:token",
     name: "ActivationLink",
     component: ActivationLink,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
   },
 
 ]
