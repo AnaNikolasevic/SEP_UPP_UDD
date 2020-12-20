@@ -44,4 +44,18 @@ public class EmailService {
         }
     }
 
+    @Async
+    public void sendEmail(String expiredToken) throws MailException, InterruptedException {
+
+
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(expiredToken);
+            email.setFrom(environment.getProperty("spring.mail.username"));
+            email.setSubject("Nevalidan token");
+            email.setText("Postovani " +
+                    ",\n\n Vas token je istekao!\n\n");
+            javaMailSender.send(email);
+
+    }
+
 }

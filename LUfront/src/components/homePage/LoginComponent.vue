@@ -62,31 +62,32 @@ export default {
   data: () => ({
     LoginDialog: false,
     passwordRules: [(v) => !!v || "Password is required"],
-    user : {
-       username: '',
-       password: '',
+    user: {
+      username: "",
+      password: "",
     },
-     snackbarSuccess: false,
-      snackbarSuccessText: "",
-      snackbarDanger: false,
-      snackbarDangerText: "",
+    snackbarSuccess: false,
+    snackbarSuccessText: "",
+    snackbarDanger: false,
+    snackbarDangerText: "",
   }),
   methods: {
     login() {
-     axios
-          .post("http://localhost:8080/login", this.user)
-          .then((response) => {
-              //localStorage.setItem("jwt", response.data.accessToken);
-              this.$store.commit( 'login', response.data);
-              console.log("ulogovala si se:");  
-              console.log(this.$store.state.user);  
-              this.close();
-                    
-          })
-          .catch(error => {
-              console.log(this.user)
-              console.log(error);
-          });
+      axios
+        .post("http://localhost:8080/login", this.user)
+        .then((response) => {
+          //localStorage.setItem("jwt", response.data.accessToken);
+          this.$store.commit("login", response.data);
+          console.log("ulogovala si se:");
+          console.log(this.$store.state.user);
+          this.$emit("loggedIn");
+          this.close();
+        })
+        .catch((error) => {
+          console.log(this.user);
+          this.$emit("notLoggedIn");
+          console.log(error);
+        });
     },
     close() {
       this.LoginDialog = false;
