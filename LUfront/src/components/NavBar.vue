@@ -38,6 +38,14 @@
           "
         />
       </div>
+      <v-btn
+        text
+        color="primary"
+        @click="openCart()"
+      >
+        <span>Cart</span>
+        <v-icon right>mdi-cart</v-icon>
+      </v-btn>
     </v-toolbar>
   </nav>
 </template>
@@ -58,5 +66,10 @@ export default {
       snackbarDangerText: "",
     };
   },
+  methods: {
+    openCart() {
+      this.$router.push("/cart");
+    },
+  }
 };
 </script>

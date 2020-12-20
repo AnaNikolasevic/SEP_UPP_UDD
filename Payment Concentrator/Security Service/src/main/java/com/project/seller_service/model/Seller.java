@@ -1,6 +1,7 @@
 package com.project.seller_service.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -26,7 +27,7 @@ public class Seller {
 	
 	@OneToMany
     @JoinColumn(name = "seller_id") 
-	private Set<PaymentType> paymentTypes;
+	private List<PaymentType> paymentTypes;
 
 
 
@@ -44,6 +45,21 @@ public class Seller {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+
+	public List<PaymentType> getPaymentTypes() {
+		return paymentTypes;
+	}
+
+	public void setPaymentTypes(List<PaymentType> paymentTypes) {
+		this.paymentTypes = paymentTypes;
+	}
+
+	public Seller() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 
