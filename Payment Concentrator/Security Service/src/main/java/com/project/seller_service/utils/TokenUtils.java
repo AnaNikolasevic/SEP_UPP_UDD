@@ -1,12 +1,13 @@
-package com.project.security_service.utils;
+package com.project.seller_service.utils;
 
-import com.project.security_service.security.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
+import com.project.seller_service.security.JwtConfig;
 
 import java.util.Map;
 
