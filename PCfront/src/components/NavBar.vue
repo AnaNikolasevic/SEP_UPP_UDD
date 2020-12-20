@@ -14,10 +14,10 @@
   <!-- gornji toolbar -->
   <v-toolbar flat class="mx-12">
       <v-toolbar-title>
-        <span color="orange-text">BOLNICA</span>
+        <span color="orange-text">PAYMENT CONCETRATOR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="mx-2">
+     <!-- <div class="mx-2">
         <LoginComponent
           @loggedIn="
             snackbarSuccess = true;
@@ -40,17 +40,17 @@
             snackbarDangerText = 'Can not register.';
           "
         />
-      </div>
+      </div> -->
     </v-toolbar>
   </nav>
 </template>
 
 <script>
-import LoginComponent from "@/components/homePage/LoginComponent.vue";
-import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
+//import LoginComponent from "@/components/homePage/LoginComponent.vue";
+//import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
 export default {
   components: {
-      LoginComponent, RegistrationComponent
+      //LoginComponent, RegistrationComponent
   },
 data() {
     return {

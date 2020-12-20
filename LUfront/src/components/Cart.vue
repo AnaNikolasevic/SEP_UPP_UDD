@@ -80,11 +80,11 @@ export default {
       orderRequest: {
           price: "",
           currency: "",
-          sellerId: "",
+          sellerId: 1,
       },
       totalPrice: 0,
       currencies: [
-          "euro", "dolar", "dinar"
+          "USD", "EUR", "DIN"
       ]
     };
   },
