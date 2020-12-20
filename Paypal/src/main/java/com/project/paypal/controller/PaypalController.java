@@ -3,73 +3,41 @@ package com.project.paypal.controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import com.project.paypal.dto.Order;
+import com.project.paypal.dto.PaymentRequestDTO;
 import com.project.paypal.service.PaypalService;
+import com.project.paypal.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
+@RequestMapping("/payments")
 public class PaypalController {
 
     @Autowired
-    PaypalService service;
+    PaypalService payPalService;
 
-    public static final String SUCCESS_URL = "pay/success";
-    public static final String CANCEL_URL = "pay/cancel";
-
+    @Autowired
+    JwtUtils jwtUtils;
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity createPayment() {
-        //
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+    public ResponseEntity createPayment(@RequestHeader(value = "Authorization") String token) throws Throwable{
 
-    @GetMapping("/")
-    public String home(){
-        return "home";
-    }
-
-    @PostMapping("/pay")
-    public String payment(@ModelAttribute("order") Order order) {
-        try {
-            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescription(), "http://localhost:9090/" + CANCEL_URL,
-                    "http://localhost:9090/" + SUCCESS_URL);
+        System.out.println(token);
+        PaymentRequestDTO pr = jwtUtils.getPaymentRequest(token);
+       try {
+            Payment payment = payPalService.createPayment(pr);
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
-                    return "redirect:"+link.getHref();
+                    return new ResponseEntity<>(link.getHref(), HttpStatus.OK);
                 }
             }
-
         } catch (PayPalRESTException e) {
-
             e.printStackTrace();
         }
-        return "redirect:/";
+
+        return new ResponseEntity<>("redirect:/", HttpStatus.OK);
     }
-
-    @GetMapping(value = CANCEL_URL)
-    public String cancelPay() {
-        return "cancel";
-    }
-
-    @GetMapping(value = SUCCESS_URL)
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
-        try {
-            Payment payment = service.executePayment(paymentId, payerId);
-            System.out.println(payment.toJSON());
-            if (payment.getState().equals("approved")) {
-                return "success";
-            }
-        } catch (PayPalRESTException e) {
-            System.out.println(e.getMessage());
-        }
-        return "redirect:/";
-    }
-
-
 }
