@@ -81,7 +81,7 @@ export default {
           .get("http://localhost:8082/token")
           .then((response) => {
             this.token = response;
-            //console.log(response);
+            console.log(response);
           })
           .catch((error) => {
             console.log(error);
@@ -100,15 +100,23 @@ export default {
     },
     close() {
       console.log(this.token.data);
-      axios.post(
-        "http://localhost:8081/tokens",
-        { action: "dashboard" },
-        {
-          headers: {
-            Authorization: this.token.data,
-          },
-        }
-      );
+      axios
+        .post(
+          "http://localhost:8081/payments",
+          { action: "dashboard" },
+          {
+            headers: {
+              Authorization: this.token.data,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          window.location.href = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       this.LoginDialog = false;
       this.$refs.form.reset();

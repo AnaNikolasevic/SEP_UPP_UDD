@@ -1,6 +1,7 @@
 package com.project.paypal.security;
 
 import com.project.paypal.security.JwtConfig;
+import com.project.paypal.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtConfig jwtConfig;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     //definisemo za koje putanje vazi ili ne vazi security
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -27,11 +31,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig, jwtUtils), UsernamePasswordAuthenticationFilter.class)
 
                 .authorizeRequests()
                 .antMatchers("/success*").permitAll()
                 .antMatchers("/tokens*").permitAll()
+                .antMatchers("/payments*").permitAll()
                 .antMatchers("/cancel*").permitAll()
                 .antMatchers("/cancel/*").permitAll()
                 .antMatchers("/err*").permitAll()

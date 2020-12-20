@@ -24,7 +24,7 @@ public class  JwtUtils {
 
     //iz tokena izvlaci sve informacije
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(jwtConfig.getSecret()).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(jwtConfig.getSecret().getBytes()).parseClaimsJws(token).getBody();
     }
 
     //uzima iz tokena vrednost polja koje mu prosledimo
@@ -43,26 +43,25 @@ public class  JwtUtils {
         return extractClaim(token, Claims::getExpiration);
     }
 
+
     //proverava da li je token istekao
     private Boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 
     //validacija tokena
-    public Boolean validateToken(String token, UserDetails userDetails){
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public Boolean validateToken(String token){
+        return (!isTokenExpired(token));
     }
 
-    //popraviti
     public PaymentRequestDTO getPaymentRequest(String token) {
 
         PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //paymentRequest.setSellerId(Long.parseLong(authentication.getPrincipal().toString()));
+        paymentRequest.setSellerId(Long.parseLong(authentication.getPrincipal().toString()));
 
-        Map<String,Object> claims = getTokenClaims(token);
+        Claims claims = extractAllClaims(token);
 
         paymentRequest.setPrice(Float.parseFloat(claims.get("price").toString()));
         paymentRequest.setCurrency(claims.get("currency").toString());
@@ -70,13 +69,4 @@ public class  JwtUtils {
         return paymentRequest;
     }
 
-    private Map<String,Object> getTokenClaims(String token){
-
-        Claims claims = Jwts.parser()
-                .setSigningKey(jwtConfig.getSecret().getBytes())
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims;
-    }
 }

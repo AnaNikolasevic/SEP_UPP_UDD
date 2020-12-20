@@ -20,44 +20,40 @@ import java.io.IOException;
 //presrece zahtev i izvlaci header
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtils jwtUtils;
-
-    @Autowired
-    private MyUserDetailsService userDetailsService;
 
     private final JwtConfig jwtConfig;
+    private final JwtUtils jwtUtils;
 
-    public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {
+    public JwtTokenAuthenticationFilter(JwtConfig jwtConfig, JwtUtils jwtUtils) {
         this.jwtConfig = jwtConfig;
+        this.jwtUtils = jwtUtils;
     }
 
     //metoda koja radi posao
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
-        final String header = httpServletRequest.getHeader(jwtConfig.getHeader());
+        String header = httpServletRequest.getHeader(jwtConfig.getHeader());
 
-        String token = null;
-        String username = null;
+        //if(header == null || !header.startsWith(jwtConfig.getPrefix())) {
+         //   filterChain.doFilter(httpServletRequest, httpServletResponse);  		// If not valid, go to the next filter.
+         //   return;
+      //  }
 
-        //validacija hedera
-        if(header != null && header.startsWith(jwtConfig.getPrefix())) {
-            //uzimanje tokena
-            token = header.replace(jwtConfig.getPrefix(), "");
-            //username = jwtUtils.extractUsername(token);
-        }
+        String token = header.replace(jwtConfig.getPrefix(), "");
+        String username = jwtUtils.extractUsername(token);
 
-        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if(jwtUtils.validateToken(token, userDetails)){
+            System.out.println(username);
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                if (jwtUtils.validateToken(token)) {
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null, null);
+                    usernamePasswordAuthenticationToken.setDetails(token);
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    System.out.println(username);
+                }
             }
-        }
+
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

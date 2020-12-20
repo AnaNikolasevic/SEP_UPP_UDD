@@ -20,15 +20,18 @@ public class TokenService {
 
     public String getToken(){
 
+        Integer i = 1;
+        Long sellerId = new Long(i);
+
         Map<String, Object> claimsMap = new HashMap<>();
-        claimsMap.put("sellerId", 1);
+        claimsMap.put("sellerId", sellerId);
         claimsMap.put("price", 30.0);
-        claimsMap.put("currency", "euro");
+        claimsMap.put("currency", "USD");
 
         Long now = System.currentTimeMillis();
         String token = Jwts.builder()
                 .setClaims(claimsMap)
-                .setSubject(Long.toString(1))
+                .setSubject(Long.toString(sellerId))
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
