@@ -7,4 +7,6 @@ public interface PaymentOrderRepository extends JpaRepository<PaymentOrder, Long
 
     PaymentOrder findOneByPaymentId(String id);
 
+    PaymentOrder findOneById(String id);
+
 }
