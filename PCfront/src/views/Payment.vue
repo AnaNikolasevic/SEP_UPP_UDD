@@ -63,8 +63,13 @@ export default {
   data: () => ({
     LoginDialog: false,
     password: "",
+    params: "",
     token: "",
     milica: "",
+    list: [],
+    list2: [],
+    paymentId: "",
+    PayerID: "",
     passwordRules: [(v) => !!v || "Password is required"],
     email: "",
     emailRules: [
@@ -121,6 +126,27 @@ export default {
       this.LoginDialog = false;
       this.$refs.form.reset();
     },
+  },
+  mounted() {
+    console.log(this.$route);
+    this.list = this.$route.fullPath.split("=");
+    this.list2 = this.list[1].split("&");
+    this.paymentId = this.list2[0];
+    this.PayerID = this.list[3];
+
+    console.log(this.paymentId);
+    console.log(this.PayerID);
+
+    axios
+      .get(
+        "http://localhost:8081/success/" + this.paymentId + "/" + this.PayerID
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>

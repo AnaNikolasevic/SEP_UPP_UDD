@@ -58,8 +58,13 @@ public class  JwtUtils {
 
         PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        paymentRequest.setSellerId(Long.parseLong(authentication.getPrincipal().toString()));
+        try{
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            paymentRequest.setSellerId(Long.parseLong(authentication.getPrincipal().toString()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         Claims claims = extractAllClaims(token);
 

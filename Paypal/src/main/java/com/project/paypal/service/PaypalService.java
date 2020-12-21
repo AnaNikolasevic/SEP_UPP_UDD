@@ -6,9 +6,11 @@ import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 import com.project.paypal.dto.PaymentRequestDTO;
 import com.project.paypal.model.PaymentOrder;
+import com.project.paypal.model.PaymentOrderStatus;
 import com.project.paypal.model.Seller;
 import com.project.paypal.repository.PaymentOrderRepository;
 import com.project.paypal.repository.SellerRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class PaypalService {
@@ -32,8 +36,10 @@ public class PaypalService {
     @Autowired
     private SellerRepository sellerRepository;
 
-    public static final String SUCCESS_URL = "payments/success";
-    public static final String CANCEL_URL = "payments/cancel";
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public static final String SUCCESS_URL = "/success";
+    public static final String CANCEL_URL = "/cancel";
 
     @Value("${paypal.mode}")
     private String mode;
@@ -71,11 +77,12 @@ public class PaypalService {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8082/" + CANCEL_URL);
-        redirectUrls.setReturnUrl("http://localhost:8082/" + SUCCESS_URL);
+        redirectUrls.setCancelUrl("http://localhost:8081" + CANCEL_URL);
+        redirectUrls.setReturnUrl("http://localhost:8083/payment");
         payment.setRedirectUrls(redirectUrls);
 
         payment = payment.create(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()));
+        logger.info("Paypal order paypalId="+ payment.getId() +" created sellerId="+pr.getSellerId());
 
         po.setPaymentId(payment.getId());
         paymentOrderRepository.save(po);
@@ -91,6 +98,39 @@ public class PaypalService {
         APIContext context = new APIContext(new OAuthTokenCredential(clientId, clientSecret, configMap).getAccessToken());
         context.setConfigurationMap(configMap);
         return context;
+    }
+
+    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException{
+
+        PaymentOrder po = paymentOrderRepository.findOneByPaymentId(paymentId);
+        Seller seller = po.getSeller();
+
+        Payment payment = new Payment();
+
+        payment.setId(paymentId);
+        PaymentExecution paymentExecute = new PaymentExecution();
+        paymentExecute.setPayerId(payerId);
+
+        payment = payment.execute(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()), paymentExecute);
+
+        if(payment.getState().equals("approved")) {
+            logger.info("Paypal order paypalId="+ paymentId +" approved");
+            po.setStatus(PaymentOrderStatus.PAID);
+        }else {
+            logger.info("Paypal order paypalId="+ paymentId +" failed");
+            po.setStatus(PaymentOrderStatus.FAILED);
+        }
+
+        paymentOrderRepository.save(po);
+
+        return payment;
+    }
+
+    public void cancelPaymentOrder(String id) {
+        PaymentOrder po = paymentOrderRepository.findOneById(id);
+        po.setStatus(PaymentOrderStatus.CANCELED);
+        logger.info("Paypal orderId="+ id +" canceled");
+        paymentOrderRepository.save(po);
     }
 
 }
