@@ -26,7 +26,6 @@ public class OrderRequestController {
 	@PostMapping("")
     public ResponseEntity<OrderRequest> add(@RequestBody OrderRequestDto orderRequestDto)  {
 		try {
-			service.add(orderRequestDto);
 	        return new ResponseEntity<OrderRequest>(service.add(orderRequestDto), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception

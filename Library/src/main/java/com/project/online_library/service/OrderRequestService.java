@@ -17,7 +17,7 @@ public class OrderRequestService {
 		OrderRequest orderRequest = new OrderRequest();
 		orderRequest.setPrice(orderRequestDto.getPrice());
 		orderRequest.setCurrency(orderRequestDto.getCurrency());
-		orderRequest.setSellerId(orderRequestDto.getSelerId());
+		orderRequest.setSellerId(orderRequestDto.getSellerId());
 		repository.save(orderRequest);
 		return orderRequest;
 	}

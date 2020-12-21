@@ -42,7 +42,7 @@ public class TokenService {
 	public String makeToken(OrderRequestDto orderRequestDto) {
 		// TODO Auto-generated method stub
 		Map<String, Object> claimsMap = new HashMap<>();
-        claimsMap.put("sellerId", orderRequestDto.getSelerId());
+        claimsMap.put("sellerId", orderRequestDto.getSellerId());
         claimsMap.put("price", orderRequestDto.getPrice());
         claimsMap.put("currency", orderRequestDto.getCurrency());
 

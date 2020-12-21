@@ -68,8 +68,9 @@ export default {
       .get("http://localhost:8080/orderRequest/" + id)
       .then(response => {
         console.log(response.data);
+        var orderRequest = response.data;
         axios
-          .get("http://localhost:8082/token")
+          .put("http://localhost:8082/token", orderRequest)
           .then((response) => {
             this.token = response;
             console.log(response);

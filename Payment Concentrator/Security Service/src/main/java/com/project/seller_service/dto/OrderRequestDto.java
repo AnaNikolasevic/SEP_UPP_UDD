@@ -1,4 +1,4 @@
-package com.project.online_library.dto;
+package com.project.seller_service.dto;
 
 public class OrderRequestDto {
 	private Long sellerId;
