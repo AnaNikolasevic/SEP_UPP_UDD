@@ -78,7 +78,7 @@ public class PaypalService {
 
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl("http://localhost:8081" + CANCEL_URL);
-        redirectUrls.setReturnUrl("http://localhost:8081" + SUCCESS_URL);
+        redirectUrls.setReturnUrl("http://localhost:8083/payment");
         payment.setRedirectUrls(redirectUrls);
 
         payment = payment.create(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()));
@@ -117,7 +117,7 @@ public class PaypalService {
             logger.info("Paypal order paypalId="+ paymentId +" approved");
             po.setStatus(PaymentOrderStatus.PAID);
         }else {
-            po.setStatus(PaymentOrderStatus.FAILED);
+            logger.info("Paypal order paypalId="+ paymentId +" failed");
             po.setStatus(PaymentOrderStatus.FAILED);
         }
 

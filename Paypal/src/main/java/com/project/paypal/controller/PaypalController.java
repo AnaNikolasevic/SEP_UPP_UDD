@@ -13,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import javax.xml.ws.Response;
+
 
 @CrossOrigin
 @RestController
@@ -46,19 +49,21 @@ public class PaypalController {
         return new ResponseEntity<>("redirect:/", HttpStatus.OK);
     }
 
-    @GetMapping("/success")
-    public String  successfullPayment(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+    @GetMapping(path="/success/{paymentId}/{PayerID}")
+    public ResponseEntity successfullPayment(@PathVariable String paymentId, @PathVariable String PayerID) {
+
+        System.out.println(paymentId);
 
         try {
-            Payment payment = payPalService.executePayment(paymentId, payerId);
+            Payment payment = payPalService.executePayment(paymentId, PayerID);
             System.out.println(payment.toJSON());
             if (payment.getState().equals("approved")) {
-                return "Payment via paypal successful!";
+                return new ResponseEntity<>("proso", HttpStatus.OK);
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
-        return "Payment via paypal failed!";
+        return new ResponseEntity<>("greska", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/cancel")
