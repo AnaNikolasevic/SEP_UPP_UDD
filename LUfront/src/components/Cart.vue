@@ -23,7 +23,7 @@
           <div class="cardBorderColor">
             <v-card-title class="headline">Title: "{{ book.title }}"</v-card-title>
             <v-card-text>author: {{book.author}}</v-card-text>
-            <v-card-text>price: {{book.price}}</v-card-text>
+            <v-card-text>price: {{book.price}} USD</v-card-text>
             <v-card-actions></v-card-actions>
           </div>
         </v-card>
@@ -33,7 +33,7 @@
       <v-card hover elevation="2" class="text-center ma-6">
         <div class="cardBorderColor">
           <v-card-title class="primary--text font-weight-bold headline">Summary</v-card-title>
-          <v-card-text aria-disabled v-model="orderRequest.price">Total price: {{totalPrice}}</v-card-text>
+          <v-card-text aria-disabled v-model="orderRequest.price">Total price: {{orderRequest.price}}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-combobox
@@ -70,22 +70,22 @@ export default {
         {
             title: "Real Life Paperback",
             author: "Brandon Taylor",
-            price: 100
+            price: 15
         },
         {
             title: "The Buried Giant",
             author: "Kazuo Ishiguro",
-            price: 200
+            price: 20
         }
       ],
       orderRequest: {
           price: "",
-          currency: "DIN",
+          currency: "USD",
           sellerId: 1,
       },
       totalPrice: 0,
       currencies: [
-          "USD", "EUR", "DIN"
+          "USD", "EUR", "HUF"
       ]
     };
   },
@@ -101,20 +101,21 @@ export default {
     },
     changeValue(currency) {
         if(currency == "EUR")
-            this.totalPrice = (this.orderRequest.price / 104).toFixed(2)
+            this.orderRequest.price = (this.totalPrice * 0.82).toFixed(2)
         else if (currency == "USD")
-            this.totalPrice = (this.orderRequest.price / 100).toFixed(2)
-        else if (currency == "DIN")
-            this.totalPrice = this.orderRequest.price
+            this.orderRequest.price = this.totalPrice
+        else if (currency == "HUF")
+            this.orderRequest.price = (this.totalPrice * 296).toFixed(2)
     },
     sendRequest() {
       axios
-        .put("http://localhost:8080/token", this.orderRequest)
+        .post("http://localhost:8080/orderRequest", this.orderRequest)
         .then(response => {
           console.log(response.data);
           /*this.snackbarSuccess = true;
           this.$store.commit("deleteAll");
           this.emptyBasket = true;*/
+          window.open("http://localhost:8083/?id=" + response.data.id);
         })
         .catch(error => {
           console.log(error);
