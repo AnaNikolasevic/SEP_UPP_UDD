@@ -9,6 +9,7 @@
         outlined
         dense
     ></v-combobox>
+    <v-btn text color="primary" @click="proceed()">Proceed</v-btn>
   </div>
 </template>
 
@@ -24,10 +25,29 @@ export default {
         }
       ],
       choosenType: "",
+      token: "",
     };
   },
   methods: {
-
+    proceed(){
+      axios
+      .post(
+        "http://localhost:8081/payments",
+        { action: "dashboard" },
+        {
+          headers: {
+            Authorization: this.token.data,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        window.location.href = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
   },
   mounted() {
     axios
@@ -35,6 +55,28 @@ export default {
       .then(response => {
         console.log(response.data);
         this.paymentTypes = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id')
+
+    axios
+      .get("http://localhost:8080/orderRequest/" + id)
+      .then(response => {
+        console.log(response.data);
+        axios
+          .get("http://localhost:8082/token")
+          .then((response) => {
+            this.token = response;
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch(error => {
         console.log(error);

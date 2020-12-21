@@ -81,7 +81,7 @@ export default {
       orderRequest: {
           price: "",
           currency: "DIN",
-          sellerId: 1,
+          selerId: 1,
       },
       totalPrice: 0,
       currencies: [
@@ -109,12 +109,13 @@ export default {
     },
     sendRequest() {
       axios
-        .put("http://localhost:8080/token", this.orderRequest)
+        .post("http://localhost:8080/orderRequest", this.orderRequest)
         .then(response => {
           console.log(response.data);
           /*this.snackbarSuccess = true;
           this.$store.commit("deleteAll");
           this.emptyBasket = true;*/
+          window.open("http://localhost:8083/?id=" + response.data.id);
         })
         .catch(error => {
           console.log(error);
