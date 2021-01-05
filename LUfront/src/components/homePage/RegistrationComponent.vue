@@ -28,26 +28,7 @@
                   :rules="rules(field)"
                 ></v-text-field>
                 <v-combobox
-                  v-if="field.id == 'userType'"
-                  :items="Object.keys(field.type.values)"
-                  :label="field.label"
-                  v-model="field.fieldValue"
-                  @change="changeGenreBetaVisibility(field.fieldValue)"
-                  outlined
-                  dense
-                  :rules="rules(field)"
-                ></v-combobox>
-                <v-combobox
-                  v-if="field.id == 'genre'"
-                  :items="Object.keys(field.type.values)"
-                  :label="field.label"
-                  v-model="field.fieldValue"
-                  outlined
-                  dense
-                  :rules="rules(field)"
-                ></v-combobox>
-                <v-combobox
-                  v-if="field.id == 'genreBeta' && userType =='beta-reader'"
+                  v-if="field.type.name == 'enum'"
                   :items="Object.keys(field.type.values)"
                   :label="field.label"
                   v-model="field.fieldValue"
@@ -106,9 +87,6 @@ export default {
     },
   },
   methods: {
-    changeGenreBetaVisibility(userType) {
-      this.userType = userType;
-    },
     rules(field){
       const rules = []
         field.validationConstraints.forEach(constraint => {
@@ -145,14 +123,34 @@ export default {
         )
           .then((response) => {
             console.log(response);
+            if(response.data == "beta-reader"){
+              this.loadGenreBeta();
+            } else {
+              this.close();
+            }
           })
           .catch((error) => {
             console.log(error);
           });
-        this.close();
+        
       } else {
         console.log("nije validno");
       }
+    },
+    loadGenreBeta(){
+      Axios.get("http://localhost:8080/genreBetaForm/" + this.processInstanceId)
+        .then((response) => {
+          console.log(response);
+          this.formFields = response.data.formFields;
+          //this.$store.state.processID
+          this.$store.commit("addProcessID", response.data.processInstanceId);
+          console.log(this.$store.state.processID );
+          this.taskId = response.data.taskId;
+          this.processInstanceId = response.data.processInstanceId;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     close() {
       this.RegisterDialog = false;
@@ -166,6 +164,7 @@ export default {
           this.$store.commit("addProcessID", response.data.processInstanceId);
           console.log(this.$store.state.processID );
           this.taskId = response.data.taskId;
+          this.processInstanceId = response.data.processInstanceId;
         })
         .catch((error) => {
           console.log(error);
