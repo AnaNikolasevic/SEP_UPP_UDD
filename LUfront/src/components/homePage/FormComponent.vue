@@ -1,8 +1,5 @@
 <template>
-    <v-row justify="center">
-        <v-card-text>
-          <v-container>
-            <v-form ref="form">
+    <div>
         <div v-for="field in formFields" :key="field.id">
             <v-text-field
                 :label="field.id"
@@ -20,10 +17,7 @@
                 :rules="rules(field)"
             ></v-combobox>
         </div>
-        </v-form>
-          </v-container>
-        </v-card-text>
-    </v-row>
+    </div>
 </template>
 <script>
 export default {

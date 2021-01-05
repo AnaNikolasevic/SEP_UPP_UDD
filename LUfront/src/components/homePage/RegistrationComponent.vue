@@ -16,10 +16,18 @@
           <v-btn icon color="primary" @click="RegisterDialog = false">
             <CloseIcon></CloseIcon>
           </v-btn>
-        </v-card-title>        
+        </v-card-title>  
+        <v-row justify="center">
+        <v-card-text>
+          <v-container>
+            <v-form ref="form">      
           <FormComponent
             v-bind:formFields="formFields" >
           </FormComponent>
+          </v-form>
+          </v-container>
+        </v-card-text>
+    </v-row>
               <!--<div v-for="field in formFields" :key="field.id">
                 <v-text-field
                   :label="field.id"
