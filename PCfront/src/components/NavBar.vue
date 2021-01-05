@@ -17,42 +17,13 @@
         <span color="orange-text">PAYMENT CONCETRATOR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="mx-2">
-        <LoginComponent
-          @loggedIn="
-            snackbarSuccess = true;
-            snackbarSuccessText = 'You are logged in!';
-          "
-          @notLoggedIn="
-            snackbarDanger = true;
-            snackbarDangerText = 'Can not log in. There is no such user!';
-          "
-        />
-      </div>
-      <div class="mx-2">
-        <RegistrationComponent
-          @registered="
-            snackbarSuccess = true;
-            snackbarSuccessText = 'You are registered! Please login.';
-          "
-          @notRegistered="
-            snackbarDanger = true;
-            snackbarDangerText = 'Can not register.';
-          "
-        />
-      </div>
+     
     </v-toolbar>
   </nav>
 </template>
 
 <script>
-import LoginComponent from "@/components/homePage/LoginComponent.vue";
-import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
 export default {
-  components: {
-    LoginComponent,
-    RegistrationComponent,
-  },
   data() {
     return {
       snackbarSuccess: false,

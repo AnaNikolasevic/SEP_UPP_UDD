@@ -32,7 +32,7 @@ export default {
     proceed(){
       axios
       .post(
-        "http://localhost:8081/payments",
+        "http://localhost:8081/pay",
         { action: "dashboard" },
         {
           headers: {

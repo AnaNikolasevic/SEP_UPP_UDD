@@ -70,7 +70,7 @@ export default {
         {
             title: "Real Life Paperback",
             author: "Brandon Taylor",
-            price: 15
+            price: 25
         },
         {
             title: "The Buried Giant",

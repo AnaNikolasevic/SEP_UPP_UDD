@@ -116,9 +116,11 @@ public class PaypalService {
         if(payment.getState().equals("approved")) {
             logger.info("Paypal order paypalId="+ paymentId +" approved");
             po.setStatus(PaymentOrderStatus.PAID);
+            System.out.println("Paypal order paypalId="+ paymentId +" approved");
         }else {
             logger.info("Paypal order paypalId="+ paymentId +" failed");
             po.setStatus(PaymentOrderStatus.FAILED);
+            System.out.println("Paypal order paypalId="+ paymentId +" failed");
         }
 
         paymentOrderRepository.save(po);
