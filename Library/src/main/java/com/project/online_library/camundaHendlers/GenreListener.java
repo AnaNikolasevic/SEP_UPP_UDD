@@ -41,6 +41,14 @@ public class GenreListener implements TaskListener {
                     	values.put(genre.getName(), genre.getName());
                     }
                 }
+                if( field.getId().equals("genreBeta")){
+                	EnumFormType enumFormType = (EnumFormType) field.getType();
+    				
+    				Map<String, String> values = enumFormType.getValues();
+                    for(Genre genre : genreRepository.findAll()){
+                    	values.put(genre.getName(), genre.getName());
+                    }
+                }
             }
         }
 	}
