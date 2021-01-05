@@ -16,11 +16,11 @@
           <v-btn icon color="primary" @click="RegisterDialog = false">
             <CloseIcon></CloseIcon>
           </v-btn>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-form ref="form">
-              <div v-for="field in formFields" :key="field.id">
+        </v-card-title>        
+          <FormComponent
+            v-bind:formFields="formFields" >
+          </FormComponent>
+              <!--<div v-for="field in formFields" :key="field.id">
                 <v-text-field
                   :label="field.id"
                   v-if="field.type.name == 'string'"
@@ -36,10 +36,7 @@
                   dense
                   :rules="rules(field)"
                 ></v-combobox>
-              </div>
-            </v-form>
-          </v-container>
-        </v-card-text>
+              </div>-->
         <v-card-actions class="pr-10 pb-10">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="close">Cancel</v-btn>
@@ -54,10 +51,13 @@
 import Axios from "axios";
 import RegistrationIcon from "vue-material-design-icons/AccountCircle.vue";
 import CloseIcon from "vue-material-design-icons/CloseCircle.vue";
+import FormComponent from "@/components/homePage/FormComponent.vue";
+
 export default {
   components: {
     RegistrationIcon,
     CloseIcon,
+    FormComponent,
   },
   data: () => ({
     RegisterDialog: false,
@@ -142,7 +142,6 @@ export default {
         .then((response) => {
           console.log(response);
           this.formFields = response.data.formFields;
-          //this.$store.state.processID
           this.$store.commit("addProcessID", response.data.processInstanceId);
           console.log(this.$store.state.processID );
           this.taskId = response.data.taskId;

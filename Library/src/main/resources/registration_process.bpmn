@@ -164,6 +164,25 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="registration_process">
+      <bpmndi:BPMNEdge id="Flow_08ersw8_di" bpmnElement="Flow_08ersw8">
+        <di:waypoint x="430" y="280" />
+        <di:waypoint x="540" y="280" />
+        <di:waypoint x="540" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yuerdd_di" bpmnElement="userTypeBetaReader">
+        <di:waypoint x="380" y="142" />
+        <di:waypoint x="380" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="289" y="206" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0so8on3_di" bpmnElement="userTypeReader">
+        <di:waypoint x="405" y="117" />
+        <di:waypoint x="490" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="406" y="99" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1giej4b_di" bpmnElement="Flow_1giej4b">
         <di:waypoint x="840" y="300" />
         <di:waypoint x="840" y="362" />
@@ -220,25 +239,15 @@
         <di:waypoint x="158" y="117" />
         <di:waypoint x="200" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0so8on3_di" bpmnElement="userTypeReader">
-        <di:waypoint x="405" y="117" />
-        <di:waypoint x="490" y="117" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="406" y="99" width="83" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0yuerdd_di" bpmnElement="userTypeBetaReader">
-        <di:waypoint x="380" y="142" />
-        <di:waypoint x="380" y="240" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="289" y="206" width="83" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_08ersw8_di" bpmnElement="Flow_08ersw8">
-        <di:waypoint x="430" y="280" />
-        <di:waypoint x="540" y="280" />
-        <di:waypoint x="540" y="157" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="122" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17hgiy0_di" bpmnElement="DataEntry">
+        <dc:Bounds x="200" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ywcmtb_di" bpmnElement="CreateUser">
+        <dc:Bounds x="490" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13wym08_di" bpmnElement="SendEmail">
         <dc:Bounds x="640" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -266,12 +275,6 @@
       <bpmndi:BPMNShape id="Activity_0sx88q8_di" bpmnElement="TokenExpiredMail">
         <dc:Bounds x="790" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="122" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17hgiy0_di" bpmnElement="DataEntry">
-        <dc:Bounds x="200" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0pc3uum_di" bpmnElement="ReaderOrBetaReader" isMarkerVisible="true">
         <dc:Bounds x="355" y="92" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -280,9 +283,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_043wk7d_di" bpmnElement="DataEntryBeta">
         <dc:Bounds x="330" y="240" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ywcmtb_di" bpmnElement="CreateUser">
-        <dc:Bounds x="490" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_13m79ih_di" bpmnElement="Event_1qrfv7c">
         <dc:Bounds x="822" y="139" width="36" height="36" />
