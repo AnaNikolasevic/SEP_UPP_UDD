@@ -37,7 +37,7 @@ public class EmailService {
             email.setSubject("Potvrda registracije");
             email.setText("Dobrodošli " + user.getFirstName() +
                     ",\n\n Da biste potvrdili vašu email adresu molimo Vas da pristupite sledećem linku:\n\n" +
-                    "http://localhost:8081/activationForm/" + token +
+                    "http://localhost:8084/activationForm/" + token +
                     "\n\n Nalog možete potvrditi u naredna 24h\n\n" +
                     "\n\nHvala Vam na ukazanom poverenju!\n\n\n\n" );
             javaMailSender.send(email);

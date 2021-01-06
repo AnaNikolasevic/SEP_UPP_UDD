@@ -16,11 +16,19 @@
           <v-btn icon color="primary" @click="RegisterDialog = false">
             <CloseIcon></CloseIcon>
           </v-btn>
-        </v-card-title>
+        </v-card-title>  
+        <v-row justify="center">
         <v-card-text>
           <v-container>
-            <v-form ref="form">
-              <div v-for="field in formFields" :key="field.id">
+            <v-form ref="form">      
+          <FormComponent
+            v-bind:formFields="formFields" >
+          </FormComponent>
+          </v-form>
+          </v-container>
+        </v-card-text>
+    </v-row>
+              <!--<div v-for="field in formFields" :key="field.id">
                 <v-text-field
                   :label="field.id"
                   v-if="field.type.name == 'string'"
@@ -28,17 +36,7 @@
                   :rules="rules(field)"
                 ></v-text-field>
                 <v-combobox
-                  v-if="field.id == 'userType'"
-                  :items="Object.keys(field.type.values)"
-                  :label="field.label"
-                  v-model="field.fieldValue"
-                  @change="changeGenreBetaVisibility(field.fieldValue)"
-                  outlined
-                  dense
-                  :rules="rules(field)"
-                ></v-combobox>
-                <v-combobox
-                  v-if="field.id == 'genre'"
+                  v-if="field.type.name == 'enum'"
                   :items="Object.keys(field.type.values)"
                   :label="field.label"
                   v-model="field.fieldValue"
@@ -46,19 +44,7 @@
                   dense
                   :rules="rules(field)"
                 ></v-combobox>
-                <v-combobox
-                  v-if="field.id == 'genreBeta' && userType =='beta-reader'"
-                  :items="Object.keys(field.type.values)"
-                  :label="field.label"
-                  v-model="field.fieldValue"
-                  outlined
-                  dense
-                  :rules="rules(field)"
-                ></v-combobox>
-              </div>
-            </v-form>
-          </v-container>
-        </v-card-text>
+              </div>-->
         <v-card-actions class="pr-10 pb-10">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="close">Cancel</v-btn>
@@ -73,10 +59,13 @@
 import Axios from "axios";
 import RegistrationIcon from "vue-material-design-icons/AccountCircle.vue";
 import CloseIcon from "vue-material-design-icons/CloseCircle.vue";
+import FormComponent from "@/components/homePage/FormComponent.vue";
+
 export default {
   components: {
     RegistrationIcon,
     CloseIcon,
+    FormComponent,
   },
   data: () => ({
     RegisterDialog: false,
@@ -106,9 +95,6 @@ export default {
     },
   },
   methods: {
-    changeGenreBetaVisibility(userType) {
-      this.userType = userType;
-    },
     rules(field){
       const rules = []
         field.validationConstraints.forEach(constraint => {
@@ -145,14 +131,33 @@ export default {
         )
           .then((response) => {
             console.log(response);
+            if(response.data == "beta-reader"){
+              this.loadGenreBeta();
+            } else {
+              this.close();
+            }
           })
           .catch((error) => {
             console.log(error);
           });
-        this.close();
+        
       } else {
         console.log("nije validno");
       }
+    },
+    loadGenreBeta(){
+      Axios.get("http://localhost:8080/genreBetaForm/" + this.processInstanceId)
+        .then((response) => {
+          console.log(response);
+          this.formFields = response.data.formFields;
+          this.$store.commit("addProcessID", response.data.processInstanceId);
+          console.log(this.$store.state.processID );
+          this.taskId = response.data.taskId;
+          this.processInstanceId = response.data.processInstanceId;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     close() {
       this.RegisterDialog = false;
@@ -166,6 +171,7 @@ export default {
           this.$store.commit("addProcessID", response.data.processInstanceId);
           console.log(this.$store.state.processID );
           this.taskId = response.data.taskId;
+          this.processInstanceId = response.data.processInstanceId;
         })
         .catch((error) => {
           console.log(error);

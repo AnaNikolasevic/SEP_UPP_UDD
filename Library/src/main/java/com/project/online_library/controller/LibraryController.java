@@ -55,6 +55,19 @@ public class LibraryController {
         return new FormFieldsDto(task.getId(), pi.getId(), properties);
     }
 	
+	@GetMapping(path = "/genreBetaForm/{processInstanceId}", produces = "application/json")
+    public @ResponseBody FormFieldsDto getGenreBetaForm(@PathVariable String processInstanceId) {
+
+		Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().taskName("Data Entry Beta").singleResult();
+		TaskFormData tfd = formService.getTaskFormData(task.getId());
+		List<FormField> properties = tfd.getFormFields();
+		for(FormField fp : properties) {
+			System.out.println(fp.getId() + fp.getType());
+		}
+		
+        return new FormFieldsDto(task.getId(), processInstanceId, properties);
+    }
+	
     @GetMapping("/libraryController")
     public ResponseEntity<String> appB(){
 
@@ -81,9 +94,15 @@ public class LibraryController {
 
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String processInstanceId = task.getProcessInstanceId();
-		runtimeService.setVariable(processInstanceId, "registration", dto);
+		if(dto.size()==1) {
+	        List<FormSubmissionDto> registration = (List<FormSubmissionDto>)runtimeService.getVariable(processInstanceId,"registration");
+	        registration.add(dto.get(0));
+	        runtimeService.setVariable(processInstanceId, "registration", registration);
+		} else {
+			runtimeService.setVariable(processInstanceId, "registration", dto);
+		}
 		formService.submitTaskForm(taskId, map);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(dto.get(dto.size()-1).getFieldValue(), HttpStatus.OK);
     }
 	
 	private HashMap<String, Object> mapListToDto(List<FormSubmissionDto> list)
