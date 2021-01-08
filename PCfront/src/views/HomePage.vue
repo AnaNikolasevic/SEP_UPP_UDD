@@ -50,11 +50,16 @@ export default {
           console.log(error);
         });
       } else if (this.choosenType.name == 'bitcoin') {
-        //  this.proba.price_amount = 1;
-        this.proba.price_currency = 'BTC';
-        this.proba.receive_currency = 'BTC';
         axios
-          .get("http://localhost:8089/makeOrder")
+          .post(
+          "http://localhost:8089/pay",
+          { action: "dashboard" },
+          {
+            headers: {
+              Authorization: this.token.data,
+            },
+          }
+          )
           .then(response => {
             console.log(response);
           })

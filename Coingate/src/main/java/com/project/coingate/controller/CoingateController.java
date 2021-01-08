@@ -1,8 +1,11 @@
-package com.project.coingate;
+package com.project.coingate.controller;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.http.HttpEntity;
@@ -15,16 +18,37 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.project.coingate.dto.PaymentRequestDTO;
+import com.project.coingate.service.CoingateService;
+import com.project.coingate.utils.JwtUtils;
 
 
 @CrossOrigin
 @RestController
 public class CoingateController {
 	
-    @GetMapping(path= "/makeOrder")
+    @Autowired
+    CoingateService coingateService;
+
+	@Autowired
+	JwtUtils jwtUtils;
+
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@PostMapping(path= "/pay", consumes = "application/json", produces = "application/json")
+    public ResponseEntity createPayment(@RequestHeader(value = "Authorization") String token) throws Throwable{
+
+        System.out.println("token" + token);
+        PaymentRequestDTO pr = jwtUtils.getPaymentRequest(token);
+        return new ResponseEntity<>(coingateService.createPayment(pr), HttpStatus.OK);
+    }
+	
+   /* @GetMapping(path= "/makeOrder")
     public ResponseEntity createPayment() {
 		Proba proba = new Proba();
 		proba.setPrice_amount(1.0);
@@ -51,12 +75,6 @@ public class CoingateController {
 		System.out.println("Redirecting user to allow link");
 		return new ResponseEntity<String>(paymentUrl, HttpStatus.OK);
 
-    }
+    }*/
     
-    @GetMapping(path= "/hello")
-    public String createPayment1() {	
-        System.out.println("Hello");
-
-        return "hello";
-    }
 }
