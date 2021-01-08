@@ -26,27 +26,42 @@ export default {
       ],
       choosenType: "",
       token: "",
+      proba: {},
     };
   },
   methods: {
     proceed(){
-      axios
-      .post(
-        "http://localhost:8081/pay",
-        { action: "dashboard" },
-        {
-          headers: {
-            Authorization: this.token.data,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        window.location.href = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      if(this.choosenType.name == 'paypal'){
+        axios
+        .post(
+          "http://localhost:8081/pay",
+          { action: "dashboard" },
+          {
+            headers: {
+              Authorization: this.token.data,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          window.location.href = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      } else if (this.choosenType.name == 'bitcoin') {
+        //  this.proba.price_amount = 1;
+        this.proba.price_currency = 'BTC';
+        this.proba.receive_currency = 'BTC';
+        axios
+          .get("http://localhost:8089/makeOrder")
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   },
   mounted() {
