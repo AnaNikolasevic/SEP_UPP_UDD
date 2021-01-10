@@ -62,6 +62,7 @@ export default {
           )
           .then(response => {
             console.log(response);
+            window.open(response.data.body);
           })
           .catch(error => {
             console.log(error);

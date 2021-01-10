@@ -17,14 +17,18 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.coingate.dto.PaymentRequestDTO;
+import com.project.coingate.model.PaymentOrder;
 import com.project.coingate.service.CoingateService;
+import com.project.coingate.service.PaymentOrderService;
 import com.project.coingate.utils.JwtUtils;
 
 
@@ -35,6 +39,9 @@ public class CoingateController {
     @Autowired
     CoingateService coingateService;
 
+    @Autowired
+    PaymentOrderService paymentOrderService;
+    
 	@Autowired
 	JwtUtils jwtUtils;
 
@@ -76,5 +83,19 @@ public class CoingateController {
 		return new ResponseEntity<String>(paymentUrl, HttpStatus.OK);
 
     }*/
+	
+	@PutMapping(path = "/success/{paymentOrderId}")
+	public String success(@PathVariable String paymentOrderId) {	
+		System.out.println("success");
+		paymentOrderService.success(paymentOrderId);
+		return "success";
+	}
+	
+	@PutMapping(path = "/cancel/{paymentOrderId}")
+	public String cancel(@PathVariable String paymentOrderId) {	
+		System.out.println("cancel");
+		paymentOrderService.error(paymentOrderId);
+		return "cancel";
+	}
     
 }

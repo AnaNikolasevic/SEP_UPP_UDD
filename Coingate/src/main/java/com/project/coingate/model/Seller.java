@@ -9,10 +9,7 @@ public class Seller {
     private Long id;
 
     @Column
-    private String paypalClientId;
-
-    @Column
-    private String paypalSecret;
+    private String coingateToken;
 
     @Column
     private String email;
@@ -25,23 +22,17 @@ public class Seller {
         this.id = id;
     }
 
-    public String getPaypalClientId() {
-        return paypalClientId;
-    }
 
-    public void setPaypalClientId(String paypalClientId) {
-        this.paypalClientId = paypalClientId;
-    }
 
-    public String getPaypalSecret() {
-        return paypalSecret;
-    }
+    public String getCoingateToken() {
+		return coingateToken;
+	}
 
-    public void setPaypalSecret(String paypalSecret) {
-        this.paypalSecret = paypalSecret;
-    }
+	public void setCoingateToken(String coingateToken) {
+		this.coingateToken = coingateToken;
+	}
 
-    public String getEmail() {
+	public String getEmail() {
         return email;
     }
 

@@ -31,7 +31,7 @@ public class PaymentOrder {
     private String description;
 
     @Column
-    private PaymentOrderStatus status = PaymentOrderStatus.CREATED;
+    private PaymentOrderStatus status;
 
     @ManyToOne
     private Seller seller;
