@@ -86,7 +86,7 @@ export default {
     const id = urlParams.get('id')
 
     axios
-      .get("http://localhost:8080/orderRequest/" + id)
+      .get("http://localhost:8082/orderRequest/" + id)
       .then(response => {
         console.log(response.data);
         var orderRequest = response.data;

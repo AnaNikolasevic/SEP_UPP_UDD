@@ -1,11 +1,11 @@
-package com.project.online_library.service;
+package com.project.seller_service.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.online_library.dto.OrderRequestDto;
-import com.project.online_library.model.OrderRequest;
-import com.project.online_library.repository.OrderRequestRepository;
+import com.project.seller_service.dto.OrderRequestDto;
+import com.project.seller_service.model.OrderRequest;
+import com.project.seller_service.repository.OrderRequestRepository;
 
 @Service
 public class OrderRequestService {

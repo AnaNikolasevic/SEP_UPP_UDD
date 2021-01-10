@@ -1,4 +1,4 @@
-package com.project.online_library.controller;
+package com.project.seller_service.controller;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.online_library.dto.OrderRequestDto;
-import com.project.online_library.model.OrderRequest;
-import com.project.online_library.service.OrderRequestService;
+import com.project.seller_service.dto.OrderRequestDto;
+import com.project.seller_service.model.OrderRequest;
+import com.project.seller_service.service.OrderRequestService;
 @CrossOrigin
 @RestController
 @RequestMapping("/orderRequest")
