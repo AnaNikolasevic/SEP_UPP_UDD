@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import Payment from '../views/Payment.vue'
+import AddPayment from '../views/AddPayment.vue'
 import Success from '../components/status/success.vue'
 import Error from '../components/status/error.vue'
 
@@ -16,6 +17,11 @@ const routes = [{
         path: '/payment',
         name: 'payment',
         component: Payment
+    },
+    {
+        path: '/addPayment',
+        name: 'addPayment',
+        component: AddPayment
     },
     {
         path: '/success',

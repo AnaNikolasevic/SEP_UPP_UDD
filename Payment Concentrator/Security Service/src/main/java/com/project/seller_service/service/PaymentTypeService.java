@@ -19,5 +19,9 @@ public class PaymentTypeService {
 	    return repository.findAll();
 	}
 
+	public Object getOne(Long paymentTypeId) {
+		// TODO Auto-generated method stub
+		return repository.getOne(paymentTypeId);
+	}
 
 }

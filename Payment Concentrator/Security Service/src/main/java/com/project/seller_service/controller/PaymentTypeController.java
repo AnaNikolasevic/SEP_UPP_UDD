@@ -24,5 +24,8 @@ public class PaymentTypeController {
 	@Autowired
 	PaymentTypeService service;
 	
-
+	@GetMapping("/paymentTypes")
+    public ResponseEntity<?> getPaymentTypes() {
+        return new ResponseEntity<List<PaymentType>>(service.getAll(), HttpStatus.OK);
+    }
 }
