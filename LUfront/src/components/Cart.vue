@@ -109,7 +109,7 @@ export default {
     },
     sendRequest() {
       axios
-        .post("http://localhost:8080/orderRequest", this.orderRequest)
+        .post("http://localhost:8082/orderRequest", this.orderRequest)
         .then(response => {
           console.log(response.data);
           /*this.snackbarSuccess = true;

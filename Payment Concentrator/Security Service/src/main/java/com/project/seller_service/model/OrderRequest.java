@@ -1,4 +1,4 @@
-package com.project.online_library.model;
+package com.project.seller_service.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
