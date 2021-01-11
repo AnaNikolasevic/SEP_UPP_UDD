@@ -4,6 +4,7 @@ import HomePage from '../views/HomePage.vue'
 import Payment from '../views/Payment.vue'
 import Success from '../components/status/success.vue'
 import Error from '../components/status/error.vue'
+import AikBankForm from '../views/AikBankForm.vue' 
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [{
         path: '/payment',
         name: 'payment',
         component: Payment
+    },
+     {
+        path: '/aikBank',
+        name: 'AikBankForm',
+        component: AikBankForm
     },
     {
         path: '/success',
