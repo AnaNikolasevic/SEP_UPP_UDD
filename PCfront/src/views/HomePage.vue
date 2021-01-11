@@ -83,10 +83,9 @@ export default {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get('id')
-
+    const idOrderRequest = urlParams.get('id')
     axios
-      .get("http://localhost:8082/orderRequest/" + id)
+      .get("http://localhost:8082/orderRequest/" + idOrderRequest)
       .then(response => {
         console.log(response.data);
         var orderRequest = response.data;

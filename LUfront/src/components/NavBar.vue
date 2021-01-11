@@ -41,6 +41,14 @@
       <v-btn
         text
         color="primary"
+        @click="openKP()"
+      >
+        <span>Add payment</span>
+        <v-icon right>mdi-plus</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         @click="openCart()"
       >
         <span>Cart</span>
@@ -70,6 +78,9 @@ export default {
     openCart() {
       this.$router.push("/cart");
     },
+    openKP(){
+      window.open("http://localhost:8083/addPayment/?idLU=" + 1);
+    }
   }
 };
 </script>

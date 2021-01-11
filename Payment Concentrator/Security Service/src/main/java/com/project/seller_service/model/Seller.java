@@ -25,8 +25,11 @@ public class Seller {
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany
-    @JoinColumn(name = "seller_id") 
+	@ManyToMany
+	@JoinTable(
+			  name = "seller_payment_types", 
+			  joinColumns = @JoinColumn(name = "seller_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "payment_type_id"))
 	private List<PaymentType> paymentTypes;
 
 
