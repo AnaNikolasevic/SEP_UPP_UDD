@@ -37,6 +37,7 @@ public class SellerController {
 	@PutMapping("/paymentTypes/{sellerId}/{paymentTypeId}")
     public ResponseEntity<?> getSellerPaymentTypes(@PathVariable int sellerId, @PathVariable int paymentTypeId) {
 		PaymentType paymentType = (PaymentType) servicePT.getOne(Long.valueOf(paymentTypeId));
+		service.checkIfExist(sellerId);
 		if(service.getSellerPaymentTypes(Long.valueOf(sellerId)).contains(paymentType)) {
 	        return new ResponseEntity<>("This seller already contains this payment type", HttpStatus.FOUND);		
 		} else {

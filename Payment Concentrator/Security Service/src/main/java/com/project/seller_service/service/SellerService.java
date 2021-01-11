@@ -36,6 +36,15 @@ public class SellerService {
 		return seller.getPaymentTypes();
 	}
 
+	public void checkIfExist(int sellerId) {
+		// TODO Auto-generated method stub
+		if(!repository.existsById(Long.valueOf(sellerId))) {
+			Seller seller = new Seller();
+			seller.setPaymentTypes(new ArrayList<PaymentType>());
+			repository.save(seller);
+		}
+	}
+
 
 
 }

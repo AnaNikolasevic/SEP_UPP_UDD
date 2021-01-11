@@ -10,11 +10,14 @@
         dense
     ></v-combobox>
     <div v-if="choosenType.name=='paypal'">
-        <v-text-field label="Paypal id" v-model="paypal.id"></v-text-field>
-        <v-text-field label="Paypal token" v-model="paypal.token"></v-text-field>
+        <v-text-field label="Paypal client id" v-model="seller.paypalClientId"></v-text-field>
+        <v-text-field label="Paypal secret" v-model="seller.paypalSecret"></v-text-field>
+        <v-text-field label="Paypal email" v-model="seller.email"></v-text-field>
+
     </div>
     <div v-if="choosenType.name=='bitcoin'">
-        <v-text-field label="Bitcoin token"></v-text-field>
+        <v-text-field label="Coingate token" v-model="seller.coingateToken"></v-text-field>
+        <v-text-field label="Coingate email" v-model="seller.email"></v-text-field>
     </div>
     <v-btn text color="primary" @click="add()">Add</v-btn>
   </div>
@@ -35,7 +38,7 @@ export default {
       token: "",
       proba: {},
       idLU: "",
-      paypal: {},
+      seller: {},
       bitcoin: {},
     };
   },
@@ -63,7 +66,7 @@ export default {
     addPayPal(){
         axios
         .post(
-          "http://localhost:8081/paypal/" + this.idLU, this.paypal)
+          "http://localhost:8081/seller", this.seller)
         .then((response) => {
           console.log(response);
         })
@@ -71,7 +74,17 @@ export default {
           console.log(error);
         });
     },
-    addBitcoin(){},
+    addBitcoin(){
+      axios
+        .post(
+          "http://localhost:8089/seller", this.seller)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     addCard(){},
   },
   mounted() {

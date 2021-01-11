@@ -73,4 +73,5 @@ public class PaypalController {
       //  logger.info("Paypal orderId="+ id +" canceled");
         return "Payment canceled";
     }
+
 }
