@@ -1,17 +1,9 @@
 package com.project.seller_service.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.seller_service.dto.OrderRequestDto;
 import com.project.seller_service.model.OrderRequest;
@@ -20,13 +12,14 @@ import com.project.seller_service.service.OrderRequestService;
 @RestController
 @RequestMapping("/orderRequest")
 public class OrderRequestController {
+
 	@Autowired
-	OrderRequestService service;
+	OrderRequestService orderRequestservice;
 	
 	@PostMapping("")
     public ResponseEntity<OrderRequest> add(@RequestBody OrderRequestDto orderRequestDto)  {
 		try {
-	        return new ResponseEntity<OrderRequest>(service.add(orderRequestDto), HttpStatus.OK);
+	        return new ResponseEntity<OrderRequest>(orderRequestservice.add(orderRequestDto), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new ResponseEntity<OrderRequest>(null);
@@ -35,6 +28,14 @@ public class OrderRequestController {
 	
 	@GetMapping("/{id}")
     public ResponseEntity<?> getOrderRequest(@PathVariable int id) {
-        return new ResponseEntity<OrderRequest>(service.getOrderRequest(Long.valueOf(id)), HttpStatus.OK);
+        return new ResponseEntity<OrderRequest>(orderRequestservice.getOrderRequest(Long.valueOf(id)), HttpStatus.OK);
     }
+
+	@PutMapping("/{orderId}/{status}")
+	public ResponseEntity changeOrderRequestStatus(@PathVariable Long orderId, @PathVariable String status) {
+
+		orderRequestservice.changeOrderRequestStatus(orderId, status);
+		return new ResponseEntity<> ("Payment status changed", HttpStatus.OK);
+
+	}
 }

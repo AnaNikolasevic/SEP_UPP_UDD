@@ -43,6 +43,7 @@ public class CoingateService {
 		Seller seller = sellerRepository.findOneById(pr.getSellerId());
 		System.out.println(seller.getId() + " " + seller.getEmail());
 		PaymentOrder po = new PaymentOrder();
+		po.setId(pr.getId());
 		po.setSeller(seller);
 		po.setPrice(pr.getPrice());
 		po.setCurrency(pr.getCurrency());
@@ -55,8 +56,8 @@ public class CoingateService {
 		map.add("price_amount", pr.getPrice() + "");
 		map.add("price_currency", pr.getCurrency());
 		map.add("receive_currency", pr.getCurrency());
-		map.add("cancel_url", "http://localhost:8083/error/?orderId=" + po.getId());
-		map.add("success_url", "http://localhost:8083/success/?orderId=" + po.getId());
+		map.add("cancel_url", "http://localhost:8083/bitcoinError/?orderId=" + po.getId());
+		map.add("success_url", "http://localhost:8083/bitcoinSuccess/?orderId=" + po.getId());
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Token " + seller.getCoingateToken());
 		headers.set("Content-Type", "application/x-www-form-urlencoded");
