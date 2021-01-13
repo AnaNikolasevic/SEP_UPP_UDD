@@ -17,25 +17,38 @@ public class OrderRequestController {
 	OrderRequestService orderRequestservice;
 	
 	@PostMapping("")
-    public ResponseEntity<OrderRequest> add(@RequestBody OrderRequestDto orderRequestDto)  {
+	public ResponseEntity<OrderRequest> add(@RequestBody OrderRequestDto orderRequestDto)  {
 		try {
 	        return new ResponseEntity<OrderRequest>(orderRequestservice.add(orderRequestDto), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new ResponseEntity<OrderRequest>(null);
 		}
+	}
+
+	@PutMapping("/{id}/{paymentType}")
+    public ResponseEntity<?> getOrderRequest(@PathVariable int id, @PathVariable String paymentType) {
+        return new ResponseEntity<OrderRequest>(orderRequestservice.getOrderRequest(Long.valueOf(id), paymentType), HttpStatus.OK);
     }
+
+	@PutMapping("/edit/{id}/{status}")
+	public ResponseEntity<?> editStatus(@PathVariable Long id, @PathVariable String status) {
+
+		orderRequestservice.setStatus(id, status);
+		return new ResponseEntity<OrderRequest>(HttpStatus.OK);
+
 	
 	@GetMapping("/{id}")
     public ResponseEntity<?> getOrderRequest(@PathVariable int id) {
         return new ResponseEntity<OrderRequest>(orderRequestservice.getOrderRequest(Long.valueOf(id)), HttpStatus.OK);
     }
 
-	@PutMapping("/{orderId}/{status}")
+	/*@PutMapping("/{orderId}/{status}")
 	public ResponseEntity changeOrderRequestStatus(@PathVariable Long orderId, @PathVariable String status) {
 
 		orderRequestservice.changeOrderRequestStatus(orderId, status);
 		return new ResponseEntity<> ("Payment status changed", HttpStatus.OK);
+*/
 
 	}
 }

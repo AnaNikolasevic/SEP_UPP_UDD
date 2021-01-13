@@ -1,5 +1,7 @@
 package com.project.seller_service.dto;
 
+import javax.persistence.Column;
+
 public class OrderRequestDto {
 
 	private Long id;
@@ -90,6 +92,7 @@ public class OrderRequestDto {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 
 	public OrderRequestDto() {
 		super();

@@ -7,7 +7,7 @@
           Card Number
         </label>
         <input
-          :value="cardNumber"
+          v-model="payeerFrom.pan"
           autofocus
           id="cardNumber"
           class="card-input__input"
@@ -22,7 +22,7 @@
       
           id="cardName"
           class="card-input__input"
-          v-model="name"
+          v-model="payeerFrom.cardHolderName"
           autocomplete="off"
         />
       </div>
@@ -66,16 +66,15 @@
           <div class="card-input">
             <label for="cardCvv" class="card-input__label">CVV</label>
             <input
-          
+              v-model="payeerFrom.securityCode"
               class="card-input__input"
               id="cardCvv"
-              :value="cvv"
               autocomplete="off"
             />
           </div>
         </div>
       </div>
-      <button @click="submitCard" class="card-form__button">
+      <button @click="submitCard()" class="card-form__button">
         Submit
       </button>
     </div>
@@ -83,6 +82,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -92,19 +92,41 @@ export default {
       name: "",
       cvv: "",
       currentYear: new Date().getFullYear(),
+      payeerFrom :{
+        paymentId: 0,
+        pan: '',
+        securityCode: 0,
+        cardHolderName: '',
+        expirationDate: ''
+      }
     };
   },
   methods: {
-    submitCard() {
-      alert(`
-        ${this.cardNumber}\n
-        ${this.name}\n
-        ${this.expireMonth}/${this.expireYear}\n
-        ${this.cvv}`);
-    },
+      submitCard() {
+      this.payeerFrom.expirationDate = '01-' + this.expireMonth + '-' + this.expireYear;
+      this.payeerFrom.paymentId = this.$route.params.id;
+      console.log(this.payeerFrom);
+      axios
+        .put("http://localhost:8090/pay", this.payeerFrom)
+        .then((response) => {
+            console.log(response.data);
+            window.open(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+  }
   },
+  mounted() {
+
+  },
+  computed: {
+
+  }
 };
 </script>
+
 
 <style scoped lang="scss">
 .card-container {

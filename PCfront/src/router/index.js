@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
+import AikBankForm from '../views/AikBank/AikBankForm.vue' 
+import AikBankSuccess from '../views/AikBank/SuccesUrl.vue' 
+import AikBankFailed from '../views/AikBank/FailedUrl.vue' 
+import AikBankError from '../views/AikBank/ErrorUrl.vue' 
 import PaypalSuccess from '../components/status/PaypalSuccess.vue'
 import PaypalError from '../components/status/PaypalError.vue'
 import AddPayment from '../views/AddPayment.vue'
 import BitcoinSuccess from '../components/status/BitcoinSuccess.vue'
 import BitcoinError from '../components/status/BitcoinError.vue'
-import AikBankForm from '../views/AikBankForm.vue'
 
 Vue.use(VueRouter)
 
@@ -16,9 +19,24 @@ const routes = [{
         component: HomePage
     },
     {
-        path: '/aikBank',
+        path: '/aikBank/:id',
         name: 'AikBankForm',
         component: AikBankForm
+    },
+    {
+        path: '/aikBank/success/:id',
+        name: 'AikBankSuccess',
+        component: AikBankSuccess
+    },
+    {
+        path: '/aikBank/failed/:id',
+        name: 'AikBankFailed',
+        component: AikBankFailed
+    },
+    {
+        path: '/aikBank/error/:id',
+        name: 'AikBankError',
+        component: AikBankError
     },
     {
         path: '/addPayment',
@@ -39,6 +57,7 @@ const routes = [{
         path: '/paypalSuccess',
         name: 'paypalSuccess',
         component: PaypalSuccess
+
     },
     {
         path: '/paypalError',

@@ -24,4 +24,5 @@ public class PaymentTypeService {
 		return repository.getOne(paymentTypeId);
 	}
 
+
 }

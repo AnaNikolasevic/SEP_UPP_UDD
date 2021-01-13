@@ -11,17 +11,17 @@ import javax.persistence.Id;
 public class OrderRequest {
 	//MERCAHNT_ORDER_ID
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
 	//MERCAHNT_ID
 	@Column
-	private Long sellerId;
+    private Long sellerId;
 	//AMOUNT
-	@Column
-	private String price;
-	@Column
-	private String currency;
+    @Column
+    private String price;
+    @Column
+    private String currency;
 	@Column
 	private String merchant_timestamp;
 	@Column
@@ -37,6 +37,7 @@ public class OrderRequest {
 	@Column
 	private String payment_type;
 	@Column
+
 	private String status;
 
 
@@ -134,7 +135,4 @@ public class OrderRequest {
 		this.status = status;
 	}
 
-
-
-    
 }

@@ -1,5 +1,7 @@
 package com.project.online_library.service;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,9 +44,13 @@ public class TokenService {
 	public String makeToken(OrderRequestDto orderRequestDto) {
 		// TODO Auto-generated method stub
 		Map<String, Object> claimsMap = new HashMap<>();
+        String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+        orderRequestDto.setMerchant_timestamp(timeStamp);
         claimsMap.put("sellerId", orderRequestDto.getSellerId());
         claimsMap.put("price", orderRequestDto.getPrice());
         claimsMap.put("currency", orderRequestDto.getCurrency());
+        claimsMap.put("merchant_timestamp", timeStamp);
+
 
         Long now = System.currentTimeMillis();
         String token = Jwts.builder()
