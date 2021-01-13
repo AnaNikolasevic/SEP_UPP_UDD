@@ -21,14 +21,25 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "seller_id")
 	private Long id;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
+	@Column(name = "merchant_id")
+	private String merchant_id;
+
+	@Column(name = "merchant_password")
+	private String merchant_password;
+
 	@OneToMany
-    @JoinColumn(name = "seller_id") 
+    @JoinColumn(name = "seller_id")
 	private List<PaymentType> paymentTypes;
 
+
+	public Seller() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 
 	public Long getId() {
@@ -57,10 +68,24 @@ public class Seller {
 		this.paymentTypes = paymentTypes;
 	}
 
-	public Seller() {
-		super();
-		// TODO Auto-generated constructor stub
+
+	public String getMerchant_id() {
+		return merchant_id;
 	}
+
+	public void setMerchant_id(String merchant_id) {
+		this.merchant_id = merchant_id;
+	}
+
+	public String getMerchant_password() {
+		return merchant_password;
+	}
+
+	public void setMerchant_password(String merchant_password) {
+		this.merchant_password = merchant_password;
+	}
+
+
 
 
 	

@@ -1,9 +1,11 @@
 package com.project.online_library.dto;
 
 public class OrderRequestDto {
+
 	private Long sellerId;
 	private String price;
 	private String currency;
+	private String merchant_timestamp;
 
 	public Long getSellerId() {
 		return sellerId;
@@ -23,6 +25,15 @@ public class OrderRequestDto {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+
+	public String getMerchant_timestamp() {
+		return merchant_timestamp;
+	}
+
+	public void setMerchant_timestamp(String merchant_timestamp) {
+		this.merchant_timestamp = merchant_timestamp;
+	}
+
 	public OrderRequestDto() {
 		super();
 		// TODO Auto-generated constructor stub

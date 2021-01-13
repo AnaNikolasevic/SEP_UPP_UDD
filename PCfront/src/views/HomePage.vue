@@ -8,6 +8,7 @@
         label="Choose payment type"
         outlined
         dense
+        @change="setOrder()"
     ></v-combobox>
     <v-btn text color="primary" @click="proceed()">Proceed</v-btn>
   </div>
@@ -25,8 +26,12 @@ export default {
         }
       ],
       choosenType: "",
-      token: "",
+      token: '',
       proba: {},
+      orderRequest:{
+        currency: '',
+
+      }
     };
   },
   methods: {
@@ -38,7 +43,7 @@ export default {
           { action: "dashboard" },
           {
             headers: {
-              Authorization: this.token.data,
+              Authorization: this.$store.state.token,
             },
           }
         )
@@ -56,7 +61,7 @@ export default {
           { action: "dashboard" },
           {
             headers: {
-              Authorization: this.token.data,
+              Authorization: this.$store.state.token,
             },
           }
           )
@@ -67,10 +72,66 @@ export default {
           .catch(error => {
             console.log(error);
           });
+      } else if (this.choosenType.name == 'card') {
+        console.log('ovo je token u proceed metodi');
+        console.log(this.$store.state.token);
+        axios
+          .post(
+          "http://localhost:8090/pay",
+          { action: "dashboard" },
+          {
+            headers: {
+              Authorization: this.$store.state.token,
+            },
+          }
+          )
+          .then(response => {
+            console.log(response);
+            window.open(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
-    }
+    },
+    setOrder(){
+      console.log('prosledjenjo')
+      console.log(this.choosenType.name);
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const id = urlParams.get('id');
+      axios
+          .put("http://localhost:8082/orderRequest/" + id + "/" + this.choosenType.name)
+          .then((response) => {
+            console.log("serOrder response");
+            console.log(response.data);
+            this.getToken(response.data); 
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+    },
+    getToken(order){
+
+        axios
+          .post("http://localhost:8082/token", order)
+          .then((response) => {
+            this.$store.commit("addToken", response.data);
+            console.log("token u soridzu");
+            console.log(this.$store.state.token);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+       
+    },
   },
   mounted() {
+
+    this.$store.commit("removeToken");
+
+    //dobavljanje liste nacina placanje, nekog selera!
     axios
       .get("http://localhost:8082/seller/paymentTypes/" + 1)
       .then(response => {
@@ -81,15 +142,17 @@ export default {
         console.log(error);
       });
 
-    const queryString = window.location.search;
+  /*  const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id')
-
+    //dobavljanje trenutnog zahteva
     axios
       .get("http://localhost:8082/orderRequest/" + id)
       .then(response => {
         console.log(response.data);
         var orderRequest = response.data;
+        this.order = response.data;
+        //
         axios
           .put("http://localhost:8082/token", orderRequest)
           .then((response) => {
@@ -102,7 +165,7 @@ export default {
       })
       .catch(error => {
         console.log(error);
-      });
+      });*/
   }
 };
 </script>

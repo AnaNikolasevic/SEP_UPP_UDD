@@ -1,0 +1,32 @@
+<template>
+  <div>
+    <h1> Your payment was canceled </h1>
+    <h2>There is some error</h2>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+        orderId : ''
+    };
+  },
+  methods: {
+      
+  },
+  mounted() {
+    this.orderId = this.$route.params.id;
+     axios
+          .put("http://localhost:8082/orderRequest/edit/" + this.orderId + "/" + "ERROR")
+          .then(() => {
+            console.log("USPESNOO");
+
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+  }
+};
+</script>

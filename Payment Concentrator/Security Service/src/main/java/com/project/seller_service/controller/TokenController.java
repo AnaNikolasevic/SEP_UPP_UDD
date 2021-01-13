@@ -21,15 +21,14 @@ public class TokenController {
     @Autowired
     TokenService tokenService;
 
-    @PutMapping("")
+    @PostMapping("")
     public ResponseEntity<String> getToken(@RequestBody OrderRequestDto orderRequestDto)  {
         return new ResponseEntity<String>(tokenService.getToken(orderRequestDto), HttpStatus.OK);
     }
-
-    @PostMapping(consumes = "application/json", produces = "application/json")
+  /*  @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity createPayment() {
        // System.out.println(token);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+*/
 }
