@@ -2,12 +2,12 @@
   <div>
     <h1>Welcome!</h1>
     <v-combobox
-        v-model="choosenType"
-        :items="paymentTypes"
-        item-text="name"
-        label="Choose payment type"
-        outlined
-        dense
+      v-model="choosenType"
+      :items="paymentTypes"
+      item-text="name"
+      label="Choose payment type"
+      outlined
+      dense
     ></v-combobox>
     <v-btn text color="primary" @click="proceed()">Proceed</v-btn>
   </div>
@@ -22,7 +22,7 @@ export default {
       paymentTypes: [
         {
           name: "",
-        }
+        },
       ],
       choosenType: "",
       token: "",
@@ -30,63 +30,63 @@ export default {
     };
   },
   methods: {
-    proceed(){
-      if(this.choosenType.name == 'paypal'){
-        axios
-        .post(
-          "http://localhost:8081/pay",
-          { action: "dashboard" },
-          {
-            headers: {
-              Authorization: this.token.data,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          window.location.href = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      } else if (this.choosenType.name == 'bitcoin') {
+    proceed() {
+      if (this.choosenType.name == "paypal") {
         axios
           .post(
-          "http://localhost:8089/pay",
-          { action: "dashboard" },
-          {
-            headers: {
-              Authorization: this.token.data,
-            },
-          }
+            "http://localhost:8081/pay",
+            { action: "dashboard" },
+            {
+              headers: {
+                Authorization: this.token.data,
+              },
+            }
           )
-          .then(response => {
+          .then((response) => {
+            console.log(response);
+            window.location.href = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (this.choosenType.name == "bitcoin") {
+        axios
+          .post(
+            "http://localhost:8089/pay",
+            { action: "dashboard" },
+            {
+              headers: {
+                Authorization: this.token.data,
+              },
+            }
+          )
+          .then((response) => {
             console.log(response);
             window.open(response.data.body);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       }
-    }
+    },
   },
   mounted() {
     axios
       .get("http://localhost:8082/seller/paymentTypes/" + 1)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.paymentTypes = response.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const idOrderRequest = urlParams.get('id')
+    const idOrderRequest = urlParams.get("id");
     axios
       .get("http://localhost:8082/orderRequest/" + idOrderRequest)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         var orderRequest = response.data;
         axios
@@ -99,9 +99,9 @@ export default {
             console.log(error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  },
 };
 </script>

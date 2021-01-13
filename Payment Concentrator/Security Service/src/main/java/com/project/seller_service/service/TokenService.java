@@ -22,9 +22,16 @@ public class TokenService {
     public String getToken(OrderRequestDto orderRequestDto){
 
         Map<String, Object> claimsMap = new HashMap<>();
+        claimsMap.put("orderId", orderRequestDto.getId());
         claimsMap.put("sellerId", orderRequestDto.getSellerId());
         claimsMap.put("price", orderRequestDto.getPrice());
         claimsMap.put("currency", orderRequestDto.getCurrency());
+        claimsMap.put("merchant_timestamp", orderRequestDto.getMerchant_timestamp());
+        claimsMap.put("merchant_id", orderRequestDto.getMerchant_id());
+        claimsMap.put("merchant_password", orderRequestDto.getMerchant_password());
+        claimsMap.put("success_url", orderRequestDto.getSuccess_url());
+        claimsMap.put("failed_url", orderRequestDto.getFailed_url());
+        claimsMap.put("error_url", orderRequestDto.getError_url());
 
         Long now = System.currentTimeMillis();
         String token = Jwts.builder()

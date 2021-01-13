@@ -2,6 +2,7 @@ package com.project.paypal.dto;
 
 public class PaymentRequestDTO {
 
+    private Long id;
     private Long sellerId;
     private float price;
     private String currency;
@@ -10,11 +11,20 @@ public class PaymentRequestDTO {
         super();
     }
 
-    public PaymentRequestDTO(Long sellerId, float price, String currency) {
+    public PaymentRequestDTO(Long id, Long sellerId, float price, String currency) {
         super();
+        this.id = id;
         this.sellerId = sellerId;
         this.price = price;
         this.currency = currency;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getSellerId() {

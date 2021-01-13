@@ -68,6 +68,7 @@ public class  JwtUtils {
 
         Claims claims = extractAllClaims(token);
 
+        paymentRequest.setId(Long.parseLong(claims.get("orderId").toString()));
         paymentRequest.setPrice(Float.parseFloat(claims.get("price").toString()));
         paymentRequest.setCurrency(claims.get("currency").toString());
 
