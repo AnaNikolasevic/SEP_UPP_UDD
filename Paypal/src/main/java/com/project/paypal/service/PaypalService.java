@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.lang.invoke.ConstantCallSite;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -38,9 +39,6 @@ public class PaypalService {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public static final String SUCCESS_URL = "/success";
-    public static final String CANCEL_URL = "/cancel";
-
     @Value("${paypal.mode}")
     private String mode;
 
@@ -50,6 +48,7 @@ public class PaypalService {
         System.out.println(seller.getId() + " " + seller.getEmail());
 
         PaymentOrder po = new PaymentOrder();
+        po.setId(pr.getId());
         po.setSeller(seller);
         po.setPrice(pr.getPrice());
         po.setCurrency(pr.getCurrency());
@@ -77,8 +76,8 @@ public class PaypalService {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8081" + CANCEL_URL);
-        redirectUrls.setReturnUrl("http://localhost:8083/payment");
+        redirectUrls.setCancelUrl("http://localhost:8083/paypalError/?orderId=" + po.getId());
+        redirectUrls.setReturnUrl("http://localhost:8083/paypalSuccess/?orderId=" + po.getId());
         payment.setRedirectUrls(redirectUrls);
 
         payment = payment.create(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()));
@@ -103,6 +102,7 @@ public class PaypalService {
     public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException{
 
         PaymentOrder po = paymentOrderRepository.findOneByPaymentId(paymentId);
+
         Seller seller = po.getSeller();
 
         Payment payment = new Payment();
@@ -128,11 +128,13 @@ public class PaypalService {
         return payment;
     }
 
-    public void cancelPaymentOrder(String id) {
-        PaymentOrder po = paymentOrderRepository.findOneById(id);
+    public void cancelPaymentOrder(Long id) {
+
+        PaymentOrder po = paymentOrderRepository.getOne(id);
         po.setStatus(PaymentOrderStatus.CANCELED);
         logger.info("Paypal orderId="+ id +" canceled");
         paymentOrderRepository.save(po);
+
     }
 
 }

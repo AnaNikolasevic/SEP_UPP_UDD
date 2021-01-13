@@ -25,7 +25,26 @@ public class SellerService {
 
 	public List<PaymentType> getSellerPaymentTypes(Long sellerId) {
 		// TODO Auto-generated method stub
-		return getOne(sellerId).getPaymentTypes();
+		return repository.getOne(sellerId).getPaymentTypes();
 	}
+
+	public List<PaymentType> addSellerPaymentTypes(Long sellerId, PaymentType paymentType) {
+		// TODO Auto-generated method stub
+		Seller seller = repository.getOne(sellerId);
+		seller.getPaymentTypes().add(paymentType);
+		repository.save(seller);
+		return seller.getPaymentTypes();
+	}
+
+	public void checkIfExist(int sellerId) {
+		// TODO Auto-generated method stub
+		if(!repository.existsById(Long.valueOf(sellerId))) {
+			Seller seller = new Seller();
+			seller.setPaymentTypes(new ArrayList<PaymentType>());
+			repository.save(seller);
+		}
+	}
+
+
 
 }

@@ -40,6 +40,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/success*").permitAll()
                 .antMatchers("/tokens*").permitAll()
                 .antMatchers("/pay*").permitAll()
+                .antMatchers("/payment*").permitAll()
+                .antMatchers("/payment**").permitAll()
+                .antMatchers("/payment/*").permitAll()
                 .antMatchers("/payments*").permitAll()
                 .antMatchers("/cancel*").permitAll()
                 .antMatchers("/cancel/*").permitAll()
@@ -55,6 +58,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/ncApi/createSubscription").permitAll()
                 .antMatchers("/boot*").permitAll()
                 .antMatchers("/jquery*").permitAll()
+                .antMatchers("/seller*").permitAll()
                 .anyRequest().authenticated();
                 //.anyRequest().permitAll();
 

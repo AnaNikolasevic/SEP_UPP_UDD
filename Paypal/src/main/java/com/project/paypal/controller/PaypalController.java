@@ -4,6 +4,9 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import com.project.paypal.dto.PaymentRequestDTO;
+import com.project.paypal.model.PaymentOrder;
+import com.project.paypal.model.PaymentOrderStatus;
+import com.project.paypal.repository.PaymentOrderRepository;
 import com.project.paypal.service.PaypalService;
 import com.project.paypal.utils.JwtUtils;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import javax.xml.ws.Response;
 
 @CrossOrigin
 @RestController
+@RequestMapping("")
 public class PaypalController {
 
     @Autowired
@@ -46,6 +50,7 @@ public class PaypalController {
             e.printStackTrace();
         }
 
+
         return new ResponseEntity<>("redirect:/", HttpStatus.OK);
     }
 
@@ -66,11 +71,13 @@ public class PaypalController {
         return new ResponseEntity<>("greska", HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/cancel")
-    public String cancelPayment(@RequestParam("token") String token) {
-        //payPalService.cancelPaymentOrder(id);
-        System.out.println(token);
-      //  logger.info("Paypal orderId="+ id +" canceled");
-        return "Payment canceled";
+    @PutMapping("/payment/{orderId}")
+    public ResponseEntity changeOrderRequestStatus(@PathVariable Long orderId) {
+
+        payPalService.cancelPaymentOrder(orderId);
+        return new ResponseEntity<> ("Payment status changed", HttpStatus.OK);
+
     }
+
+
 }

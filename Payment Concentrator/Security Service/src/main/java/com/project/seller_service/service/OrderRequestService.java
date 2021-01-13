@@ -11,10 +11,13 @@ import com.project.seller_service.repository.OrderRequestRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import java.util.NoSuchElementException;
+
 
 @Service
 public class OrderRequestService {
+
 	@Autowired
 	OrderRequestRepository repository;
 	@Autowired
@@ -31,6 +34,7 @@ public class OrderRequestService {
 		orderRequest.setStatus("CREATED");
 		orderRequest.setMerchant_timestamp(timeStamp);
 		repository.save(orderRequest);
+
 		return orderRequest;
 	}
 
@@ -66,6 +70,14 @@ public class OrderRequestService {
 		}
 		orderRequest.setStatus(status);
 		repository.save(orderRequest);
+		return orderRequestRepository.getOne(valueOf);
+	}
+
+	public void changeOrderRequestStatus(Long id, String status){
+
+		OrderRequest orderRequest = repository.getOne(id);
+		orderRequest.setStatus(status);
+	  repository.save(orderRequest);
 
 	}
 	

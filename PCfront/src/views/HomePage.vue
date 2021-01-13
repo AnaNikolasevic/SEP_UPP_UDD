@@ -23,7 +23,7 @@ export default {
       paymentTypes: [
         {
           name: "",
-        }
+        },
       ],
       choosenType: "",
       token: '',
@@ -35,9 +35,10 @@ export default {
     };
   },
   methods: {
-    proceed(){
-      if(this.choosenType.name == 'paypal'){
+    proceed() {
+      if (this.choosenType.name == "paypal") {
         axios
+
         .post(
           "http://localhost:8081/pay",
           { action: "dashboard" },
@@ -64,12 +65,13 @@ export default {
               Authorization: this.$store.state.token,
             },
           }
+
           )
-          .then(response => {
+          .then((response) => {
             console.log(response);
             window.open(response.data.body);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       } else if (this.choosenType.name == 'card') {
@@ -94,6 +96,7 @@ export default {
           });
       }
     },
+
     setOrder(){
       console.log('prosledjenjo')
       console.log(this.choosenType.name);
@@ -126,6 +129,7 @@ export default {
           });
        
     },
+
   },
   mounted() {
 
@@ -134,38 +138,13 @@ export default {
     //dobavljanje liste nacina placanje, nekog selera!
     axios
       .get("http://localhost:8082/seller/paymentTypes/" + 1)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.paymentTypes = response.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-
-  /*  const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get('id')
-    //dobavljanje trenutnog zahteva
-    axios
-      .get("http://localhost:8082/orderRequest/" + id)
-      .then(response => {
-        console.log(response.data);
-        var orderRequest = response.data;
-        this.order = response.data;
-        //
-        axios
-          .put("http://localhost:8082/token", orderRequest)
-          .then((response) => {
-            this.token = response;
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch(error => {
-        console.log(error);
-      });*/
   }
 };
 </script>

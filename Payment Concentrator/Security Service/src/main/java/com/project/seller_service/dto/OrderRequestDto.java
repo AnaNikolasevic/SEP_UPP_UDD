@@ -3,6 +3,7 @@ package com.project.seller_service.dto;
 import javax.persistence.Column;
 
 public class OrderRequestDto {
+
 	private Long id;
 	private Long sellerId;
 	private String price;
@@ -93,6 +94,11 @@ public class OrderRequestDto {
 	}
 
 
+	public OrderRequestDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -108,11 +114,4 @@ public class OrderRequestDto {
 	public String getStatus() {
 		return status;
 	}
-
-	public OrderRequestDto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	
 }

@@ -55,6 +55,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/ncApi/createSubscription").permitAll()
                 .antMatchers("/boot*").permitAll()
                 .antMatchers("/jquery*").permitAll()
+                .antMatchers("/seller*").permitAll()
                 .anyRequest().authenticated();
                 //.anyRequest().permitAll();
 

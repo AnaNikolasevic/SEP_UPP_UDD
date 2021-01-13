@@ -35,6 +35,7 @@ public class TokenService {
         claimsMap.put("currency", orderRequestDto.getCurrency());
         claimsMap.put("merchant_timestamp", orderRequestDto.getMerchant_timestamp());
 
+
         if (orderRequestDto.getPayment_type().equals("card")){
             claimsMap.put("merchant_id", orderRequestDto.getMerchant_id());
             claimsMap.put("merchant_password", orderRequestDto.getMerchant_password());

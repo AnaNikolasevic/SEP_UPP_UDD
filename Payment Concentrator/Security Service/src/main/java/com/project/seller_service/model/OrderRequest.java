@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity
 public class OrderRequest {
 	//MERCAHNT_ORDER_ID
@@ -36,6 +37,7 @@ public class OrderRequest {
 	@Column
 	private String payment_type;
 	@Column
+
 	private String status;
 
 
@@ -132,4 +134,5 @@ public class OrderRequest {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 }
