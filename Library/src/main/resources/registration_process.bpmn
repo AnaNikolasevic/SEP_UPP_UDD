@@ -100,7 +100,7 @@
     <bpmn:boundaryEvent id="Event_1qrfv7c" attachedToRef="Verification">
       <bpmn:outgoing>Flow_1y7orh6</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1gu1xqs">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT24H</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:endEvent id="Event_02v26ce">
