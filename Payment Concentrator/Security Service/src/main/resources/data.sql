@@ -1,5 +1,6 @@
 
 insert into seller ( name, merchant_password, merchant_id) values ( 'LU1', 'abc', 'abc');
+
 insert into payment_type (name) values ('paypal');
 insert into payment_type (name) values ('bitcoin');
 insert into payment_type (name) values ('card');

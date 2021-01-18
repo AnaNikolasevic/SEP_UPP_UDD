@@ -39,9 +39,10 @@ public class OrderRequestController {
 
 	
 	/*@GetMapping("/{id}")
-    public ResponseEntity<?> getOrderRequest(@PathVariable int id) {
-        return new ResponseEntity<OrderRequest>(orderRequestservice.getOrderRequest(Long.valueOf(id)), HttpStatus.OK);
-    }*/
+
+    public ResponseEntity<?> getOrderRequest(@PathVariable Long id) {
+        return new ResponseEntity<OrderRequest>(orderRequestservice.getOrderRequest(id, HttpStatus.OK);
+    } */
 
 	/*@PutMapping("/{orderId}/{status}")
 	public ResponseEntity changeOrderRequestStatus(@PathVariable Long orderId, @PathVariable String status) {
