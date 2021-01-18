@@ -39,7 +39,7 @@ public class SellerController {
 		PaymentType paymentType = (PaymentType) servicePT.getOne(Long.valueOf(paymentTypeId));
 		service.checkIfExist(sellerId);
 		if(service.getSellerPaymentTypes(Long.valueOf(sellerId)).contains(paymentType)) {
-	        return new ResponseEntity<>("This seller already contains this payment type", HttpStatus.FOUND);		
+	        return new ResponseEntity<>("This seller already contains this payment type", HttpStatus.BAD_REQUEST);
 		} else {
 			service.addSellerPaymentTypes(Long.valueOf(sellerId), paymentType);
 			return new ResponseEntity<>("Payment " + paymentType.getName() + "succesfully added!", HttpStatus.OK);

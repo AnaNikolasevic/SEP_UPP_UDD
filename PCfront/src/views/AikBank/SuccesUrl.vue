@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Success!</h1>
+    <h1>Your payment was successfull!</h1>
+    <v-btn text color="primary" @click="redirectToLU()">Return to LU</v-btn>
   </div>
 </template>
 
@@ -13,7 +14,9 @@ export default {
     };
   },
   methods: {
-      
+   redirectToLU() {
+      window.location = window.open("http://localhost:8084");
+    }
   },
   mounted() {
     this.orderId = this.$route.params.id;
