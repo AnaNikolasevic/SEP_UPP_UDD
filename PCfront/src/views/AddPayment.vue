@@ -69,9 +69,11 @@ export default {
           "http://localhost:8081/seller", this.seller)
         .then((response) => {
           console.log(response);
+           alert('you have successfully added this payment type');
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+         
+           alert('you already have this payment type');
         });
     },
     addBitcoin(){
@@ -80,9 +82,11 @@ export default {
           "http://localhost:8089/seller", this.seller)
         .then((response) => {
           console.log(response);
+          alert('you have successfully added this payment type');
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          console.log('you already have this payment type');
+          alert('you already have this payment type');
         });
     },
     addCard(){},

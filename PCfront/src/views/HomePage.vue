@@ -38,7 +38,6 @@ export default {
     proceed() {
       if (this.choosenType.name == "paypal") {
         axios
-
         .post(
           "http://localhost:8081/pay",
           { action: "dashboard" },
@@ -116,7 +115,6 @@ export default {
 
     },
     getToken(order){
-
         axios
           .post("http://localhost:8082/token", order)
           .then((response) => {
@@ -127,7 +125,6 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-       
     },
 
   },

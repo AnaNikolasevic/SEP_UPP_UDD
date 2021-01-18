@@ -24,7 +24,7 @@ export default {
 
       axios
         .put(
-          "http://localhost:8082/orderRequest/" +
+          "http://localhost:8082/orderRequest/edit/" +
             this.orderId +
             "/" +
             this.status

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1> Your payment was canceled </h1>
+    <h1> Your payment failed! </h1>
     <h2>You don't have enough money</h2>
+    <v-btn text color="primary" @click="redirectToLU()">Return to LU</v-btn>
   </div>
 </template>
 
@@ -14,7 +15,9 @@ export default {
     };
   },
   methods: {
-      
+      redirectToLU() {
+      window.location = window.open("http://localhost:8084");
+    }
   },
   mounted() {
     this.orderId = this.$route.params.id;

@@ -70,7 +70,6 @@ public class OrderRequestService {
 		}
 		orderRequest.setStatus(status);
 		repository.save(orderRequest);
-		return orderRequestRepository.getOne(valueOf);
 	}
 
 	public void changeOrderRequestStatus(Long id, String status){
