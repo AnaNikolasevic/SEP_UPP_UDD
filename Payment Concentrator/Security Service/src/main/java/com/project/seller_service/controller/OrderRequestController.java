@@ -38,10 +38,10 @@ public class OrderRequestController {
 		return new ResponseEntity<OrderRequest>(HttpStatus.OK);
 
 	
-	@GetMapping("/{id}")
-    public ResponseEntity<?> getOrderRequest(@PathVariable int id) {
-        return new ResponseEntity<OrderRequest>(orderRequestservice.getOrderRequest(Long.valueOf(id)), HttpStatus.OK);
-    }
+	/*@GetMapping("/{id}")
+    public ResponseEntity<?> getOrderRequest(@PathVariable Long id) {
+        return new ResponseEntity<OrderRequest>(orderRequestservice.getOrderRequest(id, HttpStatus.OK);
+    } */
 
 	/*@PutMapping("/{orderId}/{status}")
 	public ResponseEntity changeOrderRequestStatus(@PathVariable Long orderId, @PathVariable String status) {
