@@ -58,4 +58,12 @@ public class EmailService {
 
     }
 
+        @Async
+        public void sendEmail(SimpleMailMessage email) throws MailException, InterruptedException {
+
+            javaMailSender.send(email);
+
+    }
+
+
 }

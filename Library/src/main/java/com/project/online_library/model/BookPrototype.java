@@ -22,8 +22,17 @@ public class BookPrototype {
     @Column
     private BookStatus bookStatus;
 
+    @Column
+    private boolean plagiarism;
+
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public Genre genre;
+    private Genre genre;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    private Editor editor;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    private Writer writer;
 
     public Long getId() {
         return id;
@@ -63,5 +72,29 @@ public class BookPrototype {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public boolean isPlagiarism() {
+        return plagiarism;
+    }
+
+    public void setPlagiarism(boolean plagiarism) {
+        this.plagiarism = plagiarism;
+    }
+
+    public Editor getEditor() {
+        return editor;
+    }
+
+    public void setEditor(Editor editor) {
+        this.editor = editor;
+    }
+
+    public Writer getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
     }
 }

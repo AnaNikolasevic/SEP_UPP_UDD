@@ -37,9 +37,6 @@ public class MailExpirationDelegate implements JavaDelegate {
     @Autowired
     UserRepository userRepository;
 
-
-
-    //kreiranje tokena i slanja emaila sa verifikacionim linkom
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
@@ -49,7 +46,6 @@ public class MailExpirationDelegate implements JavaDelegate {
         for (FormSubmissionDto formField : registration) {
             if(formField.getId().equals("email")) {
                 email = formField.getFieldValue();
-
             }
         }
 
