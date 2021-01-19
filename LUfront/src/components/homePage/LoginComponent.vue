@@ -1,6 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="LoginDialog" max-width="600px">
+    <v-dialog
+      v-model="LoginDialog"
+      max-width="600px"
+      v-if="this.$store.state.user.role == 'none'"
+    >
       <template v-slot:activator="{ on }">
         <v-btn class="mx-1" text color="primary" v-on="on">
           <span>Login</span>
@@ -76,10 +80,9 @@ export default {
       axios
         .post("http://localhost:8080/login", this.user)
         .then((response) => {
-          //localStorage.setItem("jwt", response.data.accessToken);
-          console.log(response);
           this.$store.commit("login", response.data);
           console.log("ulogovala si se:");
+          console.log("ROLE: " + this.$store.state.user.role);
           console.log(this.$store.state.user);
           this.$emit("loggedIn");
           this.close();
