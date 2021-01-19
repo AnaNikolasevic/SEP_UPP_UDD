@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1r1scnp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="BetaReadersActivity" name="Beta Readers Activity" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0ukqrc1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0ukqrc1" sourceRef="StartEvent_1" targetRef="AddComment" />
+    <bpmn:userTask id="AddComment" name="Add Comment">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="comment" label="Comment" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ukqrc1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ron7pq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0ron7pq" sourceRef="AddComment" targetRef="SaveComment" />
+    <bpmn:serviceTask id="SaveComment" name="Save Comment">
+      <bpmn:incoming>Flow_0ron7pq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hz79d8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_0svua94" attachedToRef="AddComment">
+      <bpmn:outgoing>Flow_1ovsh8g</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0mdb5xj">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT72H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1ovsh8g" sourceRef="Event_0svua94" targetRef="AddPenaltyPoint" />
+    <bpmn:serviceTask id="AddPenaltyPoint" name="Add Penalty Point ">
+      <bpmn:incoming>Flow_1ovsh8g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0btfgg2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0btfgg2" sourceRef="AddPenaltyPoint" targetRef="CheckPenaltyPointCount" />
+    <bpmn:serviceTask id="CheckPenaltyPointCount" name="Check Penalty Point Count">
+      <bpmn:incoming>Flow_0btfgg2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0adjr7s</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_13j2ihn">
+      <bpmn:incoming>Flow_0adjr7s</bpmn:incoming>
+      <bpmn:outgoing>MoreThan5</bpmn:outgoing>
+      <bpmn:outgoing>LessThan5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0adjr7s" sourceRef="CheckPenaltyPointCount" targetRef="Gateway_13j2ihn" />
+    <bpmn:sequenceFlow id="MoreThan5" name="More Than 5" sourceRef="Gateway_13j2ihn" targetRef="DegradeBetaReader">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${penaltyPointsCount &gt;= 5}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="DegradeBetaReader" name="Degrade Beta Reader">
+      <bpmn:incoming>MoreThan5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hzs7mz</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0hzs7mz" sourceRef="DegradeBetaReader" targetRef="SendMailToBetaReader" />
+    <bpmn:sendTask id="SendMailToBetaReader" name="Send Mail To Beta Reader">
+      <bpmn:incoming>Flow_0hzs7mz</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q92fy3</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_1001pnf">
+      <bpmn:incoming>LessThan5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="LessThan5" name="Less Than 5" sourceRef="Gateway_13j2ihn" targetRef="Event_1001pnf">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${penaltyPointsCount &lt; 5}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_027cozx">
+      <bpmn:incoming>Flow_0hz79d8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0hz79d8" sourceRef="SaveComment" targetRef="Event_027cozx" />
+    <bpmn:endEvent id="Event_0gorkb8">
+      <bpmn:incoming>Flow_1q92fy3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1q92fy3" sourceRef="SendMailToBetaReader" targetRef="Event_0gorkb8" />
+    <bpmn:group id="Group_0i0jdd4" categoryValueRef="CategoryValue_0m7cyk4" />
+    <bpmn:textAnnotation id="TextAnnotation_0h9nstm">
+      <bpmn:text>Set status to commented</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1jy2f41" sourceRef="SaveComment" targetRef="TextAnnotation_0h9nstm" />
+  </bpmn:process>
+  <bpmn:category id="Category_1mgrmy4">
+    <bpmn:categoryValue id="CategoryValue_0m7cyk4" value="Beta citaoci imaju na svojoj stranici listu knjiga u koje su dodati da ih komentarisu" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="BetaReadersActivity">
+      <bpmndi:BPMNShape id="TextAnnotation_0h9nstm_di" bpmnElement="TextAnnotation_0h9nstm">
+        <dc:Bounds x="570" y="100" width="100" height="41" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ukqrc1_di" bpmnElement="Flow_0ukqrc1">
+        <di:waypoint x="215" y="227" />
+        <di:waypoint x="290" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ron7pq_di" bpmnElement="Flow_0ron7pq">
+        <di:waypoint x="390" y="227" />
+        <di:waypoint x="470" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ovsh8g_di" bpmnElement="Flow_1ovsh8g">
+        <di:waypoint x="360" y="285" />
+        <di:waypoint x="360" y="350" />
+        <di:waypoint x="430" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0btfgg2_di" bpmnElement="Flow_0btfgg2">
+        <di:waypoint x="530" y="350" />
+        <di:waypoint x="590" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0adjr7s_di" bpmnElement="Flow_0adjr7s">
+        <di:waypoint x="690" y="350" />
+        <di:waypoint x="755" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ltc57c_di" bpmnElement="MoreThan5">
+        <di:waypoint x="780" y="375" />
+        <di:waypoint x="780" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="708" y="412" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hzs7mz_di" bpmnElement="Flow_0hzs7mz">
+        <di:waypoint x="780" y="520" />
+        <di:waypoint x="780" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q92fy3_di" bpmnElement="Flow_1q92fy3">
+        <di:waypoint x="780" y="650" />
+        <di:waypoint x="780" y="682" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o214ly_di" bpmnElement="LessThan5">
+        <di:waypoint x="805" y="350" />
+        <di:waypoint x="892" y="350" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="819" y="332" width="61" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hz79d8_di" bpmnElement="Flow_0hz79d8">
+        <di:waypoint x="570" y="227" />
+        <di:waypoint x="652" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="209" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11z54x0_di" bpmnElement="AddComment">
+        <dc:Bounds x="290" y="187" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jo4ndi_di" bpmnElement="SaveComment">
+        <dc:Bounds x="470" y="187" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13jwmau_di" bpmnElement="AddPenaltyPoint">
+        <dc:Bounds x="430" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r5g9ey_di" bpmnElement="CheckPenaltyPointCount">
+        <dc:Bounds x="590" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_13j2ihn_di" bpmnElement="Gateway_13j2ihn" isMarkerVisible="true">
+        <dc:Bounds x="755" y="325" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qb8n96_di" bpmnElement="DegradeBetaReader">
+        <dc:Bounds x="730" y="440" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i9f69w_di" bpmnElement="SendMailToBetaReader">
+        <dc:Bounds x="730" y="570" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0gorkb8_di" bpmnElement="Event_0gorkb8">
+        <dc:Bounds x="762" y="682" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1001pnf_di" bpmnElement="Event_1001pnf">
+        <dc:Bounds x="892" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_027cozx_di" bpmnElement="Event_027cozx">
+        <dc:Bounds x="652" y="209" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1jy2f41_di" bpmnElement="Association_1jy2f41">
+        <di:waypoint x="556" y="187" />
+        <di:waypoint x="597" y="141" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_004gw4q_di" bpmnElement="Event_0svua94">
+        <dc:Bounds x="342" y="249" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_0i0jdd4_di" bpmnElement="Group_0i0jdd4">
+        <dc:Bounds x="170" y="85" width="120" height="90" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="187" y="92" width="87" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1rnj6md" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="DownloadBook" name="Download Book" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1mzynif</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="AcceptBookForm" name="Accept Book Form">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="isBookAccepted" label="is Book Accepted" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mzynif</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vb7azk</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1mzynif" sourceRef="StartEvent_1" targetRef="AcceptBookForm" />
+    <bpmn:serviceTask id="SetBookStatus" name="Set Book Status">
+      <bpmn:incoming>Flow_0vb7azk</bpmn:incoming>
+      <bpmn:outgoing>Flow_04wv0f6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0vb7azk" sourceRef="AcceptBookForm" targetRef="SetBookStatus" />
+    <bpmn:exclusiveGateway id="Gateway_11ld9uc">
+      <bpmn:incoming>Flow_04wv0f6</bpmn:incoming>
+      <bpmn:outgoing>bookAccepted</bpmn:outgoing>
+      <bpmn:outgoing>bookDenied</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_04wv0f6" sourceRef="SetBookStatus" targetRef="Gateway_11ld9uc" />
+    <bpmn:sequenceFlow id="bookAccepted" name="bookAccepted" sourceRef="Gateway_11ld9uc" targetRef="Event_0yy0ssw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isBookAccepted == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="bookDenied" name="bookDenied" sourceRef="Gateway_11ld9uc" targetRef="SendCancelationMailToWriter">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isBookAccepted == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sendTask id="SendCancelationMailToWriter" name="Send Cancelation Mail To Writer">
+      <bpmn:incoming>bookDenied</bpmn:incoming>
+      <bpmn:outgoing>Flow_1830o4w</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1830o4w" sourceRef="SendCancelationMailToWriter" targetRef="Event_1ys7lsz" />
+    <bpmn:endEvent id="Event_1ys7lsz">
+      <bpmn:incoming>Flow_1830o4w</bpmn:incoming>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_1jcrui7" signalRef="Signal_1nj2qcl" />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_0yy0ssw">
+      <bpmn:incoming>bookAccepted</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:signal id="Signal_1nj2qcl" name="BookDenied" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="DownloadBook">
+      <bpmndi:BPMNEdge id="Flow_1mzynif_di" bpmnElement="Flow_1mzynif">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vb7azk_di" bpmnElement="Flow_0vb7azk">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="440" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04wv0f6_di" bpmnElement="Flow_04wv0f6">
+        <di:waypoint x="540" y="117" />
+        <di:waypoint x="615" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ra0j3a_di" bpmnElement="bookAccepted">
+        <di:waypoint x="665" y="117" />
+        <di:waypoint x="812" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="662" y="99" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_036414y_di" bpmnElement="bookDenied">
+        <di:waypoint x="640" y="142" />
+        <di:waypoint x="640" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="570" y="182" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1830o4w_di" bpmnElement="Flow_1830o4w">
+        <di:waypoint x="640" y="290" />
+        <di:waypoint x="640" y="372" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10s5pry_di" bpmnElement="AcceptBookForm">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13twpgg_di" bpmnElement="SetBookStatus">
+        <dc:Bounds x="440" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_11ld9uc_di" bpmnElement="Gateway_11ld9uc" isMarkerVisible="true">
+        <dc:Bounds x="615" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1evlkcu_di" bpmnElement="SendCancelationMailToWriter">
+        <dc:Bounds x="590" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0an1ogk_di" bpmnElement="Event_1ys7lsz">
+        <dc:Bounds x="622" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yy0ssw_di" bpmnElement="Event_0yy0ssw">
+        <dc:Bounds x="812" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

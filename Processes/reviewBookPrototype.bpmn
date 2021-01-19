@@ -8,7 +8,7 @@
     <bpmn:userTask id="AcceptBookReveiwForm" name="Accept Book Reveiw Form">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="isBookAccepted" label="is Book Accepted" type="boolean" />
+          <camunda:formField id="isInterestedInBook" label="is Interested In Book" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0q07l0u</bpmn:incoming>
@@ -16,15 +16,15 @@
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_0l6cepe">
       <bpmn:incoming>Flow_0pwbjon</bpmn:incoming>
-      <bpmn:outgoing>bookAccepted</bpmn:outgoing>
+      <bpmn:outgoing>interestedInBook</bpmn:outgoing>
       <bpmn:outgoing>bookDenied</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_16go2x0" sourceRef="AcceptBookReveiwForm" targetRef="SetBookStatus" />
-    <bpmn:sequenceFlow id="bookAccepted" name="bookAccepted" sourceRef="Gateway_0l6cepe" targetRef="SendConfirmationMailToWriter">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isBookAccepted == true}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="interestedInBook" name="interestedInBook" sourceRef="Gateway_0l6cepe" targetRef="SendConfirmationMailToWriter">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isInterestedInBook == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="bookDenied" name="bookDenied" sourceRef="Gateway_0l6cepe" targetRef="AddExplenationForDenying">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isBookAccepted == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isInterestedInBook == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:userTask id="AddExplenationForDenying" name="Add Explenation For Denying">
       <bpmn:incoming>bookDenied</bpmn:incoming>
@@ -36,7 +36,7 @@
       <bpmn:outgoing>Flow_0awb96j</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sendTask id="SendConfirmationMailToWriter" name="Send Confirmation Mail To Writer">
-      <bpmn:incoming>bookAccepted</bpmn:incoming>
+      <bpmn:incoming>interestedInBook</bpmn:incoming>
       <bpmn:outgoing>Flow_02fj480</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_0awb96j" sourceRef="SendCancelationMailToWriter" targetRef="Event_0a3h1ep" />
@@ -60,67 +60,67 @@
   <bpmn:signal id="Signal_0y3f1e5" name="Signal_3fs4k6m" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="reviewBookPrototype">
-      <bpmndi:BPMNEdge id="Flow_0q07l0u_di" bpmnElement="Flow_0q07l0u">
-        <di:waypoint x="188" y="97" />
-        <di:waypoint x="250" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_16go2x0_di" bpmnElement="Flow_16go2x0">
-        <di:waypoint x="350" y="97" />
-        <di:waypoint x="410" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_08e7miv_di" bpmnElement="bookAccepted">
-        <di:waypoint x="645" y="97" />
-        <di:waypoint x="790" y="97" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="644" y="79" width="70" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_100vrsg_di" bpmnElement="bookDenied">
-        <di:waypoint x="620" y="122" />
-        <di:waypoint x="620" y="270" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="630" y="183" width="59" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0mjzy3y_di" bpmnElement="Flow_0mjzy3y">
-        <di:waypoint x="620" y="350" />
-        <di:waypoint x="620" y="400" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0awb96j_di" bpmnElement="Flow_0awb96j">
-        <di:waypoint x="620" y="480" />
-        <di:waypoint x="620" y="532" />
+      <bpmndi:BPMNEdge id="Flow_0pwbjon_di" bpmnElement="Flow_0pwbjon">
+        <di:waypoint x="510" y="97" />
+        <di:waypoint x="595" y="97" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02fj480_di" bpmnElement="Flow_02fj480">
         <di:waypoint x="890" y="97" />
         <di:waypoint x="922" y="97" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pwbjon_di" bpmnElement="Flow_0pwbjon">
-        <di:waypoint x="510" y="97" />
-        <di:waypoint x="595" y="97" />
+      <bpmndi:BPMNEdge id="Flow_0awb96j_di" bpmnElement="Flow_0awb96j">
+        <di:waypoint x="620" y="480" />
+        <di:waypoint x="620" y="532" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Gateway_0l6cepe_di" bpmnElement="Gateway_0l6cepe" isMarkerVisible="true">
-        <dc:Bounds x="595" y="72" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0kfj8cx_di" bpmnElement="Event_0a3h1ep">
-        <dc:Bounds x="602" y="532" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0vfx4ac_di" bpmnElement="SendCancelationMailToWriter">
-        <dc:Bounds x="570" y="400" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1f32kyh_di" bpmnElement="AddExplenationForDenying">
-        <dc:Bounds x="570" y="270" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01md92u_di" bpmnElement="SendConfirmationMailToWriter">
-        <dc:Bounds x="790" y="57" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0wnjfxi_di" bpmnElement="Event_0wnjfxi">
-        <dc:Bounds x="922" y="79" width="36" height="36" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0mjzy3y_di" bpmnElement="Flow_0mjzy3y">
+        <di:waypoint x="620" y="350" />
+        <di:waypoint x="620" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_100vrsg_di" bpmnElement="bookDenied">
+        <di:waypoint x="620" y="122" />
+        <di:waypoint x="620" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="630" y="213" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08e7miv_di" bpmnElement="interestedInBook">
+        <di:waypoint x="645" y="97" />
+        <di:waypoint x="790" y="97" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="648" y="79" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16go2x0_di" bpmnElement="Flow_16go2x0">
+        <di:waypoint x="350" y="97" />
+        <di:waypoint x="410" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q07l0u_di" bpmnElement="Flow_0q07l0u">
+        <di:waypoint x="188" y="97" />
+        <di:waypoint x="250" y="97" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="79" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0cj4ghx_di" bpmnElement="AcceptBookReveiwForm">
         <dc:Bounds x="250" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0l6cepe_di" bpmnElement="Gateway_0l6cepe" isMarkerVisible="true">
+        <dc:Bounds x="595" y="72" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f32kyh_di" bpmnElement="AddExplenationForDenying">
+        <dc:Bounds x="570" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vfx4ac_di" bpmnElement="SendCancelationMailToWriter">
+        <dc:Bounds x="570" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01md92u_di" bpmnElement="SendConfirmationMailToWriter">
+        <dc:Bounds x="790" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kfj8cx_di" bpmnElement="Event_0a3h1ep">
+        <dc:Bounds x="602" y="532" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wnjfxi_di" bpmnElement="Event_0wnjfxi">
+        <dc:Bounds x="922" y="79" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1c1ykvm_di" bpmnElement="SetBookStatus">
         <dc:Bounds x="410" y="57" width="100" height="80" />
