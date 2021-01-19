@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.online_library.dto.FormSubmissionDto;
+import com.project.online_library.enums.WriterMembershipStatus;
+import com.project.online_library.model.BoardMember;
 import com.project.online_library.model.MandatoryBook;
 import com.project.online_library.model.Writer;
+import com.project.online_library.repository.BoardMemberRepository;
 import com.project.online_library.repository.MandatoryBookRepository;
 import com.project.online_library.repository.WriterRepository;
 
@@ -23,6 +26,9 @@ public class MandatoryBookService implements JavaDelegate{
 	@Autowired
 	MandatoryBookRepository mandatoryBookRepository;
 	 
+	@Autowired
+    BoardMemberRepository boardMemberRepository;
+	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		// TODO Auto-generated method stub
@@ -40,6 +46,11 @@ public class MandatoryBookService implements JavaDelegate{
         
         writer.setMandatoryBookList(mandatoryBookList);
         writerRepository.save(writer);
+        
+        for (BoardMember boardMember : boardMemberRepository.findAll()) {
+			boardMember.getWriterMembership().put(writer.getUsername(), WriterMembershipStatus.WAITING);
+			boardMemberRepository.save(boardMember);
+		}
 	}
 
 }
