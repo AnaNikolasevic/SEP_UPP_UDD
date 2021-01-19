@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.8.2",
+    "firebase": "^8.2.3",
     "vue": "^2.6.11",
     "vue-material": "^1.0.0-beta-15",
     "vue-material-design-icons": "^4.11.0",
