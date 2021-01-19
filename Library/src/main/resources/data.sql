@@ -14,6 +14,11 @@ insert into editor ( id, city, country, email, enabled, first_name, last_name, p
 insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
     values (115, 'Novi Sad', 'Serbia', 'ss@gmail.com', 'true', 'Stanislava', 'Skoric', 'ss', 'ss');
 
+insert into writer ( id, city, country, email, enabled, first_name, last_name, password, username)
+    values (215, 'Novi Sad', 'Serbia', 'sm@gmail.com', 'true', 'Stevan', 'Matovic', 'sm', 'sm');
+insert into writer ( id, city, country, email, enabled, first_name, last_name, password, username)
+    values (216, 'Novi Sad', 'Serbia', 'bm@gmail.com', 'true', 'Biljana', 'Matovic', 'bm', 'bm');
+
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
     values (0, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The Count of Monte Cristo', null, 112, 5, null, null);
 
