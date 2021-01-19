@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class Editor extends Users{
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
     private List<BookPrototype> bookPrototypeList;
 
     public Editor() {

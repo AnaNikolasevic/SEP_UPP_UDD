@@ -13,7 +13,7 @@ public class Genre {
     @Column
     private String name;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
 	private List<BookPrototype> bookPrototypeList;
 
 	public Long getId() {

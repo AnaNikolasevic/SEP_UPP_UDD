@@ -34,6 +34,15 @@ public class BookPrototype {
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Writer writer;
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    private BetaReader betaReader;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    private Lector lector;
+
+    @OneToMany(mappedBy ="bookPrototype", fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
     public Long getId() {
         return id;
     }
