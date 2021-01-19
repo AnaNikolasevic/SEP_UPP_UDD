@@ -1,6 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="RegisterDialog" max-width="600px">
+    <v-dialog
+      v-model="RegisterDialog"
+      max-width="600px"
+      v-if="this.$store.state.user.role == 'none'"
+    >
       <template v-slot:activator="{ on }">
         <v-btn text color="primary" v-on="on" @click="loadRegistrationForm()">
           <span>Register</span>
@@ -16,19 +20,17 @@
           <v-btn icon color="primary" @click="RegisterDialog = false">
             <CloseIcon></CloseIcon>
           </v-btn>
-        </v-card-title>  
+        </v-card-title>
         <v-row justify="center">
-        <v-card-text>
-          <v-container>
-            <v-form ref="form">      
-          <FormComponent
-            v-bind:formFields="formFields" >
-          </FormComponent>
-          </v-form>
-          </v-container>
-        </v-card-text>
-    </v-row>
-              <!--<div v-for="field in formFields" :key="field.id">
+          <v-card-text>
+            <v-container>
+              <v-form ref="form">
+                <FormComponent v-bind:formFields="formFields"> </FormComponent>
+              </v-form>
+            </v-container>
+          </v-card-text>
+        </v-row>
+        <!--<div v-for="field in formFields" :key="field.id">
                 <v-text-field
                   :label="field.id"
                   v-if="field.type.name == 'string'"
@@ -86,7 +88,7 @@ export default {
     selectedGenreValues: [],
     betaReader: false,
     field: {},
-    userType: ""
+    userType: "",
   }),
   computed: {
     passwordConfirmationRule() {
@@ -95,25 +97,26 @@ export default {
     },
   },
   methods: {
-    rules(field){
-      const rules = []
-        field.validationConstraints.forEach(constraint => {
-          if (constraint.name == 'required') {
-            const rule = (v) => !!v || "This field is required"
-            rules.push(rule)
-          }
-          if (constraint.name == 'minlength') {
-            const rule = v => (v || '').length >= constraint.configuration ||
-                    `A minimum of ${constraint.configuration} characters is required`
-            rules.push(rule)
-          }
-          if (constraint.name == 'maxlength') {
-            const rule = v => (v || '').length <= constraint.configuration ||
-                    `A maximum of ${constraint.configuration} characters is allowed`
-            rules.push(rule)
-          }
-         
-        });
+    rules(field) {
+      const rules = [];
+      field.validationConstraints.forEach((constraint) => {
+        if (constraint.name == "required") {
+          const rule = (v) => !!v || "This field is required";
+          rules.push(rule);
+        }
+        if (constraint.name == "minlength") {
+          const rule = (v) =>
+            (v || "").length >= constraint.configuration ||
+            `A minimum of ${constraint.configuration} characters is required`;
+          rules.push(rule);
+        }
+        if (constraint.name == "maxlength") {
+          const rule = (v) =>
+            (v || "").length <= constraint.configuration ||
+            `A maximum of ${constraint.configuration} characters is allowed`;
+          rules.push(rule);
+        }
+      });
       return rules;
     },
     register() {
@@ -131,7 +134,7 @@ export default {
         )
           .then((response) => {
             console.log(response);
-            if(response.data == "beta-reader"){
+            if (response.data == "beta-reader") {
               this.loadGenreBeta();
             } else {
               this.close();
@@ -140,18 +143,17 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-        
       } else {
         console.log("nije validno");
       }
     },
-    loadGenreBeta(){
+    loadGenreBeta() {
       Axios.get("http://localhost:8080/genreBetaForm/" + this.processInstanceId)
         .then((response) => {
           console.log(response);
           this.formFields = response.data.formFields;
           this.$store.commit("addProcessID", response.data.processInstanceId);
-          console.log(this.$store.state.processID );
+          console.log(this.$store.state.processID);
           this.taskId = response.data.taskId;
           this.processInstanceId = response.data.processInstanceId;
         })
@@ -169,7 +171,7 @@ export default {
           this.formFields = response.data.formFields;
           //this.$store.state.processID
           this.$store.commit("addProcessID", response.data.processInstanceId);
-          console.log(this.$store.state.processID );
+          console.log(this.$store.state.processID);
           this.taskId = response.data.taskId;
           this.processInstanceId = response.data.processInstanceId;
         })
