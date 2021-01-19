@@ -38,8 +38,9 @@ public class GenerateEditorDelegate implements JavaDelegate {
         List<FormSubmissionDto> form = (List<FormSubmissionDto>)delegateExecution.getVariable("form");
         BookPrototype bookPrototype = bookPrototypeRepository.findByTitle(form.get(0).getFieldValue());
         bookPrototype.setEditor(editor);
+        bookPrototypeRepository.save(bookPrototype);
         //setovanje editor variable u provesu
-        delegateExecution.setVariable("editor", editor);
+        delegateExecution.setVariable("editorId", editor.getId());
 
     }
 

@@ -38,7 +38,7 @@
           "
         />
       </div>
-      <div class="mx-2">
+      <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
         <AddBook />
       </div>
       <v-btn
