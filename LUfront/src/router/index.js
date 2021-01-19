@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import ActivationLink from '../views/ActivationLink.vue'
 import Cart from '../components/Cart.vue'
-
+import MandatoryUpload from '../components/MandatoryUpload.vue'
 
 
 Vue.use(VueRouter)
@@ -24,7 +24,11 @@ const routes = [
     name: 'Cart',
     component: Cart
   },
-
+  {
+    path: '/mandatoryUpload',
+    name: 'MandatoryUpload',
+    component: MandatoryUpload
+  },
 ]
 
 const router = new VueRouter({

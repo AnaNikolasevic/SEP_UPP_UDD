@@ -18,6 +18,7 @@ export default new Vuex.Store({
     },
     login(state, user) {
       state.user.username = user.username;
+      state.user.role = user.role;
     },
     logout(state) {
       state.user = {}

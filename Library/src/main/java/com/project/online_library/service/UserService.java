@@ -38,8 +38,8 @@ public class UserService implements JavaDelegate {
     @Autowired
     LectorRepository lectorRepository;
 
-   // @Autowired
-   // BoardMemberRepository boardMemberRepository;
+    @Autowired
+    BoardMemberRepository boardMemberRepository;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -70,7 +70,7 @@ public class UserService implements JavaDelegate {
     public UserDTO login(LoginDto loginDto) {
 
         BetaReader betaReader = betaReaderRepository.findByUsername(loginDto.getUsername());
-      //  BoardMember boardMember = boardMemberRepository.findByUsername(loginDto.getUsername());
+        BoardMember boardMember = boardMemberRepository.findByUsername(loginDto.getUsername());
         Editor editor = editorRepository.findByUsername(loginDto.getUsername());
         Lector lector = lectorRepository.findByUsername(loginDto.getUsername());
         Reader reader = readerRepository.findByUsername(loginDto.getUsername());
@@ -78,8 +78,8 @@ public class UserService implements JavaDelegate {
 
         if (betaReader != null) {
             return new UserDTO(betaReader.getUsername(), betaReader.getPassword(), "betaReader");
-     //   } else if (boardMember != null) {
-    //        return new UserDTO(boardMember.getUsername(), boardMember.getPassword(), "boardMember");
+        } else if (boardMember != null) {
+            return new UserDTO(boardMember.getUsername(), boardMember.getPassword(), "boardMember");
         } else if (editor != null) {
             return new UserDTO(editor.getUsername(), editor.getPassword(), "editor");
         } else if (lector != null) {
