@@ -77,6 +77,7 @@ export default {
         .post("http://localhost:8080/login", this.user)
         .then((response) => {
           //localStorage.setItem("jwt", response.data.accessToken);
+          console.log(response);
           this.$store.commit("login", response.data);
           console.log("ulogovala si se:");
           console.log(this.$store.state.user);

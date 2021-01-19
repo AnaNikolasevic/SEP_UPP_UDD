@@ -3,8 +3,10 @@ package com.project.online_library.controller;
 
 import com.project.online_library.dto.FormSubmissionDto;
 import com.project.online_library.dto.LoginDto;
+import com.project.online_library.dto.UserDTO;
 import com.project.online_library.model.Users;
 import com.project.online_library.model.VerificationToken;
+import com.project.online_library.repository.UserRepository;
 import com.project.online_library.service.UserService;
 import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.task.Task;
@@ -20,10 +22,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserRepository userRepository;
+
     @PostMapping(path="/login")
     public ResponseEntity login (@RequestBody LoginDto user ){
 
-        Users users = userService.login(user);
+        UserDTO userDTO = userService.login(user);
+        Users users = userRepository.findByUsername(userDTO.getUsername());
 
         if (users == null){
             return new ResponseEntity<>("null", HttpStatus.NOT_FOUND);
@@ -35,10 +41,7 @@ public class UserController {
             return new ResponseEntity<>("You have not confirmed registration", HttpStatus.FORBIDDEN);
         }
 
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
 
     }
-
-
-
 }

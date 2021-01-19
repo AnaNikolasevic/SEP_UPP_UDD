@@ -38,6 +38,8 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/paymentType.html*").permitAll()
                 .antMatchers("/paymentType.js").permitAll()
                 .antMatchers("/activationForm/*").permitAll()
+                .antMatchers("/activation/**").permitAll()
+                .antMatchers("/login/**").permitAll()
                 // any other requests must be authenticated*/
                 //.antMatchers("/test/**").permitAll()
                 //.anyRequest().authenticated();
