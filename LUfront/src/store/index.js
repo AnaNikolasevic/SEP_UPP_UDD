@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     processID: "",
     user: {
-      username: ""
+      username: "",
+      role:""
     }
   },
   mutations: {

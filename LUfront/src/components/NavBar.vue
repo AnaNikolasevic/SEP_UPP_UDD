@@ -38,6 +38,9 @@
           "
         />
       </div>
+      <div class="mx-2">
+        <AddBook/>
+      </div>
       <v-btn
         text
         color="primary"
@@ -61,10 +64,12 @@
 <script>
 import LoginComponent from "@/components/homePage/LoginComponent.vue";
 import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
+import AddBook from "@/components/homePage/WriterComponents/AddBookForm.vue";
 export default {
   components: {
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AddBook
   },
   data() {
     return {

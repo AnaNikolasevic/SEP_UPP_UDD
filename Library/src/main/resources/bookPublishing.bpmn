@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_030g3of" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="bookPublishing" name="bookPublishing" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_10375b0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_10375b0" sourceRef="StartEvent_1" targetRef="SubmitBookDetailsForm" />
+    <bpmn:userTask id="SubmitBookDetailsForm" name="Submit Book Details Form">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="title" label="Title" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="synopsis" label="Synopsis" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="genre" label="Genre" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+        <camunda:taskListener delegateExpression="${genreListener}" event="create" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10375b0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0utsk4q</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="CreateBookPrototype" name="Create Book Prototype" camunda:class="com.project.online_library.camundaServices.BookPrototypeDelegate">
+      <bpmn:incoming>Flow_0utsk4q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1euyxja</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0utsk4q" sourceRef="SubmitBookDetailsForm" targetRef="CreateBookPrototype" />
+    <bpmn:endEvent id="Event_0waieml">
+      <bpmn:incoming>Flow_1euyxja</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1euyxja" sourceRef="CreateBookPrototype" targetRef="Event_0waieml" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bookPublishing">
+      <bpmndi:BPMNEdge id="Flow_10375b0_di" bpmnElement="Flow_10375b0">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="240" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0utsk4q_di" bpmnElement="Flow_0utsk4q">
+        <di:waypoint x="340" y="117" />
+        <di:waypoint x="380" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1euyxja_di" bpmnElement="Flow_1euyxja">
+        <di:waypoint x="480" y="117" />
+        <di:waypoint x="522" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r7s1d6_di" bpmnElement="SubmitBookDetailsForm">
+        <dc:Bounds x="240" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1x44l42_di" bpmnElement="CreateBookPrototype">
+        <dc:Bounds x="380" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0waieml_di" bpmnElement="Event_0waieml">
+        <dc:Bounds x="522" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
