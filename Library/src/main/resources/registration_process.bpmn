@@ -126,14 +126,10 @@
       <bpmn:outgoing>Flow_02jdtag</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_02jdtag" sourceRef="Gateway_1y8olft" targetRef="Event_0kpdc73" />
-    <bpmn:sequenceFlow id="Flow_18mdrno" name="is writer" sourceRef="Gateway_1ss2hsr" targetRef="TaskA">
+    <bpmn:sequenceFlow id="Flow_18mdrno" name="is writer" sourceRef="Gateway_1ss2hsr" targetRef="mandatoryPublicationOfBooks">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType == 'writer'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1ad9b2s" sourceRef="TaskA" targetRef="Gateway_1y8olft" />
-    <bpmn:userTask id="TaskA" name="Task A">
-      <bpmn:incoming>Flow_18mdrno</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ad9b2s</bpmn:outgoing>
-    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1ad9b2s" sourceRef="mandatoryPublicationOfBooks" targetRef="Gateway_1y8olft" />
     <bpmn:sequenceFlow id="Flow_1giej4b" sourceRef="TokenExpiredMail" targetRef="Event_02v26ce" />
     <bpmn:serviceTask id="TokenExpiredMail" name="Token expired mail" camunda:class="com.project.online_library.camundaServices.MailExpirationDelegate">
       <bpmn:incoming>Flow_1y7orh6</bpmn:incoming>
@@ -145,7 +141,7 @@
       <bpmn:outgoing>userTypeBetaReader</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="userTypeReader" name="userTypeReader" sourceRef="ReaderOrBetaReader" targetRef="CreateUser">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType == 'reader'}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType != 'beta-reader'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="userTypeBetaReader" name="userTypeBetaReader" sourceRef="ReaderOrBetaReader" targetRef="DataEntryBeta">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType == 'beta-reader'}</bpmn:conditionExpression>
@@ -161,6 +157,10 @@
       <bpmn:outgoing>Flow_08ersw8</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_08ersw8" sourceRef="DataEntryBeta" targetRef="CreateUser" />
+    <bpmn:callActivity id="mandatoryPublicationOfBooks" name="Mandatory publication of books" calledElement="mandatoryPublicationOfBooks">
+      <bpmn:incoming>Flow_18mdrno</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ad9b2s</bpmn:outgoing>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="registration_process">
@@ -269,9 +269,6 @@
       <bpmndi:BPMNShape id="Gateway_1y8olft_di" bpmnElement="Gateway_1y8olft" isMarkerVisible="true">
         <dc:Bounds x="1315" y="92" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1swnhff_di" bpmnElement="TaskA">
-        <dc:Bounds x="1160" y="190" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sx88q8_di" bpmnElement="TokenExpiredMail">
         <dc:Bounds x="790" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -283,6 +280,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_043wk7d_di" bpmnElement="DataEntryBeta">
         <dc:Bounds x="330" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ho4vez_di" bpmnElement="mandatoryPublicationOfBooks">
+        <dc:Bounds x="1160" y="190" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_13m79ih_di" bpmnElement="Event_1qrfv7c">
         <dc:Bounds x="822" y="139" width="36" height="36" />

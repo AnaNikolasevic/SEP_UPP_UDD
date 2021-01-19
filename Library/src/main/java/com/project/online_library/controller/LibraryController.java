@@ -105,6 +105,31 @@ public class LibraryController {
         return new ResponseEntity<>(dto.get(dto.size()-1).getFieldValue(), HttpStatus.OK);
     }
 	
+	@GetMapping(path = "/uploadForm", produces = "application/json")
+    public @ResponseBody FormFieldsDto getUploadForm() {
+
+		ProcessInstance pi = runtimeService.startProcessInstanceByKey("mandatoryPublicationOfBooks");
+
+		Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
+		TaskFormData tfd = formService.getTaskFormData(task.getId());
+		List<FormField> properties = tfd.getFormFields();
+		for(FormField fp : properties) {
+			System.out.println(fp.getId() + fp.getType());
+		}
+		
+        return new FormFieldsDto(task.getId(), pi.getId(), properties);
+    }
+	
+	@PostMapping(path = "/upload/{taskId}", produces = "application/json")
+    public @ResponseBody ResponseEntity upload(@RequestBody List<FormSubmissionDto> dto, @PathVariable String taskId) {
+		HashMap<String, Object> map = this.mapListToDto(dto);
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		String processInstanceId = task.getProcessInstanceId();
+	    runtimeService.setVariable(processInstanceId, "upload", dto);
+		formService.submitTaskForm(taskId, map);
+        return new ResponseEntity<>(dto.get(dto.size()-1).getFieldValue(), HttpStatus.OK);
+    }
+	
 	private HashMap<String, Object> mapListToDto(List<FormSubmissionDto> list)
 	{
 		HashMap<String, Object> map = new HashMap<String, Object>();
