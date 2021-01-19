@@ -2,12 +2,9 @@ package com.project.online_library.service;
 
 import com.project.online_library.dto.FormSubmissionDto;
 import com.project.online_library.dto.LoginDto;
-import com.project.online_library.model.BetaReader;
-import com.project.online_library.model.Reader;
-import com.project.online_library.model.Users;
-import com.project.online_library.repository.BetaReaderRepository;
-import com.project.online_library.repository.ReaderRepository;
-import com.project.online_library.repository.UserRepository;
+import com.project.online_library.dto.UserDTO;
+import com.project.online_library.model.*;
+import com.project.online_library.repository.*;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -31,6 +28,18 @@ public class UserService implements JavaDelegate {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    EditorRepository editorRepository;
+
+    @Autowired
+    WriterRepository writerRepository;
+
+    @Autowired
+    LectorRepository lectorRepository;
+
+    @Autowired
+    BoardMemberRepository boardMemberRepository;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -58,11 +67,30 @@ public class UserService implements JavaDelegate {
         identityService.saveUser(user);
     }
 
-    public Users login(LoginDto loginDto) {
+    public UserDTO login(LoginDto loginDto) {
 
-        Users user = userRepository.findByUsername(loginDto.getUsername());
-        return user;
+        BetaReader betaReader = betaReaderRepository.findByUsername(loginDto.getUsername());
+        BoardMember boardMember = boardMemberRepository.findByUsername(loginDto.getUsername());
+        Editor editor = editorRepository.findByUsername(loginDto.getUsername());
+        Lector lector = lectorRepository.findByUsername(loginDto.getUsername());
+        Reader reader = readerRepository.findByUsername(loginDto.getUsername());
+        Writer writer = writerRepository.findByUsername(loginDto.getUsername());
+
+        if (betaReader != null) {
+            return new UserDTO(betaReader.getUsername(), betaReader.getPassword(), "betaReader");
+        } else if (boardMember != null) {
+            return new UserDTO(boardMember.getUsername(), boardMember.getPassword(), "boardMember");
+        } else if (editor != null) {
+            return new UserDTO(editor.getUsername(), editor.getPassword(), "editor");
+        } else if (lector != null) {
+            return new UserDTO(lector.getUsername(), lector.getPassword(), "lector");
+        } else if (reader != null) {
+            return new UserDTO(reader.getUsername(), reader.getPassword(), "reader");
+        } else if (writer != null) {
+            return new UserDTO(writer.getUsername(), writer.getPassword(), "writer");
+        } else {
+            return null;
+        }
     }
-
 
 }
