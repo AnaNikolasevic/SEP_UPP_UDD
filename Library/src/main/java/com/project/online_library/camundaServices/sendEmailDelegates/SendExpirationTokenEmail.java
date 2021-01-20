@@ -1,4 +1,4 @@
-package com.project.online_library.camundaServices;
+package com.project.online_library.camundaServices.sendEmailDelegates;
 
 import com.project.online_library.dto.FormSubmissionDto;
 import com.project.online_library.model.Users;
@@ -11,6 +11,7 @@ import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -20,7 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class MailExpirationDelegate implements JavaDelegate {
+public class SendExpirationTokenEmail implements JavaDelegate {
 
     @Autowired
     IdentityService identityService;
@@ -42,14 +43,17 @@ public class MailExpirationDelegate implements JavaDelegate {
 
         List<FormSubmissionDto> registration = (List<FormSubmissionDto>)delegateExecution.getVariable("registration");
         System.out.println(registration);
-        String email = null;
+        String recipient = null;
         for (FormSubmissionDto formField : registration) {
             if(formField.getId().equals("email")) {
-                email = formField.getFieldValue();
+                recipient = formField.getFieldValue();
+                System.out.println(recipient);
             }
         }
-
-        emailService.sendEmail(email);
+        String subject = "Nevalidan token";
+        String body = "Poštovani " +
+                ",\n\n Vaš token je istekao!\n\n";
+        emailService.sendEmail(recipient, subject, body );
     }
 
 }
