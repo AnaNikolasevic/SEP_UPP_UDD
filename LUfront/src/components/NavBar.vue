@@ -38,10 +38,14 @@
           "
         />
       </div>
+      <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
+        <AddBook />
+      </div>
       <v-btn
         text
         color="primary"
         @click="openKP()"
+        v-if="this.$store.state.user.role == 'none'"
       >
         <span>Add payment</span>
         <v-icon right>mdi-plus</v-icon>
@@ -50,6 +54,7 @@
         text
         color="primary"
         @click="openCart()"
+        v-if="this.$store.state.user.role == 'none'"
       >
         <span>Cart</span>
         <v-icon right>mdi-cart</v-icon>
@@ -72,6 +77,19 @@
         <span>Mandatory books</span>
         <v-icon right>mdi-people</v-icon>
       </v-btn>
+      <v-btn
+        text
+        color="primary"
+        v-if="this.$store.state.user.role == 'editor'"
+      >
+        <span @click="openBookPreview()">Book Preview</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
+      <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
+        <span @click="logout()">Logout</span>
+        <v-icon right>mdi-close</v-icon>
+
+      </v-btn>
     </v-toolbar>
   </nav>
 </template>
@@ -79,10 +97,12 @@
 <script>
 import LoginComponent from "@/components/homePage/LoginComponent.vue";
 import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
+import AddBook from "@/components/homePage/WriterComponents/AddBookForm.vue";
 export default {
   components: {
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AddBook,
   },
   data() {
     return {
@@ -102,9 +122,22 @@ export default {
     manageWriters() {
       this.$router.push("/mandatoryBooks");
     },
-    openKP(){
+    openKP() {
       window.open("http://localhost:8083/addPayment/?idLU=" + 1);
-    }
-  }
+    },
+    openBookPreview() {
+      this.$router.push("/bookPreview");
+    },
+    logout() {
+      localStorage.removeItem("user");
+      this.$store.commit("logout");
+      this.$store.commit("deleteAll");
+      this.snackbarSuccess = true;
+      this.snackbarSuccessText = "You are logged out";
+      this.LoginDialog = false;
+      this.$router.push("/");
+      location.reload();
+    },
+  },
 };
 </script>

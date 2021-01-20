@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.IdentityService;
-import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.form.FormField;
@@ -29,9 +28,6 @@ public class LibraryController {
 	
 	@Autowired
 	private RuntimeService runtimeService;
-	
-	@Autowired
-	private RepositoryService repositoryService;
 	
 	@Autowired
 	TaskService taskService;

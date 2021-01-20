@@ -5,16 +5,25 @@ import ActivationLink from '../views/ActivationLink.vue'
 import Cart from '../components/Cart.vue'
 import MandatoryUpload from '../components/MandatoryUpload.vue'
 import MandatoryBooks from '../components/MandatoryBooks.vue'
-
+import BookPreview from "../views/editor/BookPreview.vue";
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'HomePage',
-    component: HomePage
-  },
+const routes = [{
+        path: '/',
+        name: 'HomePage',
+        component: HomePage
+    },
+    {
+        path: "/activationForm/:token",
+        name: "ActivationLink",
+        component: ActivationLink,
+    },
+    {
+        path: '/cart',
+        name: 'Cart',
+        component: Cart
+    },
     {
     path: "/activationForm/:token",
     name: "ActivationLink",
@@ -35,12 +44,18 @@ const routes = [
     name: 'MandatoryBooks',
     component: MandatoryBooks
   },
+                {
+        path: "/bookPreview",
+        name: "BookPreview",
+        component: BookPreview,
+    },
+
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  //base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    //base: process.env.BASE_URL,
+    routes
 })
 
 export default router
