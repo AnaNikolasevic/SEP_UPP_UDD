@@ -4,6 +4,7 @@ import HomePage from '../views/HomePage.vue'
 import ActivationLink from '../views/ActivationLink.vue'
 import Cart from '../components/Cart.vue'
 import MandatoryUpload from '../components/MandatoryUpload.vue'
+import MandatoryBooks from '../components/MandatoryBooks.vue'
 
 
 Vue.use(VueRouter)
@@ -28,6 +29,11 @@ const routes = [
     path: '/mandatoryUpload',
     name: 'MandatoryUpload',
     component: MandatoryUpload
+  },
+  {
+    path: '/mandatoryBooks',
+    name: 'MandatoryBooks',
+    component: MandatoryBooks
   },
 ]
 

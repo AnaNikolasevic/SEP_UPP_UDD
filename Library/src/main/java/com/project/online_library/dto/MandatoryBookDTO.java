@@ -1,7 +1,6 @@
-package com.project.online_library.model;
+package com.project.online_library.dto;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,23 +8,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.project.online_library.model.MandatoryBook;
+import com.project.online_library.model.Writer;
 
-@Entity
-public class MandatoryBook {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="book_id")
+public class MandatoryBookDTO {
+
     private Long id;
 
-    @Column
     private String title;
 
-    @Column
     private String path;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "writer_id", referencedColumnName = "id")
-    private Writer writer;
+    private Long writer_id;
+
+	public MandatoryBookDTO(MandatoryBook mandatoryBook) {
+		super();
+		this.id = mandatoryBook.getId();
+		this.title = mandatoryBook.getTitle();
+		this.path = mandatoryBook.getPath();
+		this.writer_id = mandatoryBook.getWriter().getId();
+	}
 
 	public Long getId() {
 		return id;
@@ -51,15 +53,20 @@ public class MandatoryBook {
 		this.path = path;
 	}
 
-	public Writer getWriter() {
-		return writer;
+	public Long getWriter_id() {
+		return writer_id;
 	}
 
-	public void setWriter(Writer writer) {
-		this.writer = writer;
+	public void setWriter_id(Long writer_id) {
+		this.writer_id = writer_id;
 	}
 
-	
+	public MandatoryBookDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
     
     
 }
