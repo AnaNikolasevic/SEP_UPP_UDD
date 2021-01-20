@@ -116,12 +116,14 @@ public class LibraryController {
         return new FormFieldsDto(task.getId(), pi.getId(), properties);
     }
 	
-	@PostMapping(path = "/upload/{taskId}", produces = "application/json")
-    public @ResponseBody ResponseEntity upload(@RequestBody List<FormSubmissionDto> dto, @PathVariable String taskId) {
+	@PostMapping(path = "/uploadMandatoryBook/{username}/{taskId}", produces = "application/json")
+    public @ResponseBody ResponseEntity upload(@RequestBody List<FormSubmissionDto> dto, @PathVariable String username, @PathVariable String taskId) {
 		HashMap<String, Object> map = this.mapListToDto(dto);
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String processInstanceId = task.getProcessInstanceId();
-	    runtimeService.setVariable(processInstanceId, "upload", dto);
+		FormSubmissionDto formSubmissionDto = new FormSubmissionDto("writerUsername", username);
+		dto.add(formSubmissionDto);
+	    runtimeService.setVariable(processInstanceId, "mandatoryBook", dto);
 		formService.submitTaskForm(taskId, map);
         return new ResponseEntity<>(dto.get(dto.size()-1).getFieldValue(), HttpStatus.OK);
     }
