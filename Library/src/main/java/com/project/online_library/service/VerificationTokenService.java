@@ -11,6 +11,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -61,7 +62,14 @@ public class VerificationTokenService implements JavaDelegate {
                 verificationTokenService.save(saved.get(), token);
 
                 // salanje  verifikacionog mejla
-                emailService.sendEmail(u);
+                String recipient = u.getEmail();
+                String subject = "Potvrda registracije";
+                String body = "Dobrodošli " + u.getFirstName() +
+                        ",\n\n Da biste potvrdili vašu email adresu molimo Vas da pristupite sledećem linku:\n\n" +
+                        "http://localhost:8084/activationForm/" + token +
+                        "\n\n Nalog možete potvrditi u naredna 24h\n\n" +
+                        "\n\nHvala Vam na ukazanom poverenju!\n\n\n\n";
+                emailService.sendEmail(recipient, subject, body);
             }catch (Exception e){
                 e.printStackTrace();
             }

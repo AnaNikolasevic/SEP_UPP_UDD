@@ -24,44 +24,16 @@ public class EmailService {
     @Autowired
     VerificationTokenRepository verificationTokenRepository;
 
+    //genericko slanje email-a
     @Async
-    public void sendEmail(Users user) throws MailException, InterruptedException {
+    public void sendEmail(String recipient, String subject, String body) throws MailException, InterruptedException {
 
-        VerificationToken verificationToken = verificationTokenRepository.findByUser(user);
-
-        if (verificationToken != null){
-            String token = verificationToken.getToken();
-            SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo(user.getEmail());
-            email.setFrom(environment.getProperty("spring.mail.username"));
-            email.setSubject("Potvrda registracije");
-            email.setText("Dobrodošli " + user.getFirstName() +
-                    ",\n\n Da biste potvrdili vašu email adresu molimo Vas da pristupite sledećem linku:\n\n" +
-                    "http://localhost:8084/activationForm/" + token +
-                    "\n\n Nalog možete potvrditi u naredna 24h\n\n" +
-                    "\n\nHvala Vam na ukazanom poverenju!\n\n\n\n" );
-            javaMailSender.send(email);
-        }
-    }
-
-    @Async
-    public void sendEmail(String expiredToken) throws MailException, InterruptedException {
-
-
-            SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo(expiredToken);
-            email.setFrom(environment.getProperty("spring.mail.username"));
-            email.setSubject("Nevalidan token");
-            email.setText("Postovani " +
-                    ",\n\n Vas token je istekao!\n\n");
-            javaMailSender.send(email);
-
-    }
-
-        @Async
-        public void sendEmail(SimpleMailMessage email) throws MailException, InterruptedException {
-
-            javaMailSender.send(email);
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(recipient);
+        email.setFrom(environment.getProperty("spring.mail.username"));
+        email.setSubject(subject);
+        email.setText(body);
+        javaMailSender.send(email);
 
     }
 
