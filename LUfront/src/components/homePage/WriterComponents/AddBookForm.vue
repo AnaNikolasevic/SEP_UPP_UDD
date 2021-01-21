@@ -69,6 +69,7 @@ export default {
           this.$store.commit("addProcessID", response.data.processInstanceId);
           this.taskId = response.data.taskId;
           console.log(this.taskId);
+          console.log(response.data.processInstanceId);
         
         })
         .catch((error) => {

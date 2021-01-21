@@ -53,29 +53,25 @@
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_1bzmebi" sourceRef="SendEmailToEditor" targetRef="ReviewBookPrototype" />
     <bpmn:endEvent id="Event_1dwsfyq">
-      <bpmn:incoming>Flow_0lu27hk</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0mymlzk" sourceRef="ReviewBookPrototype" targetRef="Activity_1a2r7un" />
-    <bpmn:sequenceFlow id="Flow_0lu27hk" sourceRef="Activity_1a2r7un" targetRef="Event_1dwsfyq" />
-    <bpmn:userTask id="Activity_1a2r7un" name="Task Novi">
       <bpmn:incoming>Flow_0mymlzk</bpmn:incoming>
-      <bpmn:outgoing>Flow_0lu27hk</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:endEvent id="Event_0ujcjp4">
-      <bpmn:incoming>Flow_1f3guxg</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1f3guxg" sourceRef="Event_14muf2n" targetRef="Event_0ujcjp4" />
-    <bpmn:intermediateCatchEvent id="Event_14muf2n">
-      <bpmn:outgoing>Flow_1f3guxg</bpmn:outgoing>
-      <bpmn:signalEventDefinition id="SignalEventDefinition_16ikk74" signalRef="Signal_1j6g7px" />
-    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0mymlzk" sourceRef="ReviewBookPrototype" targetRef="Event_1dwsfyq" />
+    <bpmn:endEvent id="Event_0ujcjp4">
+      <bpmn:incoming>Flow_048gqp5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="Event_1d8276x" attachedToRef="ReviewBookPrototype">
+      <bpmn:outgoing>Flow_048gqp5</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_1r0mm3n" signalRef="Signal_1lf17mv" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_048gqp5" sourceRef="Event_1d8276x" targetRef="Event_0ujcjp4" />
   </bpmn:process>
   <bpmn:signal id="Signal_1j6g7px" name="PublishmentCanceled" />
+  <bpmn:signal id="Signal_1lf17mv" name="BookDenied" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bookPublishing">
       <bpmndi:BPMNEdge id="Flow_0mymlzk_di" bpmnElement="Flow_0mymlzk">
         <di:waypoint x="890" y="117" />
-        <di:waypoint x="940" y="117" />
+        <di:waypoint x="1102" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bzmebi_di" bpmnElement="Flow_1bzmebi">
         <di:waypoint x="740" y="117" />
@@ -97,13 +93,9 @@
         <di:waypoint x="215" y="117" />
         <di:waypoint x="240" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lu27hk_di" bpmnElement="Flow_0lu27hk">
-        <di:waypoint x="1040" y="117" />
-        <di:waypoint x="1102" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1f3guxg_di" bpmnElement="Flow_1f3guxg">
-        <di:waypoint x="870" y="178" />
-        <di:waypoint x="870" y="292" />
+      <bpmndi:BPMNEdge id="Flow_048gqp5_di" bpmnElement="Flow_048gqp5">
+        <di:waypoint x="870" y="175" />
+        <di:waypoint x="870" y="262" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
@@ -114,7 +106,6 @@
       <bpmndi:BPMNShape id="Activity_1x44l42_di" bpmnElement="CreateBookPrototype">
         <dc:Bounds x="380" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-
       <bpmndi:BPMNShape id="Activity_0asak2w_di" bpmnElement="AutoGenerateEditor">
         <dc:Bounds x="510" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -124,20 +115,14 @@
       <bpmndi:BPMNShape id="Activity_184a6lb_di" bpmnElement="ReviewBookPrototype">
         <dc:Bounds x="790" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1hd905l_di" bpmnElement="Event_14muf2n">
-        <dc:Bounds x="852" y="142" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="886" y="226" width="88" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1j7tj3y_di" bpmnElement="Activity_1a2r7un">
-        <dc:Bounds x="940" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1dwsfyq_di" bpmnElement="Event_1dwsfyq">
         <dc:Bounds x="1102" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ujcjp4_di" bpmnElement="Event_0ujcjp4">
-        <dc:Bounds x="852" y="292" width="36" height="36" />
+        <dc:Bounds x="852" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0awfh9o_di" bpmnElement="Event_1d8276x">
+        <dc:Bounds x="852" y="139" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
