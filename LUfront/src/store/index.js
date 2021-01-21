@@ -13,6 +13,7 @@ export default new Vuex.Store({
             role: "none"
         }
     },
+
     mutations: {
         addProcessID(state, procesID) {
             state.processID = procesID;
@@ -25,7 +26,6 @@ export default new Vuex.Store({
         logout(state) {
             state.user = {}
         },
-
     },
     actions: {},
     modules: {}

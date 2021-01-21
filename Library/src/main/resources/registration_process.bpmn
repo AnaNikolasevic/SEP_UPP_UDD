@@ -131,7 +131,7 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1ad9b2s" sourceRef="mandatoryPublicationOfBooks" targetRef="Gateway_1y8olft" />
     <bpmn:sequenceFlow id="Flow_1giej4b" sourceRef="TokenExpiredMail" targetRef="Event_02v26ce" />
-    <bpmn:serviceTask id="TokenExpiredMail" name="Token expired mail" camunda:class="com.project.online_library.camundaServices.MailExpirationDelegate">
+    <bpmn:serviceTask id="TokenExpiredMail" name="Token expired mail" camunda:class="com.project.online_library.camundaServices.sendEmailDelegates.SendExpirationTokenEmail">
       <bpmn:incoming>Flow_1y7orh6</bpmn:incoming>
       <bpmn:outgoing>Flow_1giej4b</bpmn:outgoing>
     </bpmn:serviceTask>

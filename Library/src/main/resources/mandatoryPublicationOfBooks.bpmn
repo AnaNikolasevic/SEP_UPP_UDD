@@ -24,9 +24,14 @@
       <bpmn:outgoing>Flow_08b9j8w</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1rqecxx">
-      <bpmn:incoming>Flow_08b9j8w</bpmn:incoming>
+      <bpmn:incoming>Flow_02wt1lv</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_08b9j8w" sourceRef="uploadBook" targetRef="Event_1rqecxx" />
+    <bpmn:sequenceFlow id="Flow_08b9j8w" sourceRef="uploadBook" targetRef="saveMandatoryBook" />
+    <bpmn:sequenceFlow id="Flow_02wt1lv" sourceRef="saveMandatoryBook" targetRef="Event_1rqecxx" />
+    <bpmn:serviceTask id="saveMandatoryBook" name="Save Mandatory Book" camunda:class="com.project.online_library.service.MandatoryBookService">
+      <bpmn:incoming>Flow_08b9j8w</bpmn:incoming>
+      <bpmn:outgoing>Flow_02wt1lv</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="mandatoryPublicationOfBooks">
@@ -36,7 +41,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08b9j8w_di" bpmnElement="Flow_08b9j8w">
         <di:waypoint x="370" y="97" />
-        <di:waypoint x="432" y="97" />
+        <di:waypoint x="430" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02wt1lv_di" bpmnElement="Flow_02wt1lv">
+        <di:waypoint x="530" y="97" />
+        <di:waypoint x="602" y="97" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="79" width="36" height="36" />
@@ -45,7 +54,10 @@
         <dc:Bounds x="270" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1rqecxx_di" bpmnElement="Event_1rqecxx">
-        <dc:Bounds x="432" y="79" width="36" height="36" />
+        <dc:Bounds x="602" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00iklh0_di" bpmnElement="saveMandatoryBook">
+        <dc:Bounds x="430" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

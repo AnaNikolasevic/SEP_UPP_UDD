@@ -62,6 +62,24 @@
       <v-btn
         text
         color="primary"
+        @click="mandatoryUpload()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span>Mandatory upload</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="manageWriters()"
+        v-if="this.$store.state.user.role=='boardMember'"
+      >
+        <span>Mandatory books</span>
+        <v-icon right>mdi-people</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         v-if="this.$store.state.user.role == 'editor'"
       >
         <span @click="openBookPreview()">Book Preview</span>
@@ -70,6 +88,7 @@
       <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
         <span @click="logout()">Logout</span>
         <v-icon right>mdi-close</v-icon>
+
       </v-btn>
     </v-toolbar>
   </nav>
@@ -96,6 +115,12 @@ export default {
   methods: {
     openCart() {
       this.$router.push("/cart");
+    },
+    mandatoryUpload() {
+      this.$router.push("/mandatoryUpload");
+    },
+    manageWriters() {
+      this.$router.push("/mandatoryBooks");
     },
     openKP() {
       window.open("http://localhost:8083/addPayment/?idLU=" + 1);
