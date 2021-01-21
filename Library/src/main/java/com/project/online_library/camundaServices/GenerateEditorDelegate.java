@@ -40,7 +40,7 @@ public class GenerateEditorDelegate implements JavaDelegate {
         bookPrototype.setEditor(editor);
         bookPrototypeRepository.save(bookPrototype);
         //setovanje editor variable u provesu
-        delegateExecution.setVariable("editorId", editor.getId());
+        delegateExecution.setVariable("editorId", Long.toString(editor.getId()));
 
     }
 
