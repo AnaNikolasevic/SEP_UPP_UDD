@@ -19,8 +19,8 @@ public class SendEmailToEditor implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        Long editorId = (Long) delegateExecution.getVariable("editorId");
-        Editor editor = editorRepository.getOne(editorId);
+        String editorId = (String) delegateExecution.getVariable("editorId");
+        Editor editor = editorRepository.getOne(Long.parseLong(editorId));
         String recipient = editor.getEmail();
         //String recipient = "masa.matovic97@gmail.com";
         String subject = "Nova prijava knjige";

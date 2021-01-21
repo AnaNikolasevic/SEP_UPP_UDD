@@ -23,28 +23,18 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1g4bgwb" sourceRef="AcceptBookReveiwForm" targetRef="Gateway_0t0pqzg" />
     <bpmn:endEvent id="Event_0h6e66l">
-      <bpmn:incoming>Flow_04lk8gf</bpmn:incoming>
+      <bpmn:incoming>interestedInBook</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="interestedInBook" name="interestedInBook" sourceRef="Gateway_0t0pqzg" targetRef="istina">
+    <bpmn:sequenceFlow id="interestedInBook" name="interestedInBook" sourceRef="Gateway_0t0pqzg" targetRef="Event_0h6e66l">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isInterestedInBook == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="bookDenied" name="bookDenied" sourceRef="Gateway_0t0pqzg" targetRef="laz">
+    <bpmn:sequenceFlow id="bookDenied" name="bookDenied" sourceRef="Gateway_0t0pqzg" targetRef="Event_1c0jove">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isInterestedInBook == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1c0jove">
-      <bpmn:incoming>Flow_0d3j41w</bpmn:incoming>
+      <bpmn:incoming>bookDenied</bpmn:incoming>
       <bpmn:signalEventDefinition id="SignalEventDefinition_0vvuqws" signalRef="Signal_11hbasg" />
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_04lk8gf" sourceRef="istina" targetRef="Event_0h6e66l" />
-    <bpmn:sequenceFlow id="Flow_0d3j41w" sourceRef="laz" targetRef="Event_1c0jove" />
-    <bpmn:userTask id="istina" name="istina">
-      <bpmn:incoming>interestedInBook</bpmn:incoming>
-      <bpmn:outgoing>Flow_04lk8gf</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="laz" name="laz">
-      <bpmn:incoming>bookDenied</bpmn:incoming>
-      <bpmn:outgoing>Flow_0d3j41w</bpmn:outgoing>
-    </bpmn:userTask>
   </bpmn:process>
   <bpmn:signal id="Signal_11hbasg" name="PublishmentCanceled" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -59,26 +49,18 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0l16sdq_di" bpmnElement="interestedInBook">
         <di:waypoint x="515" y="97" />
-        <di:waypoint x="700" y="97" />
+        <di:waypoint x="712" y="97" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="579" y="79" width="84" height="14" />
+          <dc:Bounds x="533" y="79" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08g503h_di" bpmnElement="bookDenied">
         <di:waypoint x="490" y="122" />
         <di:waypoint x="490" y="210" />
-        <di:waypoint x="670" y="210" />
+        <di:waypoint x="692" y="210" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="545" y="193" width="59" height="14" />
+          <dc:Bounds x="530" y="193" width="59" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_04lk8gf_di" bpmnElement="Flow_04lk8gf">
-        <di:waypoint x="800" y="97" />
-        <di:waypoint x="902" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0d3j41w_di" bpmnElement="Flow_0d3j41w">
-        <di:waypoint x="770" y="210" />
-        <di:waypoint x="912" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="79" width="36" height="36" />
@@ -92,17 +74,11 @@
       <bpmndi:BPMNShape id="Gateway_0t0pqzg_di" bpmnElement="Gateway_0t0pqzg" isMarkerVisible="true">
         <dc:Bounds x="465" y="72" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1kex2ho_di" bpmnElement="Event_1c0jove">
-        <dc:Bounds x="912" y="192" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0h6e66l_di" bpmnElement="Event_0h6e66l">
-        <dc:Bounds x="902" y="79" width="36" height="36" />
+        <dc:Bounds x="712" y="79" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1gzz16t_di" bpmnElement="laz">
-        <dc:Bounds x="670" y="170" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01hb09g_di" bpmnElement="istina">
-        <dc:Bounds x="700" y="57" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_1kex2ho_di" bpmnElement="Event_1c0jove">
+        <dc:Bounds x="692" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
