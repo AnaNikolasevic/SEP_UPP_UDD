@@ -15,10 +15,10 @@ public class SendMailDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        Long editorId = (Long) delegateExecution.getVariable("editorId");
-        Editor editor = editorRepository.getOne(editorId);
-        System.out.println(editor.getId());
-        System.out.println(editor.getEmail());
+        Object editor =  delegateExecution.getVariable("editorId");
+        //Editor editor2 = (Editor) editor;
+        System.out.println(editor);
+      //  System.out.println(editor2.getEmail());
 
     }
 }

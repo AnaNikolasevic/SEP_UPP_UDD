@@ -1,42 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0dvybx8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
-  <bpmn:process id="ReviewBookPrototype" name="Review Book Prototype" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_12nx78w</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:userTask id="AcceptBookReveiwForm" name="Accept Book Reveiw Form" camunda:assignee="$xxx">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0dvybx8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="reviewBookPrototype" name="Review Book Prototype" isExecutable="true">
+    <bpmn:userTask id="AcceptBookReveiwForm" name="Accept Book Reveiw Form" camunda:assignee="${editorId}">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="isInterestedInBook" label="is Interested In Book" type="boolean" />
+          <camunda:formField id="title" label="Title" type="string" defaultValue="${title}" />
+          <camunda:formField id="synopsys" label="Synopsis" type="string" defaultValue="${synopsis}" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_12nx78w</bpmn:incoming>
-      <bpmn:outgoing>Flow_121zldx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1g4bgwb</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_12nx78w</bpmn:outgoing>
+    </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_12nx78w" sourceRef="StartEvent_1" targetRef="AcceptBookReveiwForm" />
-    <bpmn:endEvent id="Event_1rn3xur">
-      <bpmn:incoming>Flow_121zldx</bpmn:incoming>
+    <bpmn:exclusiveGateway id="Gateway_0t0pqzg">
+      <bpmn:incoming>Flow_1g4bgwb</bpmn:incoming>
+      <bpmn:outgoing>interestedInBook</bpmn:outgoing>
+      <bpmn:outgoing>bookDenied</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1g4bgwb" sourceRef="AcceptBookReveiwForm" targetRef="Gateway_0t0pqzg" />
+    <bpmn:endEvent id="Event_0h6e66l">
+      <bpmn:incoming>Flow_04lk8gf</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_121zldx" sourceRef="AcceptBookReveiwForm" targetRef="Event_1rn3xur" />
+    <bpmn:sequenceFlow id="interestedInBook" name="interestedInBook" sourceRef="Gateway_0t0pqzg" targetRef="istina">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isInterestedInBook == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="bookDenied" name="bookDenied" sourceRef="Gateway_0t0pqzg" targetRef="laz">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isInterestedInBook == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1c0jove">
+      <bpmn:incoming>Flow_0d3j41w</bpmn:incoming>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_0vvuqws" signalRef="Signal_11hbasg" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_04lk8gf" sourceRef="istina" targetRef="Event_0h6e66l" />
+    <bpmn:sequenceFlow id="Flow_0d3j41w" sourceRef="laz" targetRef="Event_1c0jove" />
+    <bpmn:userTask id="istina" name="istina">
+      <bpmn:incoming>interestedInBook</bpmn:incoming>
+      <bpmn:outgoing>Flow_04lk8gf</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="laz" name="laz">
+      <bpmn:incoming>bookDenied</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d3j41w</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
+  <bpmn:signal id="Signal_11hbasg" name="PublishmentCanceled" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ReviewBookPrototype">
-      <bpmndi:BPMNEdge id="Flow_121zldx_di" bpmnElement="Flow_121zldx">
-        <di:waypoint x="370" y="97" />
-        <di:waypoint x="432" y="97" />
-      </bpmndi:BPMNEdge>
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="reviewBookPrototype">
       <bpmndi:BPMNEdge id="Flow_12nx78w_di" bpmnElement="Flow_12nx78w">
         <di:waypoint x="215" y="97" />
-        <di:waypoint x="270" y="97" />
+        <di:waypoint x="290" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1g4bgwb_di" bpmnElement="Flow_1g4bgwb">
+        <di:waypoint x="390" y="97" />
+        <di:waypoint x="465" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l16sdq_di" bpmnElement="interestedInBook">
+        <di:waypoint x="515" y="97" />
+        <di:waypoint x="700" y="97" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="579" y="79" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08g503h_di" bpmnElement="bookDenied">
+        <di:waypoint x="490" y="122" />
+        <di:waypoint x="490" y="210" />
+        <di:waypoint x="670" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="545" y="193" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04lk8gf_di" bpmnElement="Flow_04lk8gf">
+        <di:waypoint x="800" y="97" />
+        <di:waypoint x="902" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d3j41w_di" bpmnElement="Flow_0d3j41w">
+        <di:waypoint x="770" y="210" />
+        <di:waypoint x="912" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="191" y="122" width="13" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0yv9iu8_di" bpmnElement="AcceptBookReveiwForm">
-        <dc:Bounds x="270" y="57" width="100" height="80" />
+        <dc:Bounds x="290" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1rn3xur_di" bpmnElement="Event_1rn3xur">
-        <dc:Bounds x="432" y="79" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_0t0pqzg_di" bpmnElement="Gateway_0t0pqzg" isMarkerVisible="true">
+        <dc:Bounds x="465" y="72" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kex2ho_di" bpmnElement="Event_1c0jove">
+        <dc:Bounds x="912" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0h6e66l_di" bpmnElement="Event_0h6e66l">
+        <dc:Bounds x="902" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gzz16t_di" bpmnElement="laz">
+        <dc:Bounds x="670" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01hb09g_di" bpmnElement="istina">
+        <dc:Bounds x="700" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -9,7 +9,7 @@
       <span>{{ snackbarDangerText }}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
-    <v-container class="mt-12 pt-2">
+    <v-container>
       <v-layout row wrap>
         <v-flex
           xs12
@@ -17,20 +17,20 @@
           md4
           lg10
           ml-12
-          v-for="bookPreview in bookPreviews"
-          :key="bookPreview.id - 300"
+          v-for="(formFieldsDTO, index) in bookPreviews"
+          :key="index - 100"
         >
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="detailsBorderColor">
               <v-card-title></v-card-title>
               <v-card-text>
-                <div class="primary--text font-weight-bold headline">
-                  {{ bookPreview.title }}
+                <div class="font-weight-bold headline">
+                  <DefaultFormValues
+                    @accepted="accept"
+                    @denied="deny"
+                    v-bind:formFieldsDTO="formFieldsDTO"
+                  ></DefaultFormValues>
                 </div>
-                <div class="mt-2 font-italic">
-                  genre: {{ bookPreview.genre }}
-                </div>
-                <div class="mt-2">{{ bookPreview.synopsis }}</div>
               </v-card-text>
             </div>
           </v-card>
@@ -42,7 +42,11 @@
 
 <script>
 import axios from "axios";
+import DefaultFormValues from "@/components/editor/DefaultFormValues.vue";
 export default {
+  components: {
+    DefaultFormValues,
+  },
   data() {
     return {
       snackbarSuccess: false,
@@ -59,13 +63,60 @@ export default {
           "http://localhost:8080/bookPrototype/editor/" +
             this.$store.state.user.username
         )
-        .then((bookPreviews) => {
-          this.bookPreviews = bookPreviews.data;
-          console.log(this.bookPreviews.length());
+        .then((response) => {
+          this.bookPreviews = response.data;
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    accept(FormFieldsDTO) {
+      let i = 0;
+      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
+        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
+          FormFieldsDTO.formFields[i].value = true;
+          let formSubmissionDto = new Array();
+          formSubmissionDto.push({
+            id: FormFieldsDTO.formFields[i].id,
+            fieldValue: FormFieldsDTO.formFields[i].value,
+          });
+          this.submitForm(formSubmissionDto, FormFieldsDTO);
+        }
+      }
+    },
+    deny(FormFieldsDTO) {
+      let i = 0;
+      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
+        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
+          FormFieldsDTO.formFields[i].value = false;
+          let formSubmissionDto = new Array();
+          formSubmissionDto.push({
+            id: FormFieldsDTO.formFields[i].id,
+            fieldValue: FormFieldsDTO.formFields[i].value,
+          });
+          this.submitForm(formSubmissionDto, FormFieldsDTO);
+        }
+      }
+    },
+    submitForm(formSubmissionDto, FormFieldsDTO) {
+      axios
+        .post(
+          "http://localhost:8080/subminForm/" +
+            FormFieldsDTO.taskId +
+            "/" +
+            "form",
+          formSubmissionDto
+        )
+        .then((response) => {
+          this.close();
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      this.$router.go(this.$router.currentRoute);
     },
   },
 
