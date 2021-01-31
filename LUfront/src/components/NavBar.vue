@@ -85,6 +85,13 @@
         <span @click="openBookPreview()">Book Preview</span>
         <v-icon right>mdi-book</v-icon>
       </v-btn>
+      <v-btn
+        text
+        color="primary"
+        v-if="this.$store.state.user.role == 'editor'"
+      >
+        <span @click="openBookPlagiarism()">Check Book Plagiarsim</span>
+      </v-btn>
       <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
         <span @click="logout()">Logout</span>
         <v-icon right>mdi-close</v-icon>
@@ -127,6 +134,9 @@ export default {
     },
     openBookPreview() {
       this.$router.push("/bookPreview");
+    },
+    openBookPlagiarism(){
+       this.$router.push("/bookPlagiarism");
     },
     logout() {
       localStorage.removeItem("user");

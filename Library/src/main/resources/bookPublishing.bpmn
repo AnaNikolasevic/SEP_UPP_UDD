@@ -53,9 +53,9 @@
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_1bzmebi" sourceRef="SendEmailToEditor" targetRef="ReviewBookPrototype" />
     <bpmn:endEvent id="Event_1dwsfyq">
-      <bpmn:incoming>Flow_0mymlzk</bpmn:incoming>
+      <bpmn:incoming>Flow_10csp8l</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0mymlzk" sourceRef="ReviewBookPrototype" targetRef="Event_1dwsfyq" />
+    <bpmn:sequenceFlow id="Flow_0mymlzk" sourceRef="ReviewBookPrototype" targetRef="CheckPlagiarism" />
     <bpmn:endEvent id="Event_0ujcjp4">
       <bpmn:incoming>Flow_048gqp5</bpmn:incoming>
     </bpmn:endEvent>
@@ -64,14 +64,26 @@
       <bpmn:signalEventDefinition id="SignalEventDefinition_1r0mm3n" signalRef="Signal_1lf17mv" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_048gqp5" sourceRef="Event_1d8276x" targetRef="Event_0ujcjp4" />
+    <bpmn:sequenceFlow id="Flow_10csp8l" sourceRef="CheckPlagiarism" targetRef="Event_1dwsfyq" />
+    <bpmn:callActivity id="CheckPlagiarism" name="Check Plagiarism" calledElement="Plagiarism">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mymlzk</bpmn:incoming>
+      <bpmn:outgoing>Flow_10csp8l</bpmn:outgoing>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmn:signal id="Signal_1j6g7px" name="PublishmentCanceled" />
   <bpmn:signal id="Signal_1lf17mv" name="BookDenied" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bookPublishing">
+      <bpmndi:BPMNEdge id="Flow_048gqp5_di" bpmnElement="Flow_048gqp5">
+        <di:waypoint x="870" y="175" />
+        <di:waypoint x="870" y="262" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mymlzk_di" bpmnElement="Flow_0mymlzk">
         <di:waypoint x="890" y="117" />
-        <di:waypoint x="1102" y="117" />
+        <di:waypoint x="1030" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bzmebi_di" bpmnElement="Flow_1bzmebi">
         <di:waypoint x="740" y="117" />
@@ -93,9 +105,9 @@
         <di:waypoint x="215" y="117" />
         <di:waypoint x="240" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_048gqp5_di" bpmnElement="Flow_048gqp5">
-        <di:waypoint x="870" y="175" />
-        <di:waypoint x="870" y="262" />
+      <bpmndi:BPMNEdge id="Flow_10csp8l_di" bpmnElement="Flow_10csp8l">
+        <di:waypoint x="1130" y="117" />
+        <di:waypoint x="1282" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
@@ -115,11 +127,14 @@
       <bpmndi:BPMNShape id="Activity_184a6lb_di" bpmnElement="ReviewBookPrototype">
         <dc:Bounds x="790" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1dwsfyq_di" bpmnElement="Event_1dwsfyq">
-        <dc:Bounds x="1102" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ujcjp4_di" bpmnElement="Event_0ujcjp4">
         <dc:Bounds x="852" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dwsfyq_di" bpmnElement="Event_1dwsfyq">
+        <dc:Bounds x="1282" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0p9p1i0_di" bpmnElement="CheckPlagiarism">
+        <dc:Bounds x="1030" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0awfh9o_di" bpmnElement="Event_1d8276x">
         <dc:Bounds x="852" y="139" width="36" height="36" />

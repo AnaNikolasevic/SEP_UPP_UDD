@@ -61,63 +61,17 @@ export default {
       axios
         .get(
           "http://localhost:8080/bookPrototype/editor/" +
-            this.$store.state.user.username + "/" + "AcceptBookReveiwForm"
+            this.$store.state.user.username + "/" +  "CheckBookForPlagiarism"
         )
         .then((response) => {
           this.bookPreviews = response.data;
+          console.log("Usaooo u responseee")
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
-    },
-    accept(FormFieldsDTO) {
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = true;
-          let formSubmissionDto = new Array();
-          formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-        }
-      }
-    },
-    deny(FormFieldsDTO) {
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = false;
-          let formSubmissionDto = new Array();
-          formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-        }
-      }
-    },
-    submitForm(formSubmissionDto, FormFieldsDTO) {
-      axios
-        .post(
-          "http://localhost:8080/subminForm/" +
-            FormFieldsDTO.taskId + 
-            "/" +
-            "form",
-          formSubmissionDto
-        )
-        .then((response) => {
-          this.close();
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      this.$router.go(this.$router.currentRoute);
-    },
+    }
   },
 
   mounted() {
