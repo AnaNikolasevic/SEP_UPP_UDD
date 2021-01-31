@@ -78,26 +78,28 @@ export default {
     },
     add(){
         if (this.$refs.form.validate()) {
-        let formSubmissionDto = new Array();
-        this.formFields.forEach((formField) => {
-          formSubmissionDto.push({
-            id: formField.id,
-            fieldValue: formField.fieldValue,
+          let formSubmissionDto = new Array();
+          this.formFields.forEach((formField) => {
+            formSubmissionDto.push({
+              id: formField.id,
+              fieldValue: formField.fieldValue,
+            });
           });
-        });
-        console.log(formSubmissionDto);
-          Axios.post(
-          "http://localhost:8080/subminForm/" + this.taskId + '/' + 'form',
-          formSubmissionDto
-        )
-          .then((response) => {
-            this.close();
-            console.log(response);
-            
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          var writer = { id: 'writer', fieldValue: this.$store.state.user.username }
+          formSubmissionDto.push(writer)
+          console.log(formSubmissionDto);
+            Axios.post(
+            "http://localhost:8080/subminForm/" + this.taskId + '/' + 'form',
+            formSubmissionDto
+          )
+            .then((response) => {
+              this.close();
+              console.log(response);
+              
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         
       } else {
         console.log("nije validno");

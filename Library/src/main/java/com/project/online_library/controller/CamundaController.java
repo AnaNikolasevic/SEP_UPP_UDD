@@ -36,7 +36,6 @@ public class CamundaController {
     FormFieldsDto get(@PathVariable String processId) {
 
         ProcessInstance pi = runtimeService.startProcessInstanceByKey(processId);
-
         Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
         TaskFormData tfd = formService.getTaskFormData(task.getId());
         List<FormField> properties = tfd.getFormFields();
