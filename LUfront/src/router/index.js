@@ -6,6 +6,7 @@ import Cart from '../components/Cart.vue'
 import MandatoryUpload from '../components/MandatoryUpload.vue'
 import MandatoryBooks from '../components/MandatoryBooks.vue'
 import BookPreview from "../views/editor/BookPreview.vue";
+import BookPlagiarism from "../views/editor/BookPlagiarism.vue"
 
 Vue.use(VueRouter)
 
@@ -44,11 +45,16 @@ const routes = [{
     name: 'MandatoryBooks',
     component: MandatoryBooks
   },
-                {
-        path: "/bookPreview",
-        name: "BookPreview",
-        component: BookPreview,
-    },
+  {
+    path: "/bookPreview",
+    name: "BookPreview",
+    component: BookPreview,
+  },
+  {
+    path: "/bookPlagiarism",
+    name: "BookPlagiarism",
+    component: BookPlagiarism,
+  },
 
 ]
 

@@ -50,8 +50,8 @@ public class BookPrototypeController {
     @Autowired
     FormService formService;
 
-    @GetMapping("/editor/{username}")
-    public ResponseEntity<List<FormFieldsDto>> getAllEditorsBookPrototypes(@PathVariable String username) {
+    @GetMapping("/editor/{username}/{taskKey}")
+    public ResponseEntity<List<FormFieldsDto>> getAllEditorsBookPrototypes(@PathVariable String username, @PathVariable String taskKey) {
        // return new ResponseEntity<List<BookPrototypeDTO>>(bookPrototypeService.getAllEditorsBookPrototypes(username), HttpStatus.OK);
 
         Editor editor = editorRepository.findByUsername(username);
@@ -61,17 +61,19 @@ public class BookPrototypeController {
         List<FormFieldsDto> dtos = new ArrayList<FormFieldsDto>();
 
         for (Task task : tasks) {
-
-            String processInstanceId = task.getProcessInstanceId();
-            TaskFormData tfd = formService.getTaskFormData(task.getId());
-            List<FormField> properties = tfd.getFormFields();
-            FormFieldsDto formFieldsDto = new FormFieldsDto(task.getId(), processInstanceId, properties);
-            dtos.add(formFieldsDto);
-            System.out.println(formFieldsDto.getFormFields());
+            String s = task.getTaskDefinitionKey();
+            if (s.equals(taskKey)) {
+                System.out.println("TAAAASKKK KEEY:" + taskKey);
+                String processInstanceId = task.getProcessInstanceId();
+                TaskFormData tfd = formService.getTaskFormData(task.getId());
+                List<FormField> properties = tfd.getFormFields();
+                FormFieldsDto formFieldsDto = new FormFieldsDto(task.getId(), processInstanceId, properties);
+                dtos.add(formFieldsDto);
+                System.out.println(formFieldsDto.getFormFields());
+            }
 
         }
 
          return new ResponseEntity<List<FormFieldsDto>>(dtos, HttpStatus.OK);
-
     }
 }

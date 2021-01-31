@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1aixsvr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="Plagiarism" name="Plagiarism" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0e0liuh</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="CheckBookForPlagiarism" name="Check Book For Plagiarism" camunda:assignee="${editorId}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="isPlagiarism" label="Plagiarism" type="boolean" />
+          <camunda:formField id="title" label="Title" type="string" defaultValue="${title}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0e0liuh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ngjoyh</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0e0liuh" sourceRef="StartEvent_1" targetRef="CheckBookForPlagiarism" />
+    <bpmn:endEvent id="Event_1jcn1pm">
+      <bpmn:incoming>Flow_0ngjoyh</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0ngjoyh" sourceRef="CheckBookForPlagiarism" targetRef="Event_1jcn1pm" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Plagiarism">
+      <bpmndi:BPMNEdge id="Flow_0e0liuh_di" bpmnElement="Flow_0e0liuh">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="250" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ngjoyh_di" bpmnElement="Flow_0ngjoyh">
+        <di:waypoint x="350" y="97" />
+        <di:waypoint x="512" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1is9at8_di" bpmnElement="CheckBookForPlagiarism">
+        <dc:Bounds x="250" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jcn1pm_di" bpmnElement="Event_1jcn1pm">
+        <dc:Bounds x="512" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

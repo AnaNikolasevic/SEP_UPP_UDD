@@ -58,7 +58,7 @@ export default {
   }),
   methods: {
     close() {
-      this.RegisterDialog = false;
+      this.AddBookDialog = false;
       this.$refs.form.reset();
     },
     loadBookForm() {
