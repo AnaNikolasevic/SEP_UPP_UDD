@@ -60,8 +60,10 @@ export default {
     getBookPreviews() {
       axios
         .get(
-          "http://localhost:8080/bookPrototype/editor/" +
-            this.$store.state.user.username + "/" + "AcceptBookReveiwForm"
+          "http://localhost:8080/form/" +
+            this.$store.state.user.username +
+            "/" +
+            "AcceptBookReveiwForm"
         )
         .then((response) => {
           this.bookPreviews = response.data;
@@ -103,7 +105,7 @@ export default {
       axios
         .post(
           "http://localhost:8080/subminForm/" +
-            FormFieldsDTO.taskId + 
+            FormFieldsDTO.taskId +
             "/" +
             "form",
           formSubmissionDto

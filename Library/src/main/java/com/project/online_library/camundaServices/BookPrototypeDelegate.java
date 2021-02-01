@@ -49,5 +49,6 @@ public class BookPrototypeDelegate implements JavaDelegate {
         bookPrototype.setTitle(form.get(0).getFieldValue());
         bookPrototypeRepository.save(bookPrototype);
         delegateExecution.setVariable("writer", writer.getUsername());
+
     }
 }
