@@ -149,7 +149,7 @@
     <bpmn:userTask id="DataEntryBeta" name="Data Entry Beta">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="genreBeta" label="Genre Beta" type="enum" />
+          <camunda:formField id="genreBeta" label="Genre Beta" type="multiEnum_genres" />
         </camunda:formData>
         <camunda:taskListener delegateExpression="${genreListener}" event="create" />
       </bpmn:extensionElements>

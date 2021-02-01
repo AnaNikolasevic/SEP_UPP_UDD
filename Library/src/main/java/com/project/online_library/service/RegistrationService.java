@@ -72,33 +72,31 @@ public class RegistrationService implements JavaDelegate {
     }
 
     public void saveBetaReader(List<FormSubmissionDto> registration){
-    	List<Genre> genreList = fillGenreList(registration);
-    	List<Genre> genreBetaList = new ArrayList<Genre>();
-    	genreBetaList.add(genreRepository.findByName(registration.get(9).getFieldValue().toString()));
+    	List<Genre> genreList = fillGenreList(registration.get(7).getFieldValue());
+    	List<Genre> genreBetaList = fillGenreList(registration.get(9).getFieldValue());
         BetaReader betaReader = new BetaReader(registration.get(0).getFieldValue().toString(), registration.get(1).getFieldValue().toString(), registration.get(2).getFieldValue().toString(), registration.get(6).getFieldValue().toString(), registration.get(5).getFieldValue().toString(), registration.get(3).getFieldValue().toString(), registration.get(4).getFieldValue().toString(), false, genreList, genreBetaList);
         betaReaderRepository.save(betaReader);
     }
 
     public void saveReader(List<FormSubmissionDto> registration){
-    	List<Genre> genreList = fillGenreList(registration);
+    	List<Genre> genreList = fillGenreList(registration.get(7).getFieldValue());
         Reader reader = new Reader(registration.get(0).getFieldValue().toString(), registration.get(1).getFieldValue().toString(), registration.get(2).getFieldValue().toString(), registration.get(6).getFieldValue().toString(), registration.get(5).getFieldValue().toString(), registration.get(3).getFieldValue().toString(), registration.get(4).getFieldValue().toString(), false, genreList);
         readerRepository.save(reader);
 
     }
 
     public void saveWriter(List<FormSubmissionDto> registration){
-
-        Writer writer = new Writer(registration.get(0).getFieldValue().toString(), registration.get(1).getFieldValue().toString(), registration.get(2).getFieldValue().toString(), registration.get(6).getFieldValue().toString(), registration.get(5).getFieldValue().toString(), registration.get(3).getFieldValue().toString(), registration.get(4).getFieldValue().toString(), false);
+    	List<Genre> genreList = fillGenreList(registration.get(7).getFieldValue());
+        Writer writer = new Writer(registration.get(0).getFieldValue().toString(), registration.get(1).getFieldValue().toString(), registration.get(2).getFieldValue().toString(), registration.get(6).getFieldValue().toString(), registration.get(5).getFieldValue().toString(), registration.get(3).getFieldValue().toString(), registration.get(4).getFieldValue().toString(), false, genreList);
         writerRepository.save(writer);
     }
 
-    public List<Genre> fillGenreList(List<FormSubmissionDto> registration){
-    	Object obj = registration.get(7).getFieldValue();
+    public List<Genre> fillGenreList(Object genreObject){
     	List<?> list = new ArrayList<>();
-        if (obj.getClass().isArray()) {
-            list = Arrays.asList((Object[])obj);
-        } else if (obj instanceof Collection) {
-            list = new ArrayList<>((Collection<?>)obj);
+        if (genreObject.getClass().isArray()) {
+            list = Arrays.asList((Object[])genreObject);
+        } else if (genreObject instanceof Collection) {
+            list = new ArrayList<>((Collection<?>)genreObject);
         }
 
         List<Genre> genreList = new ArrayList<Genre>();
