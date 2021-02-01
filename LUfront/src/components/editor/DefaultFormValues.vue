@@ -12,7 +12,12 @@
               <v-icon>mdi-check</v-icon>
             </v-btn>
           </template>
-          <span class="primary--text">accept</span>
+          <div v-if="pageName == 'BookPreview'">
+            <span class="primary--text">accept</span>
+          </div>
+          <div v-if="field.type.name == 'CheckBookPlagiarism'">
+            <span class="primary--text">is plagiarism</span>
+          </div>
         </v-tooltip>
         <v-tooltip bottom color="black">
           <template #activator="{ on: tooltip }">
@@ -20,7 +25,12 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </template>
-          <span class="primary--text">Deny</span>
+          <div v-if="pageName == 'BookPreview'">
+            <span class="primary--text">deny</span>
+          </div>
+          <div v-if="field.type.name == 'CheckBookPlagiarism'">
+            <span class="primary--text">not plagiarism</span>
+          </div>
         </v-tooltip>
       </div>
     </div>
@@ -31,6 +41,7 @@
 export default {
   props: {
     formFieldsDTO: {},
+    pageName: {},
   },
   methods: {
     accept() {
