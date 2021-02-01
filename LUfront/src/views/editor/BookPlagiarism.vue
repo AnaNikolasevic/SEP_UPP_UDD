@@ -29,6 +29,7 @@
                     @accepted="accept"
                     @denied="deny"
                     v-bind:formFieldsDTO="formFieldsDTO"
+                    v-bind:pageName="pageName"
                   ></DefaultFormValues>
                 </div>
               </v-card-text>
@@ -54,6 +55,7 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
+      pageName: "CheckBookPlagiarism",
     };
   },
   methods: {
@@ -61,7 +63,9 @@ export default {
       axios
         .get(
           "http://localhost:8080/form/" +
-            this.$store.state.user.username + "/" +  "CheckBookForPlagiarism"
+            this.$store.state.user.username +
+            "/" +
+            "CheckBookForPlagiarism"
         )
         .then((response) => {
           this.bookPreviews = response.data;
@@ -105,7 +109,7 @@ export default {
       axios
         .post(
           "http://localhost:8080/subminForm/" +
-            FormFieldsDTO.taskId + 
+            FormFieldsDTO.taskId +
             "/" +
             "form",
           formSubmissionDto
@@ -120,7 +124,6 @@ export default {
 
       this.$router.go(this.$router.currentRoute);
     },
-
   },
 
   mounted() {

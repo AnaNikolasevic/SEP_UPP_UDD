@@ -24,16 +24,31 @@ public class BookStatusDelegate implements JavaDelegate {
 
         BookPrototype bookPrototype = bookPrototypeRepository.findByTitle(title);
 
-        boolean isInterestedInBook = (boolean)delegateExecution.getVariable("isInterestedInBook");
+        Boolean isInterestedInBook = null;
+        Boolean isPlagiarism = null;
 
-        if(isInterestedInBook){
-            bookPrototype.setBookStatus(BookStatus.INTERESTED);
-            System.out.println(bookPrototype.getBookStatus() + "---------------");
-        }else{
-            bookPrototype.setBookStatus(BookStatus.DENIED);
-            System.out.println(bookPrototype.getBookStatus() + "---------------");
+        if((Boolean)delegateExecution.getVariable("isInterestedInBook") != null){
+            isInterestedInBook = (Boolean)delegateExecution.getVariable("isInterestedInBook");
+        }
+        if((Boolean)delegateExecution.getVariable("isPlagiarism") != null){
+            isPlagiarism = (Boolean)delegateExecution.getVariable("isPlagiarism");
         }
 
 
+        if(isInterestedInBook != null && isInterestedInBook && bookPrototype.getBookStatus().equals(BookStatus.CREATED)){
+            bookPrototype.setBookStatus(BookStatus.INTERESTED);
+            System.out.println(bookPrototype.getBookStatus() + "---------------");
+        }else if(isInterestedInBook != null && !isInterestedInBook && bookPrototype.getBookStatus().equals(BookStatus.CREATED)){
+            bookPrototype.setBookStatus(BookStatus.DENIED);
+            System.out.println(bookPrototype.getBookStatus() + "---------------");
+        }else if(isPlagiarism != null && isPlagiarism && bookPrototype.getBookStatus().equals(BookStatus.INTERESTED)){
+            bookPrototype.setBookStatus(BookStatus.PLAGIARISM);
+            System.out.println(bookPrototype.getBookStatus() + "---------------");
+        }else if(isPlagiarism != null && !isPlagiarism && bookPrototype.getBookStatus().equals(BookStatus.INTERESTED)){
+            bookPrototype.setBookStatus(BookStatus.ACCEPTED);
+            System.out.println(bookPrototype.getBookStatus() + "---------------");
+        }
+
+        bookPrototypeRepository.save(bookPrototype);
     }
 }

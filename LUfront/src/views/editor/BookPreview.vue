@@ -29,6 +29,7 @@
                     @accepted="accept"
                     @denied="deny"
                     v-bind:formFieldsDTO="formFieldsDTO"
+                    v-bind:pageName="pageName"
                   ></DefaultFormValues>
                 </div>
               </v-card-text>
@@ -54,6 +55,8 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
+      timer: "",
+      pageName: "BookPreview",
     };
   },
   methods: {
@@ -61,7 +64,9 @@ export default {
       axios
         .get(
           "http://localhost:8080/form/" +
-            this.$store.state.user.username + "/" + "AcceptBookReveiwForm"
+            this.$store.state.user.username +
+            "/" +
+            "AcceptBookReveiwForm"
         )
         .then((response) => {
           this.bookPreviews = response.data;
@@ -111,15 +116,13 @@ export default {
         .then((response) => {
           this.close();
           console.log(response);
+          this.getBookPreviews();
         })
         .catch((error) => {
           console.log(error);
         });
-
-      this.$router.go(this.$router.currentRoute);
     },
   },
-
   mounted() {
     this.getBookPreviews();
   },
