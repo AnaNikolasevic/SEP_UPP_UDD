@@ -61,9 +61,7 @@ export default {
       axios
         .get(
           "http://localhost:8080/form/" +
-            this.$store.state.user.username +
-            "/" +
-            "AcceptBookReveiwForm"
+            this.$store.state.user.username + "/" + "AcceptBookReveiwForm"
         )
         .then((response) => {
           this.bookPreviews = response.data;
