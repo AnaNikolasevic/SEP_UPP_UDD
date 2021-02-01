@@ -40,13 +40,13 @@ public class BookPrototypeDelegate implements JavaDelegate {
         List<FormSubmissionDto> form = (List<FormSubmissionDto>)delegateExecution.getVariable("form");
         System.out.println(form);
         BookPrototype bookPrototype = new BookPrototype();
-        Genre genre = genreRepository.findByName(form.get(2).getFieldValue());
-        Writer writer = writerRepository.findByUsername(form.get(3).getFieldValue());
+        Genre genre = genreRepository.findByName(form.get(2).getFieldValue().toString());
+        Writer writer = writerRepository.findByUsername(form.get(3).getFieldValue().toString());
         bookPrototype.setWriter(writer);
         bookPrototype.setGenre(genre);
         bookPrototype.setBookStatus(BookStatus.CREATED);
-        bookPrototype.setSynopsis(form.get(1).getFieldValue());
-        bookPrototype.setTitle(form.get(0).getFieldValue());
+        bookPrototype.setSynopsis(form.get(1).getFieldValue().toString());
+        bookPrototype.setTitle(form.get(0).getFieldValue().toString());
         bookPrototypeRepository.save(bookPrototype);
         delegateExecution.setVariable("writer", writer.getUsername());
 

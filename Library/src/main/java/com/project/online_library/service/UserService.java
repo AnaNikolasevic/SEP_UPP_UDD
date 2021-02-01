@@ -49,19 +49,19 @@ public class UserService implements JavaDelegate {
         User user = identityService.newUser("");
         for (FormSubmissionDto formField : registration) {
             if (formField.getId().equals("username")) {
-                user.setId(formField.getFieldValue());
+                user.setId(formField.getFieldValue().toString());
             }
             if (formField.getId().equals("name")) {
-                user.setFirstName(formField.getFieldValue());
+                user.setFirstName(formField.getFieldValue().toString());
             }
             if (formField.getId().equals("surname")) {
-                user.setLastName(formField.getFieldValue());
+                user.setLastName(formField.getFieldValue().toString());
             }
             if (formField.getId().equals("email")) {
-                user.setEmail(formField.getFieldValue());
+                user.setEmail(formField.getFieldValue().toString());
             }
             if (formField.getId().equals("password")) {
-                user.setPassword(formField.getFieldValue());
+                user.setPassword(formField.getFieldValue().toString());
             }
         }
         identityService.saveUser(user);

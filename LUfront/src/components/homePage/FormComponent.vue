@@ -16,6 +16,16 @@
         dense
         :rules="rules(field)"
       ></v-combobox>
+      <v-combobox
+        v-if="field.type.name == 'multiEnum_genres'"
+        :items="Object.keys(field.type.values)"
+        :label="field.label"
+        v-model="field.fieldValue"
+        outlined
+        dense
+        :rules="rules(field)"
+        multiple
+      ></v-combobox>
     </div>
   </div>
 </template>
