@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class FormSubmissionDto implements Serializable{
 	
 	String id;
-	String fieldValue;
+	Object fieldValue;
 	
 	
 	public FormSubmissionDto() {
@@ -13,7 +13,7 @@ public class FormSubmissionDto implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormSubmissionDto(String fieldId, String fieldValue) {
+	public FormSubmissionDto(String fieldId, Object fieldValue) {
 		super();
 		this.id = fieldId;
 		this.fieldValue = fieldValue;
@@ -27,11 +27,11 @@ public class FormSubmissionDto implements Serializable{
 		this.id = fieldId;
 	}
 
-	public String getFieldValue() {
+	public Object getFieldValue() {
 		return fieldValue;
 	}
 
-	public void setFieldValue(String fieldValue) {
+	public void setFieldValue(Object fieldValue) {
 		this.fieldValue = fieldValue;
 	}
 

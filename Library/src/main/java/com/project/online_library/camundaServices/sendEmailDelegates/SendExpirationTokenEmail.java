@@ -46,7 +46,7 @@ public class SendExpirationTokenEmail implements JavaDelegate {
         String recipient = null;
         for (FormSubmissionDto formField : registration) {
             if(formField.getId().equals("email")) {
-                recipient = formField.getFieldValue();
+                recipient = formField.getFieldValue().toString();
                 System.out.println(recipient);
             }
         }

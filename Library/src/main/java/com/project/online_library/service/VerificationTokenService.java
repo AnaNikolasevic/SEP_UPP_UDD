@@ -49,7 +49,7 @@ public class VerificationTokenService implements JavaDelegate {
         String username = null;
         for (FormSubmissionDto formField : registration) {
             if(formField.getId().equals("username")) {
-                username = formField.getFieldValue();
+                username = formField.getFieldValue().toString();
             }
         }
 

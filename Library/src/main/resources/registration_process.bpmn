@@ -53,7 +53,7 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="genre" label="Genre" type="enum">
+          <camunda:formField id="genre" label="Genre" type="multiEnum_genres">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
