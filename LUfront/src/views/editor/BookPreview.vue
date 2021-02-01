@@ -60,7 +60,7 @@ export default {
     getBookPreviews() {
       axios
         .get(
-          "http://localhost:8080/bookPrototype/editor/" +
+          "http://localhost:8080/form/" +
             this.$store.state.user.username + "/" + "AcceptBookReveiwForm"
         )
         .then((response) => {
