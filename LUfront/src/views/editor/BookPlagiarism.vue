@@ -65,13 +65,14 @@ export default {
         )
         .then((response) => {
           this.bookPreviews = response.data;
-          console.log("Usaooo u responseee")
+          console.log("Usaooo u responseee");
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
     accept(FormFieldsDTO) {
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
@@ -119,6 +120,7 @@ export default {
 
       this.$router.go(this.$router.currentRoute);
     },
+
   },
 
   mounted() {

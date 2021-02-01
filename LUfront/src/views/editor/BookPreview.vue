@@ -103,7 +103,7 @@ export default {
       axios
         .post(
           "http://localhost:8080/subminForm/" +
-            FormFieldsDTO.taskId + 
+            FormFieldsDTO.taskId +
             "/" +
             "form",
           formSubmissionDto
