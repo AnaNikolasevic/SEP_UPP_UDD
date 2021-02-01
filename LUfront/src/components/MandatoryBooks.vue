@@ -74,13 +74,22 @@
                     <v-col cols="1">
                       <v-tooltip bottom color="white">
                         <template v-slot:activator="{ on }">
-                          <v-btn icon v-on="on" color="yellow" >
+                          <v-btn icon v-on="on" color="yellow" @click="submitMandatoryBookEvaluationForm()">
                             <v-icon>mdi-dots-horizontal</v-icon>
                           </v-btn>
                         </template>
                         <span class="yellow--text">More</span>
                       </v-tooltip>
                     </v-col>
+                  </v-row>
+                  <v-row justify="center">
+                    <v-card-text>
+                      <v-container>
+                        <v-form ref="form">
+                          <FormComponent v-bind:formFields="formFields"> </FormComponent>
+                        </v-form>
+                      </v-container>
+                    </v-card-text>
                   </v-row>
                 </v-container>
               </v-expansion-panels>
@@ -94,7 +103,11 @@
 
 <script>
 import axios from "axios";
+import FormComponent from "@/components/homePage/FormComponent.vue";
 export default {
+  components: {
+    FormComponent,
+  },
   data() {
     return {
       writers: [],
@@ -104,7 +117,9 @@ export default {
       snackbarSuccess: false,
       snackbarSuccessText: "",
       snackbarDanger: false,
-      snackbarDangerText: ""
+      snackbarDangerText: "",
+      taskId: "",
+      formFields: [],
     };
   },
   methods: {
@@ -152,10 +167,45 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    },
+    loadMandatoryBookEvaluationForm() {
+      axios.get("http://localhost:8080/form/" + this.$store.state.user.username + "/mandatoryBookEvaluationForm")
+        .then((response) => {
+          this.formFields = response.data[0].formFields;
+          console.log(response);
+          //this.$store.state.processID
+          this.$store.commit("addProcessID", response.data.processInstanceId);
+          console.log(this.$store.state.processID);
+          this.taskId = response.data[0].taskId;
+          this.processInstanceId = response.data.processInstanceId;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    submitMandatoryBookEvaluationForm() {
+        let formSubmissionDto = new Array();
+        this.formFields.forEach((formField) => {
+          formSubmissionDto.push({
+            id: formField.id,
+            fieldValue: formField.fieldValue,
+          });
+        });
+        axios.post(
+          "http://localhost:8080/subminForm/" + this.taskId + "/boardMemberDecision",
+          formSubmissionDto
+        )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
   },
   mounted() {
     this.getWriters();
+    this.loadMandatoryBookEvaluationForm();
   }
 };
 </script>

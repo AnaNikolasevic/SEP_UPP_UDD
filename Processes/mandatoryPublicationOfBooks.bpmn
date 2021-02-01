@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0sxt4jt" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="mandatoryPublicationOfBooks" name="Mandatory publication of books" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1c0ohev</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1c0ohev" sourceRef="StartEvent_1" targetRef="uploadBook" />
+    <bpmn:userTask id="uploadBook" name="Upload Book" camunda:formKey="uploadBookForm">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="bookName" label="Book Name" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="bookPath" label="Book Path" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1c0ohev</bpmn:incoming>
+      <bpmn:outgoing>Flow_08b9j8w</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1rqecxx">
+      <bpmn:incoming>Flow_119o53b</bpmn:incoming>
+      <bpmn:incoming>Flow_0gorf9m</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_08b9j8w" sourceRef="uploadBook" targetRef="saveMandatoryBook" />
+    <bpmn:sequenceFlow id="Flow_02wt1lv" sourceRef="saveMandatoryBook" targetRef="getStatusForm" />
+    <bpmn:serviceTask id="saveMandatoryBook" name="Save Mandatory Book And Send To Board Member" camunda:class="com.project.online_library.service.MandatoryBookService">
+      <bpmn:incoming>Flow_08b9j8w</bpmn:incoming>
+      <bpmn:incoming>Flow_1472yfy</bpmn:incoming>
+      <bpmn:outgoing>Flow_02wt1lv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0wrdvcs" sourceRef="getStatusForm" targetRef="setMembershipStatus" />
+    <bpmn:userTask id="getStatusForm" name="Get Status Form" camunda:formKey="Buttons">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="accepted" label="Accepted" type="boolean" defaultValue="false" />
+          <camunda:formField id="denied" label="Denied" type="boolean" defaultValue="false" />
+          <camunda:formField id="notEnough" label="Not enough" type="boolean" defaultValue="false" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02wt1lv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wrdvcs</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" />
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1erjr5l" sourceRef="setMembershipStatus" targetRef="Gateway_0ai5v78" />
+    <bpmn:serviceTask id="setMembershipStatus" name="Set Membership Status">
+      <bpmn:incoming>Flow_0wrdvcs</bpmn:incoming>
+      <bpmn:outgoing>Flow_1erjr5l</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0ai5v78">
+      <bpmn:incoming>Flow_1erjr5l</bpmn:incoming>
+      <bpmn:outgoing>Flow_119o53b</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1rtbcnv</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0woxohv</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_119o53b" name="Denied" sourceRef="Gateway_0ai5v78" targetRef="Event_1rqecxx" />
+    <bpmn:sequenceFlow id="Flow_1rtbcnv" name="Accepted" sourceRef="Gateway_0ai5v78" targetRef="sendAcceptedMail" />
+    <bpmn:sequenceFlow id="Flow_0woxohv" sourceRef="Gateway_0ai5v78" targetRef="uploadMoreBooks" />
+    <bpmn:sequenceFlow id="Flow_1472yfy" sourceRef="uploadMoreBooks" targetRef="saveMandatoryBook" />
+    <bpmn:userTask id="uploadMoreBooks" name="Upload More Books">
+      <bpmn:incoming>Flow_0woxohv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1472yfy</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_1kbs780" attachedToRef="uploadMoreBooks">
+      <bpmn:outgoing>Flow_0ssmxsf</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0x05a0t">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT48H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0ssmxsf" sourceRef="Event_1kbs780" targetRef="sendDeniedMail" />
+    <bpmn:sendTask id="sendDeniedMail" name="Send Denied Mail">
+      <bpmn:incoming>Flow_0ssmxsf</bpmn:incoming>
+      <bpmn:outgoing>Flow_09ol89c</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="sendAcceptedMail" name="Send Accepted Mail">
+      <bpmn:incoming>Flow_1rtbcnv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1k4uhi5</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_1h2m2tv">
+      <bpmn:incoming>Flow_180byq1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1k4uhi5" sourceRef="sendAcceptedMail" targetRef="Activity_09nqle5" />
+    <bpmn:sequenceFlow id="Flow_0urz7yq" sourceRef="Activity_09nqle5" targetRef="Activity_0dnp8ve" />
+    <bpmn:userTask id="Activity_09nqle5" name="PaymentForm">
+      <bpmn:incoming>Flow_1k4uhi5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0urz7yq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_0fe4qsi" attachedToRef="Activity_09nqle5">
+      <bpmn:outgoing>Flow_1c8pvlf</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1al7bqx">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT24H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="Activity_0dnp8ve" name="Set Final Membership Status">
+      <bpmn:incoming>Flow_0urz7yq</bpmn:incoming>
+      <bpmn:outgoing>Flow_180byq1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_180byq1" sourceRef="Activity_0dnp8ve" targetRef="Event_1h2m2tv" />
+    <bpmn:sendTask id="Activity_1r0znzy" name="Send Denied Mail">
+      <bpmn:incoming>Flow_1c8pvlf</bpmn:incoming>
+      <bpmn:outgoing>Flow_03xsap4</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1c8pvlf" sourceRef="Event_0fe4qsi" targetRef="Activity_1r0znzy" />
+    <bpmn:serviceTask id="Activity_0t8l8iw" name="Set Final Membership Status">
+      <bpmn:incoming>Flow_03xsap4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gorf9m</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0nktm6t">
+      <bpmn:incoming>Flow_09ol89c</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09ol89c" sourceRef="sendDeniedMail" targetRef="Event_0nktm6t" />
+    <bpmn:sequenceFlow id="Flow_03xsap4" sourceRef="Activity_1r0znzy" targetRef="Activity_0t8l8iw" />
+    <bpmn:sequenceFlow id="Flow_0gorf9m" sourceRef="Activity_0t8l8iw" targetRef="Event_1rqecxx" />
+  </bpmn:process>
+  <bpmn:signal id="Signal_0757kdi" name="Denied" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="mandatoryPublicationOfBooks">
+      <bpmndi:BPMNEdge id="Flow_02wt1lv_di" bpmnElement="Flow_02wt1lv">
+        <di:waypoint x="530" y="627" />
+        <di:waypoint x="570" y="627" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08b9j8w_di" bpmnElement="Flow_08b9j8w">
+        <di:waypoint x="370" y="627" />
+        <di:waypoint x="430" y="627" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c0ohev_di" bpmnElement="Flow_1c0ohev">
+        <di:waypoint x="215" y="627" />
+        <di:waypoint x="270" y="627" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wrdvcs_di" bpmnElement="Flow_0wrdvcs">
+        <di:waypoint x="670" y="627" />
+        <di:waypoint x="710" y="627" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1erjr5l_di" bpmnElement="Flow_1erjr5l">
+        <di:waypoint x="810" y="627" />
+        <di:waypoint x="845" y="627" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_119o53b_di" bpmnElement="Flow_119o53b">
+        <di:waypoint x="895" y="627" />
+        <di:waypoint x="1012" y="627" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="936" y="609" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rtbcnv_di" bpmnElement="Flow_1rtbcnv">
+        <di:waypoint x="870" y="602" />
+        <di:waypoint x="870" y="520" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="887" y="558" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0woxohv_di" bpmnElement="Flow_0woxohv">
+        <di:waypoint x="870" y="652" />
+        <di:waypoint x="870" y="780" />
+        <di:waypoint x="530" y="780" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1472yfy_di" bpmnElement="Flow_1472yfy">
+        <di:waypoint x="480" y="740" />
+        <di:waypoint x="480" y="667" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ssmxsf_di" bpmnElement="Flow_0ssmxsf">
+        <di:waypoint x="510" y="838" />
+        <di:waypoint x="510" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1k4uhi5_di" bpmnElement="Flow_1k4uhi5">
+        <di:waypoint x="870" y="440" />
+        <di:waypoint x="870" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0urz7yq_di" bpmnElement="Flow_0urz7yq">
+        <di:waypoint x="870" y="290" />
+        <di:waypoint x="870" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_180byq1_di" bpmnElement="Flow_180byq1">
+        <di:waypoint x="870" y="160" />
+        <di:waypoint x="870" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c8pvlf_di" bpmnElement="Flow_1c8pvlf">
+        <di:waypoint x="900" y="272" />
+        <di:waypoint x="900" y="252" />
+        <di:waypoint x="980" y="252" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09ol89c_di" bpmnElement="Flow_09ol89c">
+        <di:waypoint x="510" y="950" />
+        <di:waypoint x="510" y="992" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03xsap4_di" bpmnElement="Flow_03xsap4">
+        <di:waypoint x="1030" y="292" />
+        <di:waypoint x="1030" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gorf9m_di" bpmnElement="Flow_0gorf9m">
+        <di:waypoint x="1030" y="450" />
+        <di:waypoint x="1030" y="609" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="609" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bi442j_di" bpmnElement="uploadBook">
+        <dc:Bounds x="270" y="587" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00iklh0_di" bpmnElement="saveMandatoryBook">
+        <dc:Bounds x="430" y="587" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mzeof7_di" bpmnElement="getStatusForm">
+        <dc:Bounds x="570" y="587" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dek66z_di" bpmnElement="setMembershipStatus">
+        <dc:Bounds x="710" y="587" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ai5v78_di" bpmnElement="Gateway_0ai5v78" isMarkerVisible="true">
+        <dc:Bounds x="845" y="602" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1c2lxfw_di" bpmnElement="uploadMoreBooks">
+        <dc:Bounds x="430" y="740" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k9eiwc_di" bpmnElement="sendDeniedMail">
+        <dc:Bounds x="460" y="870" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0keu59k_di" bpmnElement="sendAcceptedMail">
+        <dc:Bounds x="820" y="440" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mt7mgf_di" bpmnElement="Activity_09nqle5">
+        <dc:Bounds x="820" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1h2m2tv_di" bpmnElement="Event_1h2m2tv">
+        <dc:Bounds x="852" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dnp8ve_di" bpmnElement="Activity_0dnp8ve">
+        <dc:Bounds x="820" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ejkb8c_di" bpmnElement="Activity_1r0znzy">
+        <dc:Bounds x="980" y="212" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rqecxx_di" bpmnElement="Event_1rqecxx">
+        <dc:Bounds x="1012" y="609" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nktm6t_di" bpmnElement="Event_0nktm6t">
+        <dc:Bounds x="492" y="992" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0t8l8iw_di" bpmnElement="Activity_0t8l8iw">
+        <dc:Bounds x="980" y="370" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0krc9cm_di" bpmnElement="Event_1kbs780">
+        <dc:Bounds x="492" y="802" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nfkk1i_di" bpmnElement="Event_0fe4qsi">
+        <dc:Bounds x="882" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -12,10 +12,6 @@ insert into board_member (id, city, country, email, enabled, first_name, last_na
     values (223, 'Novi Sad', 'Serbia', 'sv@gmail.com', 'true', 'Sara', 'Vukoje', 'sv', 'sv');
 insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
     values (224, 'Novi Sad', 'Serbia', 'mg@gmail.com', 'true', 'Milana', 'Galin', 'mg', 'mg');
-insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
-    values (225, 'Novi Sad', 'Serbia', 'it@gmail.com', 'true', 'Isidora', 'Tepic', 'it', 'it');
-insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
-    values (226, 'Novi Sad', 'Serbia', 'sdj@gmail.com', 'true', 'Sara', 'Djokovic', 'sdj', 'sdj');    
 
 insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
     values (113, 'Novi Sad', 'Serbia', 'mm@gmail.com', 'true', 'Masa', 'Matovic', 'mm', 'mm');

@@ -16,6 +16,11 @@
         dense
         :rules="rules(field)"
       ></v-combobox>
+      <v-checkbox
+        v-if="field.type.name == 'boolean'"
+        v-model="field.fieldValue"
+        :label="field.label"
+      ></v-checkbox>
     </div>
   </div>
 </template>
