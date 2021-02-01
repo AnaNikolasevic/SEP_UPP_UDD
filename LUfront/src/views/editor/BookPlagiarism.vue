@@ -60,18 +60,20 @@ export default {
     getBookPreviews() {
       axios
         .get(
-          "http://localhost:8080/bookPrototype/editor/" +
-            this.$store.state.user.username + "/" +  "CheckBookForPlagiarism"
+          "http://localhost:8080/form/" +
+            this.$store.state.user.username +
+            "/" +
+            "CheckBookForPlagiarism"
         )
         .then((response) => {
           this.bookPreviews = response.data;
-          console.log("Usaooo u responseee")
+          console.log("Usaooo u responseee");
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
-    }
+    },
   },
 
   mounted() {

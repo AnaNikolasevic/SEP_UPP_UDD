@@ -3,6 +3,8 @@ package com.project.online_library.controller;
 
 import com.project.online_library.dto.FormFieldsDto;
 import com.project.online_library.dto.FormSubmissionDto;
+import com.project.online_library.model.Editor;
+import com.project.online_library.repository.EditorRepository;
 import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
@@ -15,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +33,35 @@ public class CamundaController {
 
     @Autowired
     FormService formService;
+
+    @Autowired
+    private EditorRepository editorRepository;
+
+    @GetMapping("/form/{username}/{taskKey}")
+    public ResponseEntity<List<FormFieldsDto>> getAllUserTasks(@PathVariable String username, @PathVariable String taskKey) {
+        // return new ResponseEntity<List<BookPrototypeDTO>>(bookPrototypeService.getAllEditorsBookPrototypes(username), HttpStatus.OK);
+
+        List<Task> tasks = taskService.createTaskQuery().taskAssigneeLike(username).list();
+        System.out.println(tasks.size());
+
+        List<FormFieldsDto> dtos = new ArrayList<FormFieldsDto>();
+
+        for (Task task : tasks) {
+            String s = task.getTaskDefinitionKey();
+            if (s.equals(taskKey)) {
+                System.out.println("TAAAASKKK KEEY:" + taskKey);
+                String processInstanceId = task.getProcessInstanceId();
+                TaskFormData tfd = formService.getTaskFormData(task.getId());
+                List<FormField> properties = tfd.getFormFields();
+                FormFieldsDto formFieldsDto = new FormFieldsDto(task.getId(), processInstanceId, properties);
+                dtos.add(formFieldsDto);
+                System.out.println(formFieldsDto.getFormFields());
+            }
+
+        }
+
+        return new ResponseEntity<List<FormFieldsDto>>(dtos, HttpStatus.OK);
+    }
 
     @GetMapping(path = "/getForm/{processId}", produces = "application/json")
     public @ResponseBody
