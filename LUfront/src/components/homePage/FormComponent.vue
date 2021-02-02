@@ -21,7 +21,16 @@
         v-model="field.fieldValue"
         :label="field.label"
       ></v-checkbox>
-    </div>
+      <v-combobox
+        v-if="field.type.name == 'multiEnum_genres'"
+        :items="Object.keys(field.type.values)"
+        :label="field.label"
+        v-model="field.fieldValue"
+        outlined
+        dense
+        :rules="rules(field)"
+        multiple
+      ></v-combobox>
   </div>
 </template>
 <script>

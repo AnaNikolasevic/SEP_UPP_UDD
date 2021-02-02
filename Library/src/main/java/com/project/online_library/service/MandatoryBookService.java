@@ -33,11 +33,11 @@ public class MandatoryBookService implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 		// TODO Auto-generated method stub
 		List<FormSubmissionDto> mandatoryBookVariable = (List<FormSubmissionDto>) execution.getVariable("mandatoryBook");
-		Writer writer = writerRepository.findByUsername(mandatoryBookVariable.get(2).getFieldValue());
+		Writer writer = writerRepository.findByUsername(mandatoryBookVariable.get(2).getFieldValue().toString());
 
 		MandatoryBook mandatoryBook = new MandatoryBook();
-        mandatoryBook.setTitle(mandatoryBookVariable.get(0).getFieldValue());
-        mandatoryBook.setPath(mandatoryBookVariable.get(1).getFieldValue());
+        mandatoryBook.setTitle(mandatoryBookVariable.get(0).getFieldValue().toString());
+        mandatoryBook.setPath(mandatoryBookVariable.get(1).getFieldValue().toString());
         mandatoryBook.setWriter(writer);
         mandatoryBookRepository.save(mandatoryBook);
         
