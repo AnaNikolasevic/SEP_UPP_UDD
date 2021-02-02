@@ -32,6 +32,13 @@
             <span class="primary--text">not plagiarism</span>
           </div>
         </v-tooltip>
+      </div >
+      <div v-else-if="field.type.name == 'file_upload'">
+            <v-file-input
+               label="Choose pdf"
+               truncate-length="15"
+               v-model="field.fieldValue"
+            ></v-file-input>
       </div>
     </div>
   </div>

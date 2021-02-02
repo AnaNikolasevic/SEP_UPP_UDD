@@ -3,10 +3,11 @@ import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import ActivationLink from '../views/ActivationLink.vue'
 import Cart from '../components/Cart.vue'
-import MandatoryUpload from '../components/MandatoryUpload.vue'
 import MandatoryBooks from '../components/MandatoryBooks.vue'
 import BookPreview from "../views/editor/BookPreview.vue";
 import BookPlagiarism from "../views/editor/BookPlagiarism.vue"
+import UploadBook from "../components/homePage/WriterComponents/UploadBook.vue";
+import UploadMandatory from "../components/UploadMandatory.vue"
 
 Vue.use(VueRouter)
 
@@ -36,9 +37,9 @@ const routes = [{
     component: Cart
   },
   {
-    path: '/mandatoryUpload',
-    name: 'MandatoryUpload',
-    component: MandatoryUpload
+    path: '/uplaodMandatory',
+    name: 'UplaodMandatory',
+    component: UploadMandatory
   },
   {
     path: '/mandatoryBooks',
@@ -54,6 +55,11 @@ const routes = [{
     path: "/bookPlagiarism",
     name: "BookPlagiarism",
     component: BookPlagiarism,
+  },
+    {
+    path: "/uploadBook",
+    name: "uploadBook",
+    component: UploadBook,
   },
 
 ]

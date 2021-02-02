@@ -31,6 +31,13 @@
         :rules="rules(field)"
         multiple
       ></v-combobox>
+      <div v-if="field.type.name == 'file_upload'">
+            <v-file-input
+               label="Upload pdf"
+               truncate-length="15"
+               v-model="field.fieldValue"
+            ></v-file-input>
+      </div>
     </div>
   </div>
 </template>
@@ -39,8 +46,17 @@ export default {
   props: {
     formFields: {},
   },
-  data: () => ({}),
+  data: () => ({
+      imageData: null,
+      uploadValue: 0,
+      picture: null,
+  }),
   methods: {
+    previewImage(event) {
+      this.uploadValue=0;
+      this.picture=null;
+      this.imageData = event.target.files[0];
+    },
     rules(field) {
       const rules = [];
       field.validationConstraints.forEach((constraint) => {

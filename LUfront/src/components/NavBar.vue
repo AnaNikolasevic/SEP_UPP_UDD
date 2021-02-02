@@ -105,6 +105,7 @@
 import LoginComponent from "@/components/homePage/LoginComponent.vue";
 import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
 import AddBook from "@/components/homePage/WriterComponents/AddBookForm.vue";
+
 export default {
   components: {
     LoginComponent,
@@ -124,8 +125,11 @@ export default {
       this.$router.push("/cart");
     },
     mandatoryUpload() {
-      this.$router.push("/mandatoryUpload");
+      this.$router.push("/uplaodMandatory");
     },
+    // uploadMandatory(){
+    //   this.$router.push("/uplaodMandatory");
+    // },
     manageWriters() {
       this.$router.push("/mandatoryBooks");
     },
@@ -137,6 +141,9 @@ export default {
     },
     openBookPlagiarism(){
        this.$router.push("/bookPlagiarism");
+    },
+    openUploadBook(){
+         this.$router.push("/uploadBook");
     },
     logout() {
       localStorage.removeItem("user");

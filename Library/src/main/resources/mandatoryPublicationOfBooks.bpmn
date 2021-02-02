@@ -4,16 +4,11 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1c0ohev</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1c0ohev" sourceRef="StartEvent_1" targetRef="uploadBook" />
-    <bpmn:userTask id="uploadBook" name="Upload Books" camunda:formKey="uploadBookForm" camunda:assignee="${writer}">
+    <bpmn:sequenceFlow id="Flow_1c0ohev" sourceRef="StartEvent_1" targetRef="MandatoryUploadBook" />
+    <bpmn:userTask id="MandatoryUploadBook" name="Upload Book" camunda:formKey="uploadBookForm" camunda:assignee="${username}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bookName" label="Book Name" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="bookPath" label="Book Path" type="string">
+          <camunda:formField id="bookPath" label="Book Path" type="file_upload">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
@@ -28,13 +23,13 @@
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1rqecxx">
       <bpmn:incoming>Flow_1gd6z6o</bpmn:incoming>
+      <bpmn:incoming>Flow_175z5jx</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_08b9j8w" sourceRef="uploadBook" targetRef="saveMandatoryBook" />
-    <bpmn:sequenceFlow id="Flow_02wt1lv" sourceRef="saveMandatoryBook" targetRef="mandatoryBookEvaluationForm" />
+    <bpmn:sequenceFlow id="Flow_08b9j8w" sourceRef="MandatoryUploadBook" targetRef="saveMandatoryBook" />
     <bpmn:serviceTask id="saveMandatoryBook" name="Save Mandatory Book" camunda:class="com.project.online_library.service.MandatoryBookService">
       <bpmn:incoming>Flow_08b9j8w</bpmn:incoming>
       <bpmn:incoming>Flow_064k3db</bpmn:incoming>
-      <bpmn:outgoing>Flow_02wt1lv</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12ykre0</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_16zpv1q" sourceRef="boardMemberDecision" targetRef="Activity_0v52fqy" />
     <bpmn:scriptTask id="boardMemberDecision" name="Board Member Decision" scriptFormat="JavaScript">
@@ -76,6 +71,7 @@ if(upload_more!=0){
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_02wt1lv</bpmn:incoming>
       <bpmn:incoming>Flow_052hexh</bpmn:incoming>
+      <bpmn:incoming>Flow_12ykre0</bpmn:incoming>
       <bpmn:outgoing>Flow_0445t02</bpmn:outgoing>
       <bpmn:multiInstanceLoopCharacteristics camunda:collection="${boardMembers}" camunda:elementVariable="oneBoardMember" />
     </bpmn:userTask>
@@ -99,15 +95,11 @@ if(upload_more!=0){
     <bpmn:sequenceFlow id="Flow_0unl2rf" sourceRef="Gateway_1m87gpi" targetRef="Activity_0u7ia3c">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${decision == 'accepted'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0ahuyo9" sourceRef="Activity_0u7ia3c" targetRef="Event_1c7lwsa" />
-    <bpmn:userTask id="Activity_0u7ia3c" name="Send Accepted Mail">
-      <bpmn:incoming>Flow_0unl2rf</bpmn:incoming>
-      <bpmn:outgoing>Flow_0ahuyo9</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1gd6z6o" sourceRef="Activity_0l7unilsdv" targetRef="Event_1rqecxx" />
     <bpmn:serviceTask id="Activity_0l7unilsdv" name="dv" camunda:class="com.project.online_library.service.MandatoryBookService">
       <bpmn:incoming>Flow_10pijzb</bpmn:incoming>
       <bpmn:outgoing>Flow_1gd6z6o</bpmn:outgoing>
+      <bpmn:outgoing>Flow_175z5jx</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_19zy1hv" sourceRef="Activity_0v52fqy" targetRef="Gateway_1m87gpi" />
     <bpmn:userTask id="Activity_0v52fqy" name="bla">
@@ -124,31 +116,32 @@ if(upload_more!=0){
       <bpmn:incoming>Flow_07dnysm</bpmn:incoming>
       <bpmn:outgoing>Flow_064k3db</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sendTask id="Activity_16339g5" name="Send Denied Mail">
-      <bpmn:incoming>Flow_1euoa3m</bpmn:incoming>
-      <bpmn:outgoing>Flow_0ozcsnt</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:endEvent id="Event_1f8m1iz">
-      <bpmn:incoming>Flow_0ozcsnt</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:boundaryEvent id="Event_0r44oi4" attachedToRef="uploadMoreBooks">
-      <bpmn:outgoing>Flow_1euoa3m</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1kzd50f">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT48H</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_1euoa3m" sourceRef="Event_0r44oi4" targetRef="Activity_16339g5" />
-    <bpmn:sequenceFlow id="Flow_0ozcsnt" sourceRef="Activity_16339g5" targetRef="Event_1f8m1iz" />
     <bpmn:sequenceFlow id="Flow_07dnysm" sourceRef="Gateway_1m87gpi" targetRef="uploadMoreBooks">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${decision == 'upload_more'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_064k3db" sourceRef="uploadMoreBooks" targetRef="saveMandatoryBook" />
+    <bpmn:sequenceFlow id="Flow_12ykre0" sourceRef="saveMandatoryBook" targetRef="mandatoryBookEvaluationForm" />
+    <bpmn:userTask id="Activity_0u7ia3c" name="Send Accepted Mail">
+      <bpmn:incoming>Flow_0unl2rf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ahuyo9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0ahuyo9" sourceRef="Activity_0u7ia3c" targetRef="Event_1c7lwsa" />
+    <bpmn:sequenceFlow id="Flow_175z5jx" sourceRef="Activity_0l7unilsdv" targetRef="Event_1rqecxx" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="mandatoryPublicationOfBooks">
-      <bpmndi:BPMNEdge id="Flow_1gd6z6o_di" bpmnElement="Flow_1gd6z6o">
-        <di:waypoint x="1070" y="387" />
-        <di:waypoint x="1112" y="387" />
+      <bpmndi:BPMNEdge id="Flow_064k3db_di" bpmnElement="Flow_064k3db">
+        <di:waypoint x="460" y="470" />
+        <di:waypoint x="460" y="427" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07dnysm_di" bpmnElement="Flow_07dnysm">
+        <di:waypoint x="920" y="412" />
+        <di:waypoint x="920" y="510" />
+        <di:waypoint x="510" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19zy1hv_di" bpmnElement="Flow_19zy1hv">
+        <di:waypoint x="880" y="387" />
+        <di:waypoint x="895" y="387" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ahuyo9_di" bpmnElement="Flow_0ahuyo9">
         <di:waypoint x="920" y="160" />
@@ -178,57 +171,27 @@ if(upload_more!=0){
         <di:waypoint x="830" y="327" />
         <di:waypoint x="830" y="347" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_02wt1lv_di" bpmnElement="Flow_02wt1lv">
-        <di:waypoint x="510" y="387" />
-        <di:waypoint x="540" y="387" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08b9j8w_di" bpmnElement="Flow_08b9j8w">
-        <di:waypoint x="370" y="387" />
+        <di:waypoint x="360" y="387" />
         <di:waypoint x="410" y="387" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1c0ohev_di" bpmnElement="Flow_1c0ohev">
         <di:waypoint x="215" y="387" />
-        <di:waypoint x="270" y="387" />
+        <di:waypoint x="260" y="387" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_19zy1hv_di" bpmnElement="Flow_19zy1hv">
-        <di:waypoint x="880" y="387" />
-        <di:waypoint x="895" y="387" />
+      <bpmndi:BPMNEdge id="Flow_12ykre0_di" bpmnElement="Flow_12ykre0">
+        <di:waypoint x="510" y="387" />
+        <di:waypoint x="540" y="387" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1euoa3m_di" bpmnElement="Flow_1euoa3m">
-        <di:waypoint x="490" y="568" />
-        <di:waypoint x="490" y="590" />
-        <di:waypoint x="580" y="590" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ozcsnt_di" bpmnElement="Flow_0ozcsnt">
-        <di:waypoint x="620" y="670" />
-        <di:waypoint x="620" y="712" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_07dnysm_di" bpmnElement="Flow_07dnysm">
-        <di:waypoint x="920" y="412" />
-        <di:waypoint x="920" y="510" />
-        <di:waypoint x="510" y="510" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_064k3db_di" bpmnElement="Flow_064k3db">
-        <di:waypoint x="460" y="470" />
-        <di:waypoint x="460" y="427" />
+      <bpmndi:BPMNEdge id="Flow_175z5jx_di" bpmnElement="Flow_175z5jx">
+        <di:waypoint x="1070" y="387" />
+        <di:waypoint x="1112" y="387" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="369" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bi442j_di" bpmnElement="uploadBook">
-        <dc:Bounds x="270" y="347" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1rqecxx_di" bpmnElement="Event_1rqecxx">
         <dc:Bounds x="1112" y="369" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0m0rmhi_di" bpmnElement="mandatoryBookEvaluationForm">
-        <dc:Bounds x="540" y="347" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1m87gpi_di" bpmnElement="Gateway_1m87gpi" isMarkerVisible="true">
-        <dc:Bounds x="895" y="362" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1cn8en0_di" bpmnElement="Activity_0l7unilsdv">
-        <dc:Bounds x="970" y="347" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_00iklh0_di" bpmnElement="saveMandatoryBook">
         <dc:Bounds x="410" y="347" width="100" height="80" />
@@ -236,8 +199,11 @@ if(upload_more!=0){
       <bpmndi:BPMNShape id="Activity_17luoy6_di" bpmnElement="boardMemberDecision">
         <dc:Bounds x="670" y="347" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0jdwoib_di" bpmnElement="Activity_0v52fqy">
-        <dc:Bounds x="780" y="347" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0m0rmhi_di" bpmnElement="mandatoryBookEvaluationForm">
+        <dc:Bounds x="540" y="347" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1m87gpi_di" bpmnElement="Gateway_1m87gpi" isMarkerVisible="true">
+        <dc:Bounds x="895" y="362" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1c7lwsa_di" bpmnElement="Event_1c7lwsa">
         <dc:Bounds x="902" y="82" width="36" height="36" />
@@ -245,17 +211,17 @@ if(upload_more!=0){
       <bpmndi:BPMNShape id="Activity_1wsfwe5_di" bpmnElement="Activity_0u7ia3c">
         <dc:Bounds x="870" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16339g5_di" bpmnElement="Activity_16339g5">
-        <dc:Bounds x="570" y="590" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1cn8en0_di" bpmnElement="Activity_0l7unilsdv">
+        <dc:Bounds x="970" y="347" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1f8m1iz_di" bpmnElement="Event_1f8m1iz">
-        <dc:Bounds x="602" y="712" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0jdwoib_di" bpmnElement="Activity_0v52fqy">
+        <dc:Bounds x="780" y="347" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1or5s46_di" bpmnElement="uploadMoreBooks">
         <dc:Bounds x="410" y="470" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0r44oi4_di" bpmnElement="Event_0r44oi4">
-        <dc:Bounds x="472" y="532" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0bi442j_di" bpmnElement="MandatoryUploadBook">
+        <dc:Bounds x="260" y="347" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
