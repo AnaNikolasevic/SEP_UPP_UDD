@@ -1,9 +1,16 @@
 package com.project.online_library.controller;
 
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+
 import com.project.online_library.dto.FormFieldsDto;
 import com.project.online_library.dto.FormSubmissionDto;
 import com.project.online_library.repository.EditorRepository;
+
 import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
@@ -14,11 +21,18 @@ import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.project.online_library.camundaServices.CamundaService;
+import com.project.online_library.dto.FormFieldsDto;
+import com.project.online_library.dto.FormSubmissionDto;
+import com.project.online_library.repository.EditorRepository;
 
 @CrossOrigin
 @RestController
@@ -27,6 +41,9 @@ public class CamundaController {
     @Autowired
     private RuntimeService runtimeService;
 
+    @Autowired
+    private CamundaService camundaService;
+    
     @Autowired
     TaskService taskService;
 
@@ -84,7 +101,9 @@ public class CamundaController {
         System.out.println(map.toString());
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
-        runtimeService.setVariable(processInstanceId, variableName, dto);
+        if(variableName.equals("boardMemberDecision")) {
+        	camundaService.addBoardMemberDecision(processInstanceId, dto);
+        }
         formService.submitTaskForm(taskId, map);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

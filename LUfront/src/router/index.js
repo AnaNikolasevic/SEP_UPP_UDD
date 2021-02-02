@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import ActivationLink from '../views/ActivationLink.vue'
 import Cart from '../components/Cart.vue'
-import MandatoryUpload from '../components/MandatoryUpload.vue'
 import MandatoryBooks from '../components/MandatoryBooks.vue'
 import BookPreview from "../views/editor/BookPreview.vue";
 import BookPlagiarism from "../views/editor/BookPlagiarism.vue"
@@ -36,11 +35,6 @@ const routes = [{
     path: '/cart',
     name: 'Cart',
     component: Cart
-  },
-  {
-    path: '/mandatoryUpload',
-    name: 'MandatoryUpload',
-    component: MandatoryUpload
   },
   {
     path: '/uplaodMandatory',

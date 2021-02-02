@@ -41,9 +41,6 @@
       <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
         <AddBook />
       </div>
-      <!-- <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
-        <UploadBook />
-      </div> -->
       <v-btn
         text
         color="primary"
@@ -71,17 +68,6 @@
         <span>Mandatory upload</span>
         <v-icon right>mdi-book</v-icon>
       </v-btn>
-
-      <!-- <v-btn
-        text
-        color="primary"
-        @click="uploadMandatory()"
-        v-if="this.$store.state.user.role=='writer'"
-      >
-        <span> Upload Mandatory</span>
-        <v-icon right>mdi-book</v-icon>
-      </v-btn> -->
-
       <v-btn
         text
         color="primary"
@@ -105,14 +91,6 @@
         v-if="this.$store.state.user.role == 'editor'"
       >
         <span @click="openBookPlagiarism()">Check Book Plagiarsim</span>
-      </v-btn>
-      <v-btn
-        text
-        color="primary"
-        v-if="this.$store.state.user.role == 'writer'"
-      >
-        <span @click="openUploadBook()">Upload Book</span>
-        <v-icon right>mdi-book</v-icon>
       </v-btn>
       <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
         <span @click="logout()">Logout</span>

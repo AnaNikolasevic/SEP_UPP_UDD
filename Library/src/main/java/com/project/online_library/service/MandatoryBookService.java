@@ -48,10 +48,14 @@ public class MandatoryBookService implements JavaDelegate{
         writer.setMandatoryBookList(mandatoryBookList);
         writerRepository.save(writer);
         
+        ArrayList<String> boardMemberUsernameList = new ArrayList<String>();
         for (BoardMember boardMember : boardMemberRepository.findAll()) {
 			boardMember.getWriterMembership().put(writer.getUsername(), WriterMembershipStatus.WAITING);
 			boardMemberRepository.save(boardMember);
+			boardMemberUsernameList.add(boardMember.getUsername());
 		}
+        
+        execution.setVariable("boardMembers", boardMemberUsernameList);
 	}
 
 }
