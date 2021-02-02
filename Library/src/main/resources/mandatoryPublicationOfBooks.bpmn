@@ -4,16 +4,11 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1c0ohev</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1c0ohev" sourceRef="StartEvent_1" targetRef="uploadBook" />
-    <bpmn:userTask id="uploadBook" name="Upload Book" camunda:formKey="uploadBookForm">
+    <bpmn:sequenceFlow id="Flow_1c0ohev" sourceRef="StartEvent_1" targetRef="MandatoryUploadBook" />
+    <bpmn:userTask id="MandatoryUploadBook" name="Upload Book" camunda:formKey="uploadBookForm" camunda:assignee="${username}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bookName" label="Book Name" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="bookPath" label="Book Path" type="string">
+          <camunda:formField id="bookPath" label="Book Path" type="file_upload">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
@@ -26,7 +21,7 @@
     <bpmn:endEvent id="Event_1rqecxx">
       <bpmn:incoming>Flow_02wt1lv</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_08b9j8w" sourceRef="uploadBook" targetRef="saveMandatoryBook" />
+    <bpmn:sequenceFlow id="Flow_08b9j8w" sourceRef="MandatoryUploadBook" targetRef="saveMandatoryBook" />
     <bpmn:sequenceFlow id="Flow_02wt1lv" sourceRef="saveMandatoryBook" targetRef="Event_1rqecxx" />
     <bpmn:serviceTask id="saveMandatoryBook" name="Save Mandatory Book" camunda:class="com.project.online_library.service.MandatoryBookService">
       <bpmn:incoming>Flow_08b9j8w</bpmn:incoming>
@@ -35,22 +30,22 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="mandatoryPublicationOfBooks">
-      <bpmndi:BPMNEdge id="Flow_1c0ohev_di" bpmnElement="Flow_1c0ohev">
-        <di:waypoint x="215" y="97" />
-        <di:waypoint x="270" y="97" />
+      <bpmndi:BPMNEdge id="Flow_02wt1lv_di" bpmnElement="Flow_02wt1lv">
+        <di:waypoint x="530" y="97" />
+        <di:waypoint x="602" y="97" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08b9j8w_di" bpmnElement="Flow_08b9j8w">
         <di:waypoint x="370" y="97" />
         <di:waypoint x="430" y="97" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_02wt1lv_di" bpmnElement="Flow_02wt1lv">
-        <di:waypoint x="530" y="97" />
-        <di:waypoint x="602" y="97" />
+      <bpmndi:BPMNEdge id="Flow_1c0ohev_di" bpmnElement="Flow_1c0ohev">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="270" y="97" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="79" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bi442j_di" bpmnElement="uploadBook">
+      <bpmndi:BPMNShape id="Activity_0bi442j_di" bpmnElement="MandatoryUploadBook">
         <dc:Bounds x="270" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1rqecxx_di" bpmnElement="Event_1rqecxx">

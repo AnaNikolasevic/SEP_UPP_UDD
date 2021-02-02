@@ -41,6 +41,9 @@
       <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
         <AddBook />
       </div>
+      <!-- <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
+        <UploadBook />
+      </div> -->
       <v-btn
         text
         color="primary"
@@ -68,6 +71,17 @@
         <span>Mandatory upload</span>
         <v-icon right>mdi-book</v-icon>
       </v-btn>
+
+      <!-- <v-btn
+        text
+        color="primary"
+        @click="uploadMandatory()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span> Upload Mandatory</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn> -->
+
       <v-btn
         text
         color="primary"
@@ -92,6 +106,14 @@
       >
         <span @click="openBookPlagiarism()">Check Book Plagiarsim</span>
       </v-btn>
+      <v-btn
+        text
+        color="primary"
+        v-if="this.$store.state.user.role == 'writer'"
+      >
+        <span @click="openUploadBook()">Upload Book</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
       <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
         <span @click="logout()">Logout</span>
         <v-icon right>mdi-close</v-icon>
@@ -105,6 +127,7 @@
 import LoginComponent from "@/components/homePage/LoginComponent.vue";
 import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
 import AddBook from "@/components/homePage/WriterComponents/AddBookForm.vue";
+
 export default {
   components: {
     LoginComponent,
@@ -124,8 +147,11 @@ export default {
       this.$router.push("/cart");
     },
     mandatoryUpload() {
-      this.$router.push("/mandatoryUpload");
+      this.$router.push("/uplaodMandatory");
     },
+    // uploadMandatory(){
+    //   this.$router.push("/uplaodMandatory");
+    // },
     manageWriters() {
       this.$router.push("/mandatoryBooks");
     },
@@ -137,6 +163,9 @@ export default {
     },
     openBookPlagiarism(){
        this.$router.push("/bookPlagiarism");
+    },
+    openUploadBook(){
+         this.$router.push("/uploadBook");
     },
     logout() {
       localStorage.removeItem("user");

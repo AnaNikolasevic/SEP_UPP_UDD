@@ -93,6 +93,11 @@ export default {
 
     upload(){
       this.picture=null;
+      console.log("slikaa")
+      console.log(this.imageData)
+      console.log("ime slike")
+      console.log(this.imageData.name)
+      
       const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
       storageRef.on(`state_changed`,snapshot=>{
         this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
@@ -100,6 +105,8 @@ export default {
       ()=>{this.uploadValue=100;
         storageRef.snapshot.ref.getDownloadURL().then((url)=>{
           this.formFields[1].fieldValue = url;
+          console.log("formFields[1].fieldValue")
+          console.log( this.formFields[1].fieldValue)
           axios
             .post(
             "http://localhost:8080/uploadMandatoryBook/" + this.$store.state.user.username + "/" + this.taskId,
