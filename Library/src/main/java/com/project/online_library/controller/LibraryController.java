@@ -90,6 +90,7 @@ public class LibraryController {
 
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String processInstanceId = task.getProcessInstanceId();
+		runtimeService.getVariables(processInstanceId);
 		if(dto.size()==1) {
 	        List<FormSubmissionDto> registration = (List<FormSubmissionDto>)runtimeService.getVariable(processInstanceId,"registration");
 	        registration.add(dto.get(0));

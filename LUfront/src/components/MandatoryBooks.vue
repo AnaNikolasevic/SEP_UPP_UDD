@@ -18,11 +18,6 @@
           >
             <v-expansion-panel-header>
               Writer {{ writer.firstName }} {{writer.lastName}}
-              <template v-slot:actions>
-                <v-icon color="teal" >mdi-check</v-icon>
-                <v-icon color="error" >mdi-alert-circle</v-icon>
-                <v-icon >mdi-dots-horizontal</v-icon>
-              </template>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-expansion-panels>
@@ -54,31 +49,11 @@
                     <v-col cols="1">
                       <v-tooltip bottom color="white">
                         <template v-slot:activator="{ on }">
-                          <v-btn icon v-on="on" color="green" >
-                            <v-icon>mdi-check</v-icon>
-                          </v-btn>
-                        </template>
-                        <span class="green--text">Accept</span>
-                      </v-tooltip>
-                    </v-col>
-                    <v-col cols="1">
-                      <v-tooltip bottom color="white">
-                        <template v-slot:activator="{ on }">
-                          <v-btn icon v-on="on" color="red" >
-                            <v-icon>mdi-close</v-icon>
-                          </v-btn>
-                        </template>
-                        <span class="red--text">Decline</span>
-                      </v-tooltip>
-                    </v-col>
-                    <v-col cols="1">
-                      <v-tooltip bottom color="white">
-                        <template v-slot:activator="{ on }">
                           <v-btn icon v-on="on" color="yellow" @click="submitMandatoryBookEvaluationForm()">
-                            <v-icon>mdi-dots-horizontal</v-icon>
+                            Vote
                           </v-btn>
                         </template>
-                        <span class="yellow--text">More</span>
+                        <span class="yellow--text">Vote</span>
                       </v-tooltip>
                     </v-col>
                   </v-row>

@@ -71,14 +71,14 @@ export default {
   },
   methods: { 
     loadUploadForm(){
-        axios.get("http://localhost:8080/uploadForm")
+        axios.get("http://localhost:8080/form/" + this.$store.state.user.username + "/uploadBook")
         .then((response) => {
-          this.formFields = response.data.formFields;
+          this.formFields = response.data[0].formFields;
           //this.$store.state.processID
           //this.$store.commit("addProcessID", response.data.processInstanceId);
           console.log(this.$store.state.processID );
-          this.taskId = response.data.taskId;
-          this.processInstanceId = response.data.processInstanceId;
+          this.taskId = response.data[0].taskId;
+          this.processInstanceId = response.data[0].processInstanceId;
           this.UploadDialog = true;
         })
         .catch((error) => {

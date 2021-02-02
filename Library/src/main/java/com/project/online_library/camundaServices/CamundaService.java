@@ -16,17 +16,15 @@ public class CamundaService {
 	
 	public void addBoardMemberDecision(String processInstanceId, List<FormSubmissionDto> dto) {
 		// TODO Auto-generated method stub
-		System.out.println(runtimeService.getVariable(processInstanceId,"boardMemberDecision"));
 
-		System.out.println((List<String>)runtimeService.getVariable(processInstanceId,"boardMemberDecision"));
-        if((List<String>)runtimeService.getVariable(processInstanceId,"boardMemberDecision") == null) {
+        if((List<String>)runtimeService.getVariable(processInstanceId,"boardMemberDecisions") == null) {
         	ArrayList<String> boardMemberDecision = new ArrayList<String>();
-        	boardMemberDecision.add(dto.get(0).getFieldValue());
-            runtimeService.setVariable(processInstanceId, "boardMemberDecision", boardMemberDecision);
+        	boardMemberDecision.add(dto.get(0).getFieldValue().toString());
+            runtimeService.setVariable(processInstanceId, "boardMemberDecisions", boardMemberDecision);
         } else {
-        	List<String> boardMemberDecision = (List<String>)runtimeService.getVariable(processInstanceId,"boardMemberDecision");
-        	boardMemberDecision.add(dto.get(0).getFieldValue());
-	        runtimeService.setVariable(processInstanceId, "boardMemberDecision", boardMemberDecision);
+        	List<String> boardMemberDecision = (List<String>)runtimeService.getVariable(processInstanceId,"boardMemberDecisions");
+        	boardMemberDecision.add(dto.get(0).getFieldValue().toString());
+	        runtimeService.setVariable(processInstanceId, "boardMemberDecisions", boardMemberDecision);
         }
 	}
 
