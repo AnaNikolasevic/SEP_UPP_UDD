@@ -13,22 +13,31 @@
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_175kue0</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ja6dnn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1xlr48w</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1ja6dnn" sourceRef="UploadBook" targetRef="Event_0vh34mj" />
-    <bpmn:endEvent id="Event_0vh34mj">
-      <bpmn:incoming>Flow_1ja6dnn</bpmn:incoming>
+    <bpmn:endEvent id="Event_0l5sgce">
+      <bpmn:incoming>Flow_0vmr7ox</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1xlr48w" sourceRef="UploadBook" targetRef="SaveBook" />
+    <bpmn:serviceTask id="SaveBook" name="Save Book" camunda:class="com.project.online_library.service.BookPrototypeService">
+      <bpmn:incoming>Flow_1xlr48w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vmr7ox</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0vmr7ox" sourceRef="SaveBook" targetRef="Event_0l5sgce" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="WriterUploadBook">
-      <bpmndi:BPMNEdge id="Flow_1ja6dnn_di" bpmnElement="Flow_1ja6dnn">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="472" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_175kue0_di" bpmnElement="Flow_175kue0">
         <di:waypoint x="215" y="117" />
         <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xlr48w_di" bpmnElement="Flow_1xlr48w">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="470" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vmr7ox_di" bpmnElement="Flow_0vmr7ox">
+        <di:waypoint x="570" y="117" />
+        <di:waypoint x="732" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
@@ -36,8 +45,11 @@
       <bpmndi:BPMNShape id="Activity_1vb4wad_di" bpmnElement="UploadBook">
         <dc:Bounds x="270" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0vh34mj_di" bpmnElement="Event_0vh34mj">
-        <dc:Bounds x="472" y="99" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_0l5sgce_di" bpmnElement="Event_0l5sgce">
+        <dc:Bounds x="732" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nxcjgj_di" bpmnElement="SaveBook">
+        <dc:Bounds x="470" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

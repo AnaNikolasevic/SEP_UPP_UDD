@@ -37,18 +37,16 @@ public class BookPrototypeDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
-        List<FormSubmissionDto> form = (List<FormSubmissionDto>)delegateExecution.getVariable("form");
-        System.out.println(form);
         BookPrototype bookPrototype = new BookPrototype();
-        Genre genre = genreRepository.findByName(form.get(2).getFieldValue().toString());
-        Writer writer = writerRepository.findByUsername(form.get(3).getFieldValue().toString());
+        Genre genre = genreRepository.findByName((String) delegateExecution.getVariable("genre"));
+        Writer writer = writerRepository.findByUsername((String) delegateExecution.getVariable("writer"));
         bookPrototype.setWriter(writer);
         bookPrototype.setGenre(genre);
         bookPrototype.setBookStatus(BookStatus.CREATED);
-        bookPrototype.setSynopsis(form.get(1).getFieldValue().toString());
-        bookPrototype.setTitle(form.get(0).getFieldValue().toString());
+        bookPrototype.setSynopsis((String) delegateExecution.getVariable("synopsis"));
+        bookPrototype.setTitle((String) delegateExecution.getVariable("title"));
         bookPrototypeRepository.save(bookPrototype);
-        delegateExecution.setVariable("writer", writer.getUsername());
+       // delegateExecution.setVariable("writer", writer.getUsername());
 
     }
 }
