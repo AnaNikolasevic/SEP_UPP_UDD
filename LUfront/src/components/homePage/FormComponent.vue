@@ -31,6 +31,7 @@
         :rules="rules(field)"
         multiple
       ></v-combobox>
+    </div>
   </div>
 </template>
 <script>
