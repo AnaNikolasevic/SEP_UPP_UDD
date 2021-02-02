@@ -68,6 +68,15 @@
         <span>Mandatory upload</span>
         <v-icon right>mdi-book</v-icon>
       </v-btn>
+        <v-btn
+        text
+        color="primary"
+        @click="openUploadBook()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span>Upload new book</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
       <v-btn
         text
         color="primary"
