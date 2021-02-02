@@ -26,11 +26,10 @@
               <v-card-text>
                 <div class="font-weight-bold headline">
                   <DefaultFormValues
-                    @accepted="accept"
-                    @denied="deny"
                     v-bind:formFieldsDTO="formFieldsDTO"
                     v-bind:pageName="pageName"
                   ></DefaultFormValues>
+                  <v-btn color="primary" @click="upload(formFieldsDTO)">Upload</v-btn>
                 </div>
               </v-card-text>
             </div>
@@ -44,6 +43,7 @@
 <script>
 import axios from "axios";
 import DefaultFormValues from "@/components/editor/DefaultFormValues.vue";
+import firebase from 'firebase'
 export default {
   components: {
     DefaultFormValues,
@@ -55,8 +55,9 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      timer: "",
-      pageName: "BookPreview",
+      pageName: "CheckBookPlagiarism",
+      uploadValue: 0
+      
     };
   },
   methods: {
@@ -66,42 +67,46 @@ export default {
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "AcceptBookReveiwForm"
+            "UploadBook"
         )
         .then((response) => {
           this.bookPreviews = response.data;
+          console.log("Usaooo u responseee");
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    accept(FormFieldsDTO) {
+    upload(FormFieldsDTO){
+      console.log("usaooo u upload")
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = true;
+        console.log("usaooo u for")
+        if (FormFieldsDTO.formFields[i].type.name == "file_upload") {
+           console.log("usaooo u if")
           let formSubmissionDto = new Array();
+          var imageData = FormFieldsDTO.formFields[i].fieldValue;    
+          const storageRef=firebase.storage().ref(`${imageData.name}`).put(imageData);
+
+      storageRef.on(`state_changed`,snapshot=>{
+        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+      }, error=>{console.log(error.message)},
+      ()=>{this.uploadValue=100;
+        storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+          console.log("ovde ispiusujem url")
+          console.log(url);
           formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-        }
+            id: FormFieldsDTO.formFields[1].id,
+            fieldValue: url,
+            });   
+          this.submitForm(formSubmissionDto, FormFieldsDTO); 
+         
+         
+        });
       }
-    },
-    deny(FormFieldsDTO) {
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = false;
-          let formSubmissionDto = new Array();
-          formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-        }
+         );
+       }
       }
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
@@ -127,6 +132,7 @@ export default {
         });
     },
   },
+
   mounted() {
     this.getBookPreviews();
   },

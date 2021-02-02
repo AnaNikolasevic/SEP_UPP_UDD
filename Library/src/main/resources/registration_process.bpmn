@@ -158,6 +158,9 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_08ersw8" sourceRef="DataEntryBeta" targetRef="CreateUser" />
     <bpmn:callActivity id="mandatoryPublicationOfBooks" name="Mandatory publication of books" calledElement="mandatoryPublicationOfBooks">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_18mdrno</bpmn:incoming>
       <bpmn:outgoing>Flow_1ad9b2s</bpmn:outgoing>
     </bpmn:callActivity>
