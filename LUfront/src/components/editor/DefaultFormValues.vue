@@ -55,6 +55,18 @@
             </div>
           </v-tooltip>
         </template>
+      </div >
+      <div v-else-if="field.type.name == 'file_upload'">
+            <v-file-input
+               label="Choose pdf"
+               truncate-length="15"
+               v-model="field.fieldValue"
+            ></v-file-input>
+      </div>
+      <div v-else-if="field.type.name == 'file_view'">
+        <v-btn title="Open" color="primary" :href="field.value.value" download>                     
+        <v-icon>mdi-file</v-icon>
+      </v-btn>
       </div>
     </div>
   </div>

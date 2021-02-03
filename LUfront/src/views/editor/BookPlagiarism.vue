@@ -69,8 +69,8 @@ export default {
         )
         .then((response) => {
           this.bookPreviews = response.data;
-          console.log("Usaooo u responseee");
-          console.log(response);
+          console.log("Book Previews");
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);

@@ -12,10 +12,18 @@ insert into board_member (id, city, country, email, enabled, first_name, last_na
     values (223, 'Novi Sad', 'Serbia', 'sv@gmail.com', 'true', 'Sara', 'Vukoje', 'sv', 'sv');
 insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
     values (224, 'Novi Sad', 'Serbia', 'mg@gmail.com', 'true', 'Milana', 'Galin', 'mg', 'mg');
-insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
-    values (225, 'Novi Sad', 'Serbia', 'it@gmail.com', 'true', 'Isidora', 'Tepic', 'it', 'it');
-insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
-    values (226, 'Novi Sad', 'Serbia', 'sdj@gmail.com', 'true', 'Sara', 'Djokovic', 'sdj', 'sdj');    
+
+insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
+    values (113, 'Novi Sad', 'Serbia', 'mm@gmail.com', 'true', 'Masa', 'Matovic', 'mm', 'mm');
+insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
+    values (114, 'Novi Sad', 'Serbia', 'an@gmail.com', 'true', 'Ana', 'Nikolasevic', 'an', 'an');
+insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
+    values (115, 'Novi Sad', 'Serbia', 'ss@gmail.com', 'true', 'Stanislava', 'Skoric', 'ss', 'ss');
+
+--insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
+--    values (225, 'Novi Sad', 'Serbia', 'it@gmail.com', 'true', 'Isidora', 'Tepic', 'it', 'it');
+--insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
+--    values (226, 'Novi Sad', 'Serbia', 'sdj@gmail.com', 'true', 'Sara', 'Djokovic', 'sdj', 'sdj');    
 --
 -- insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
 --     values (113, 'Novi Sad', 'Serbia', 'mm@gmail.com', 'true', 'Masa', 'Matovic', 'mm', 'mm');
@@ -55,10 +63,19 @@ insert into reader_genre_beta(users_id_seq, genre_beta_id)
     values (316, 1);
 
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (0, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The Count of Monte Cristo', null, 112, 5, null, null);
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The Count of Monte Cristo', null, 112, 5, null, null);
 
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (0, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The song of ice and fire', null, 112, 6, null, null);
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The song of ice and fire', null, 112, 6, null, null);
 
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (0, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Les Miserables', null, 112, 5, null, null);
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Les Miserables', null, 112, 5, null, null);
+
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Hamlet', null, 112, 5, null, null);
+
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Utopia', null, 112, 6, null, null);
+
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The diary of a young girl ', null, 112, 5, null, null);

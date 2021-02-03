@@ -64,6 +64,9 @@ public class UserService implements JavaDelegate {
                 user.setPassword(formField.getFieldValue().toString());
             }
         }
+        if(writerRepository.findByUsername(user.getId())!=null) {
+        	delegateExecution.setVariable("writer", user.getId());
+        }
         identityService.saveUser(user);
     }
 

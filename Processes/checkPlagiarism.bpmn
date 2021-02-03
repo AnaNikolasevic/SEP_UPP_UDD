@@ -68,6 +68,23 @@
   <bpmn:signal id="Signal_1mze861" name="BookDenied" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Plagiarism">
+      <bpmndi:BPMNEdge id="Flow_0ai4cbf_di" bpmnElement="Flow_0ai4cbf">
+        <di:waypoint x="580" y="320" />
+        <di:waypoint x="580" y="372" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06mphvi_di" bpmnElement="Flow_06mphvi">
+        <di:waypoint x="985" y="290" />
+        <di:waypoint x="1092" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e748hl_di" bpmnElement="Flow_0e748hl">
+        <di:waypoint x="800" y="117" />
+        <di:waypoint x="960" y="117" />
+        <di:waypoint x="960" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_031pe6p_di" bpmnElement="Flow_031pe6p">
+        <di:waypoint x="658" y="290" />
+        <di:waypoint x="935" y="290" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12i3ysj_di" bpmnElement="isNotPlagiarism">
         <di:waypoint x="580" y="142" />
         <di:waypoint x="580" y="240" />
@@ -94,23 +111,6 @@
         <di:waypoint x="215" y="117" />
         <di:waypoint x="270" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_031pe6p_di" bpmnElement="Flow_031pe6p">
-        <di:waypoint x="658" y="290" />
-        <di:waypoint x="935" y="290" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0e748hl_di" bpmnElement="Flow_0e748hl">
-        <di:waypoint x="800" y="117" />
-        <di:waypoint x="960" y="117" />
-        <di:waypoint x="960" y="265" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_06mphvi_di" bpmnElement="Flow_06mphvi">
-        <di:waypoint x="985" y="290" />
-        <di:waypoint x="1092" y="290" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ai4cbf_di" bpmnElement="Flow_0ai4cbf">
-        <di:waypoint x="580" y="320" />
-        <di:waypoint x="580" y="372" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -126,6 +126,9 @@
       <bpmndi:BPMNShape id="Activity_0jyr4ef_di" bpmnElement="SendMailIfPlagiarism">
         <dc:Bounds x="700" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u2ckag_di" bpmnElement="Event_1ar1o0d">
+        <dc:Bounds x="1092" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1kx9aca_di" bpmnElement="DownloadBookEditor">
         <dc:Bounds x="530" y="240" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -134,9 +137,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_01pkb8d_di" bpmnElement="Event_0nv4sui">
         <dc:Bounds x="622" y="272" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1u2ckag_di" bpmnElement="Event_1ar1o0d">
-        <dc:Bounds x="1092" y="272" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0c88zjy_di" bpmnElement="Event_0c88zjy">
         <dc:Bounds x="562" y="372" width="36" height="36" />

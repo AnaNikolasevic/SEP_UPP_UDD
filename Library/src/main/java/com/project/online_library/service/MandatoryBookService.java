@@ -33,11 +33,12 @@ public class MandatoryBookService implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 		// TODO Auto-generated method stub
 		List<FormSubmissionDto> mandatoryBookVariable = (List<FormSubmissionDto>) execution.getVariable("mandatoryBook");
-		Writer writer = writerRepository.findByUsername(mandatoryBookVariable.get(2).getFieldValue().toString());
+		String username = (String) execution.getVariable("username");
+		Writer writer = writerRepository.findByUsername(username);
 
 		MandatoryBook mandatoryBook = new MandatoryBook();
-        mandatoryBook.setTitle(mandatoryBookVariable.get(0).getFieldValue().toString());
-        mandatoryBook.setPath(mandatoryBookVariable.get(1).getFieldValue().toString());
+        //mandatoryBook.setTitle(mandatoryBookVariable.get(0).getFieldValue().toString());
+        mandatoryBook.setPath((String) execution.getVariable("bookPath"));
         mandatoryBook.setWriter(writer);
         mandatoryBookRepository.save(mandatoryBook);
         
@@ -47,10 +48,14 @@ public class MandatoryBookService implements JavaDelegate{
         writer.setMandatoryBookList(mandatoryBookList);
         writerRepository.save(writer);
         
+        ArrayList<String> boardMemberUsernameList = new ArrayList<String>();
         for (BoardMember boardMember : boardMemberRepository.findAll()) {
 			boardMember.getWriterMembership().put(writer.getUsername(), WriterMembershipStatus.WAITING);
 			boardMemberRepository.save(boardMember);
+			boardMemberUsernameList.add(boardMember.getUsername());
 		}
+        
+        execution.setVariable("boardMembers", boardMemberUsernameList);
 	}
 
 }

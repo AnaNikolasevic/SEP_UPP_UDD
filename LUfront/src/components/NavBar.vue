@@ -68,6 +68,15 @@
         <span>Mandatory upload</span>
         <v-icon right>mdi-book</v-icon>
       </v-btn>
+        <v-btn
+        text
+        color="primary"
+        @click="openUploadBook()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span>Upload new book</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
       <v-btn
         text
         color="primary"
@@ -105,6 +114,7 @@
 import LoginComponent from "@/components/homePage/LoginComponent.vue";
 import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
 import AddBook from "@/components/homePage/WriterComponents/AddBookForm.vue";
+
 export default {
   components: {
     LoginComponent,
@@ -124,8 +134,11 @@ export default {
       this.$router.push("/cart");
     },
     mandatoryUpload() {
-      this.$router.push("/mandatoryUpload");
+      this.$router.push("/uplaodMandatory");
     },
+    // uploadMandatory(){
+    //   this.$router.push("/uplaodMandatory");
+    // },
     manageWriters() {
       this.$router.push("/mandatoryBooks");
     },
@@ -137,6 +150,9 @@ export default {
     },
     openBookPlagiarism(){
        this.$router.push("/bookPlagiarism");
+    },
+    openUploadBook(){
+         this.$router.push("/uploadBook");
     },
     logout() {
       localStorage.removeItem("user");
