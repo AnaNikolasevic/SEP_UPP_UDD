@@ -19,6 +19,6 @@ public class CustomTypeProcessEnginePlugin extends AbstractProcessEnginePlugin{
 
         List<AbstractFormFieldType> formTypes = processEngineConfiguration.getCustomFormTypes();
         formTypes.add(new MultipleEnumType("genres"));
-
+        formTypes.add(new MultipleEnumType("betaReaders"));
     }
 }

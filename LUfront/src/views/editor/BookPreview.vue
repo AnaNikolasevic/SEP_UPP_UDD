@@ -76,7 +76,8 @@ export default {
           console.log(error);
         });
     },
-    accept(FormFieldsDTO) {
+    accept(FormFieldsDTO, formFields) {
+      console.log(formFields);
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
         if (FormFieldsDTO.formFields[i].type.name == "boolean") {
@@ -90,7 +91,8 @@ export default {
         }
       }
     },
-    deny(FormFieldsDTO) {
+    deny(FormFieldsDTO, formFields) {
+      console.log(formFields);
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
         if (FormFieldsDTO.formFields[i].type.name == "boolean") {
@@ -121,6 +123,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+      location.reload();
     },
   },
   mounted() {

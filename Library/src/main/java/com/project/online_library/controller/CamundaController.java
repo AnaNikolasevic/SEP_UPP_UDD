@@ -78,7 +78,7 @@ public class CamundaController {
         return new FormFieldsDto(task.getId(), pi.getId(), properties);
     }
 
-    @PostMapping(path = "/subminForm/{taskId}/{variableName}", produces = "application/json")
+    @PostMapping(path = "/subminForm/{taskId}/{variableName}", consumes="application/json", produces = "application/json")
     public @ResponseBody
     ResponseEntity crate(@RequestBody List<FormSubmissionDto> dto, @PathVariable String taskId,  @PathVariable String variableName) {
         HashMap<String, Object> map = this.mapListToDto(dto);
