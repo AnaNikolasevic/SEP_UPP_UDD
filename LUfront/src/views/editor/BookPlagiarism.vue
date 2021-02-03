@@ -87,11 +87,12 @@ export default {
             id: FormFieldsDTO.formFields[i].id,
             fieldValue: FormFieldsDTO.formFields[i].value,
           });
-          this.submitForm(formSubmissionDto, FormFieldsDTO, "plagiarism");
+          this.submitForm(formSubmissionDto, FormFieldsDTO);
         }
       }
     },
     deny(FormFieldsDTO, formFields) {
+      console.log("milica");
       console.log(formFields);
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
@@ -108,6 +109,7 @@ export default {
       }
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
+      console.log(formSubmissionDto);
       axios
         .post(
           "http://localhost:8080/subminForm/" +
