@@ -120,6 +120,8 @@ export default {
       return rules;
     },
     register() {
+      console.log("milica");
+
       if (this.$refs.form.validate()) {
         let formSubmissionDto = new Array();
         this.formFields.forEach((formField) => {
@@ -128,6 +130,7 @@ export default {
             fieldValue: formField.fieldValue,
           });
         });
+        console.log(formSubmissionDto);
         Axios.post(
           "http://localhost:8080/register/" + this.taskId,
           formSubmissionDto

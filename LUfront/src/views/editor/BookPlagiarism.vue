@@ -76,8 +76,8 @@ export default {
           console.log(error);
         });
     },
-
-    accept(FormFieldsDTO) {
+    accept(FormFieldsDTO, formFields) {
+      console.log(formFields);
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
         if (FormFieldsDTO.formFields[i].type.name == "boolean") {
@@ -87,11 +87,12 @@ export default {
             id: FormFieldsDTO.formFields[i].id,
             fieldValue: FormFieldsDTO.formFields[i].value,
           });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
+          this.submitForm(formSubmissionDto, FormFieldsDTO, "plagiarism");
         }
       }
     },
-    deny(FormFieldsDTO) {
+    deny(FormFieldsDTO, formFields) {
+      console.log(formFields);
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
         if (FormFieldsDTO.formFields[i].type.name == "boolean") {
@@ -102,6 +103,7 @@ export default {
             fieldValue: FormFieldsDTO.formFields[i].value,
           });
           this.submitForm(formSubmissionDto, FormFieldsDTO);
+          this.$router.push("/chooseToSendToBetaReaders");
         }
       }
     },
@@ -121,8 +123,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-
-      this.$router.go(this.$router.currentRoute);
     },
   },
 

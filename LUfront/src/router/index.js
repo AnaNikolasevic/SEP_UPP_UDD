@@ -6,6 +6,9 @@ import Cart from '../components/Cart.vue'
 import MandatoryBooks from '../components/MandatoryBooks.vue'
 import BookPreview from "../views/editor/BookPreview.vue";
 import BookPlagiarism from "../views/editor/BookPlagiarism.vue"
+import ChooseToSendToBetaReaders from "../components/editor/ChooseToSendToBetaReaders.vue"
+import ChooseBetaReaders from "../components/editor/ChooseBetaReaders.vue"
+
 import UploadBook from "../components/homePage/WriterComponents/UploadBook.vue";
 import UploadMandatory from "../components/UploadMandatory.vue"
 
@@ -27,40 +30,50 @@ const routes = [{
         component: Cart
     },
     {
-    path: "/activationForm/:token",
-    name: "ActivationLink",
-    component: ActivationLink,
-  },
-  {
-    path: '/cart',
-    name: 'Cart',
-    component: Cart
-  },
-  {
-    path: '/uplaodMandatory',
-    name: 'UplaodMandatory',
-    component: UploadMandatory
-  },
-  {
-    path: '/mandatoryBooks',
-    name: 'MandatoryBooks',
-    component: MandatoryBooks
-  },
-  {
-    path: "/bookPreview",
-    name: "BookPreview",
-    component: BookPreview,
-  },
-  {
-    path: "/bookPlagiarism",
-    name: "BookPlagiarism",
-    component: BookPlagiarism,
-  },
+        path: "/activationForm/:token",
+        name: "ActivationLink",
+        component: ActivationLink,
+    },
     {
-    path: "/uploadBook",
-    name: "uploadBook",
-    component: UploadBook,
-  },
+        path: '/cart',
+        name: 'Cart',
+        component: Cart
+    },
+    {
+        path: '/uplaodMandatory',
+        name: 'UplaodMandatory',
+        component: UploadMandatory
+    },
+    {
+        path: '/mandatoryBooks',
+        name: 'MandatoryBooks',
+        component: MandatoryBooks
+    },
+    {
+        path: "/bookPreview",
+        name: "BookPreview",
+        component: BookPreview,
+    },
+    {
+        path: "/bookPlagiarism",
+        name: "BookPlagiarism",
+        component: BookPlagiarism,
+    },
+    {
+        path: "/uploadBook",
+        name: "uploadBook",
+        component: UploadBook,
+    },
+    {
+        path: "/chooseToSendToBetaReaders",
+        name: "ChooseToSendToBetaReaders",
+        component: ChooseToSendToBetaReaders,
+    },
+    {
+        path: "/chooseBetaReaders",
+        name: "ChooseBetaReaders",
+        component: ChooseBetaReaders,
+    },
 
 ]
 
