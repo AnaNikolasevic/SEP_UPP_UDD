@@ -38,10 +38,19 @@ insert into writer ( id, city, country, email, enabled, first_name, last_name, p
     values (216, 'Novi Sad', 'Serbia', 'bm@gmail.com', 'true', 'Biljana', 'Matovic', 'bm', 'bm');
 
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (0, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The Count of Monte Cristo', null, 112, 5, null, null);
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The Count of Monte Cristo', null, 112, 5, null, null);
 
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (0, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The song of ice and fire', null, 112, 6, null, null);
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The song of ice and fire', null, 112, 6, null, null);
 
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (0, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Les Miserables', null, 112, 5, null, null);
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Les Miserables', null, 112, 5, null, null);
+
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Hamlet', null, 112, 5, null, null);
+
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Utopia', null, 112, 6, null, null);
+
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
+    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The diary of a young girl ', null, 112, 5, null, null);

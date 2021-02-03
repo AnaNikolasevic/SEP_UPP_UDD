@@ -7,8 +7,10 @@
     <bpmn:userTask id="CheckBookForPlagiarism" name="Check Book For Plagiarism" camunda:assignee="${editorId}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="isPlagiarism" label="Plagiarism" type="boolean" />
           <camunda:formField id="title" label="Title" type="string" defaultValue="${title}" />
+          <camunda:formField id="file_view" type="file_view" defaultValue="${uploadFile}" />
+          <camunda:formField id="plagiarism" type="string" defaultValue="${plagiarism}" />
+          <camunda:formField id="isPlagiarism " type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0e0liuh</bpmn:incoming>
@@ -62,14 +64,14 @@
         <di:waypoint x="470" y="210" />
         <di:waypoint x="620" y="210" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="445" y="163" width="83" height="14" />
+          <dc:Bounds x="478" y="133" width="83" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06zgreh_di" bpmnElement="isPlagiarism">
         <di:waypoint x="495" y="97" />
         <di:waypoint x="620" y="97" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="528" y="79" width="63" height="14" />
+          <dc:Bounds x="548" y="73" width="63" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ngjoyh_di" bpmnElement="Flow_0ngjoyh">
@@ -95,11 +97,11 @@
       <bpmndi:BPMNShape id="Activity_132knqr_di" bpmnElement="DownloadBookEditor">
         <dc:Bounds x="620" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17mhgd0_di" bpmnElement="Event_01pd9v8">
-        <dc:Bounds x="852" y="79" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0urbsnv_di" bpmnElement="Event_0urbsnv">
         <dc:Bounds x="652" y="312" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17mhgd0_di" bpmnElement="Event_01pd9v8">
+        <dc:Bounds x="852" y="79" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

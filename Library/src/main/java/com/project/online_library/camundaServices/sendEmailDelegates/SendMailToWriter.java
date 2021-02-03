@@ -30,8 +30,8 @@ public class SendMailToWriter implements JavaDelegate {
 
         String username = (String) delegateExecution.getVariable("writer");
         Writer writer = writerRepository.findByUsername(username);
-        //String recipient = writer.getEmail();
-        String recipient = "milicaculibrk7@gmail.com";
+        String recipient = writer.getEmail();
+        //String recipient = "milicaculibrk7@gmail.com";
 
         String title = (String)delegateExecution.getVariable("title");
         BookPrototype bookPrototype = bookPrototypeRepository.findByTitle(title);

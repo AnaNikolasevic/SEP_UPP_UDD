@@ -4,7 +4,6 @@ import org.camunda.bpm.engine.impl.form.type.SimpleFormFieldType;
 import org.camunda.bpm.engine.variable.Variables;
 import org.camunda.bpm.engine.variable.value.FileValue;
 import org.camunda.bpm.engine.variable.value.TypedValue;
-import org.camunda.feel.syntaxtree.Val;
 
 public class FileFormType  extends SimpleFormFieldType {
 
