@@ -37,6 +37,7 @@ public class BookPrototypeService implements JavaDelegate {
         String title = (String) delegateExecution.getVariable("title");
         BookPrototype bookPrototype = bookPrototypeRepository.findByTitle(title);
         bookPrototype.setPath((String) delegateExecution.getVariable("uploadFile"));
+        delegateExecution.setVariable("file_view", (String) delegateExecution.getVariable("uploadFile"));
         bookPrototypeRepository.save(bookPrototype);
 
     }

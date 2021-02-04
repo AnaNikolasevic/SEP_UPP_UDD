@@ -66,7 +66,7 @@
         v-if="this.$store.state.user.role=='writer'"
       >
         <span>Mandatory upload</span>
-        <v-icon right>mdi-book</v-icon>
+        <v-icon right>mdi-book-arrow-up</v-icon>
       </v-btn>
         <v-btn
         text
@@ -75,7 +75,7 @@
         v-if="this.$store.state.user.role=='writer'"
       >
         <span>Upload new book</span>
-        <v-icon right>mdi-book</v-icon>
+        <v-icon right>mdi-book-arrow-up</v-icon>
       </v-btn>
       <v-btn
         text
@@ -100,6 +100,52 @@
         v-if="this.$store.state.user.role == 'editor'"
       >
         <span @click="openBookPlagiarism()">Check Book Plagiarsim</span>
+        <v-icon right>mdi-book-search</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openCheckMistakes()"
+        v-if="this.$store.state.user.role=='lector'"
+      >
+        <span>Review books</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openUploadEditedBook()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span>Books to edit</span>
+        <v-icon right>mdi-book-edit</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openFinalCheck()"
+        v-if="this.$store.state.user.role=='editor'"
+      >
+        <span>Final check</span>
+        <v-icon right>mdi-book-check</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openFinalEdit()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span>Final edit</span>
+        <v-icon right>mdi-book-edit</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openFinalApprovement()"
+        v-if="this.$store.state.user.role=='editor'"
+      >
+        <span>Publish</span>
+        <v-icon right>mdi-publish</v-icon>
       </v-btn>
       <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
         <span @click="logout()">Logout</span>
@@ -153,6 +199,21 @@ export default {
     },
     openUploadBook(){
          this.$router.push("/uploadBook");
+    },
+    openCheckMistakes(){
+      this.$router.push("/checkMistakes")
+    },
+    openUploadEditedBook(){
+      this.$router.push("/uploadEdidetBook")
+    },
+    openFinalCheck(){
+      this.$router.push("/finalChceck")
+    },
+    openFinalEdit(){
+      this.$router.push("/finalEdit")
+    },
+    openFinalApprovement(){
+      this.$router.push("/finalApprovement")
     },
     logout() {
       localStorage.removeItem("user");
