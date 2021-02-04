@@ -23,7 +23,7 @@
         <v-card-actions class="pr-10 pb-10">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="close">Cancel</v-btn>
-          <v-btn color="primary" @click="upload()">Upload</v-btn>
+          <v-btn color="primary" @click="upload()">Submit</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -54,7 +54,7 @@ export default {
       imageData: null,
       uploadValue: 0,
       picture: null,
-      formSubmissionDto: []
+      formSubmissionDto: [],
     };
   },
   methods: { 
@@ -62,9 +62,7 @@ export default {
          axios
         .get(
           "http://localhost:8080/form/" +
-            this.$store.state.user.username +
-            "/" +
-            "MandatoryUploadBook"
+            this.$store.state.user.username
         )
         .then((response) => {
           this.formFields = response.data[0].formFields;
@@ -73,6 +71,7 @@ export default {
           console.log(response.data);
         })
         .catch((error) => {
+          alert("You don't have permission to access this action.");
           console.log(error);
         });
     },
@@ -92,14 +91,16 @@ export default {
                         id: this.formFields[0].id,
                         fieldValue: url,
                         }); 
-                    this.submitForm(); 
+                    this.submitUploadForm(); 
                     
                     });
                 }
             );
+        } else {
+            this.submitCheckboxForm();
         }
     },
-    submitForm(){
+    submitUploadForm(){
       console.log("submit");
       console.log(this.formSubmissionDto);
       console.log(this.taskId);     
@@ -109,13 +110,38 @@ export default {
           "http://localhost:8080/subminForm/" +
             this.taskId +
             "/" +
-            "form",
+            "mandatoryBooksPaths",
           this.formSubmissionDto
         )
         .then((response) => {
-          this.close();
+
+          location.reload();
           console.log(response);
           this.getBookPreviews();
+          
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    submitCheckboxForm(){
+      this.formSubmissionDto.push ({
+        id: this.formFields[0].id,
+        fieldValue: this.formFields[0].fieldValue,
+      }); 
+      console.log(this.formSubmissionDto);
+      axios
+      .post(
+          "http://localhost:8080/subminForm/" +
+            this.taskId +
+            "/" +
+            "checkbox",
+            this.formSubmissionDto
+        )
+        .then((response) => {
+          alert("If you checked YES, you can upload more books.\n If you checked NO, wait for board members decision.")
+          this.close();
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);

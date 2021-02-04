@@ -79,6 +79,26 @@ public class CamundaController {
         return new ResponseEntity<List<FormFieldsDto>>(dtos, HttpStatus.OK);
     }
 
+    @GetMapping("/form/{username}")
+    public ResponseEntity<List<FormFieldsDto>> getNextUserTasks(@PathVariable String username) {
+        // return new ResponseEntity<List<BookPrototypeDTO>>(bookPrototypeService.getAllEditorsBookPrototypes(username), HttpStatus.OK);
+
+        List<Task> tasks = taskService.createTaskQuery().taskAssigneeLike(username).list();
+        System.out.println(tasks.size());
+
+        List<FormFieldsDto> dtos = new ArrayList<FormFieldsDto>();
+        Task task = tasks.get(0);
+        System.out.println("TAAAASKKK KEEY:" + task.getTaskDefinitionKey());
+        String processInstanceId = task.getProcessInstanceId();
+        TaskFormData tfd = formService.getTaskFormData(task.getId());
+        List<FormField> properties = tfd.getFormFields();
+        FormFieldsDto formFieldsDto = new FormFieldsDto(task.getId(), processInstanceId, properties);
+        dtos.add(formFieldsDto);
+        System.out.println(formFieldsDto.getFormFields());
+
+        return new ResponseEntity<List<FormFieldsDto>>(dtos, HttpStatus.OK);
+    }
+    
     @GetMapping(path = "/getForm/{processId}", produces = "application/json")
     public @ResponseBody
     FormFieldsDto get(@PathVariable String processId) {
@@ -101,8 +121,12 @@ public class CamundaController {
         System.out.println(map.toString());
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
-        if(variableName.equals("boardMemberDecision")) {
-        	camundaService.addBoardMemberDecision(processInstanceId, dto);
+        if(variableName.equals("boardMemberDecisions")) {
+        	camundaService.makeAndFillList(processInstanceId, dto.get(2).getFieldValue().toString(), variableName);
+        } else if (variableName.equals("mandatoryBooksPaths")) {
+        	camundaService.makeAndFillList(processInstanceId, dto.get(0).getFieldValue().toString(), variableName);
+        } else {
+        	runtimeService.setVariable(processInstanceId, variableName, dto);
         }
         formService.submitTaskForm(taskId, map);
         return new ResponseEntity<>(dto, HttpStatus.OK);

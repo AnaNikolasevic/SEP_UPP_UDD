@@ -23,8 +23,8 @@ public class MultipleEnumType extends EnumFormType{
     public String getName() {
         return "multiEnum_".concat(typeName);
     }
-
-    public TypedValue convertValue(TypedValue propertyValue) {
+    @Override
+	public TypedValue convertValue(TypedValue propertyValue) {
         Object value = propertyValue.getValue();
         return value == null ? Variables.stringValue((String) null, propertyValue.isTransient()) : Variables.stringValue(value.toString(), propertyValue.isTransient());
     }

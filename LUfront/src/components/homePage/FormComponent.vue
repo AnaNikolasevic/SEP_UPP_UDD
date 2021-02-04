@@ -1,6 +1,27 @@
 <template>
   <div>
     <div v-for="field in formFields" :key="field.id">
+      <div v-if="field.validationConstraints[0] != null && field.validationConstraints[0].name == 'readonly'">
+          <div class="mt-2" v-if="field.type.name == 'string'" >{{field.label}}: {{ field.defaultValue }}</div>
+          <div class="mt-2" v-if="field.type.name == 'multiEnum_booksPaths'">
+            <v-list flat>
+              <v-subheader>{{field.label}}</v-subheader>
+              <v-list-item-group>
+                <v-list-item v-for="(item, i) in field.type.values" :key="i">
+                <v-list-item-icon>
+                  <v-btn :href="item">                     
+                    <v-icon>mdi-file</v-icon>
+                  </v-btn>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item"></v-list-item-title>
+                </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </div>
+        </div>
+      <div v-else>
       <v-text-field
         :label="field.id"
         v-if="field.type.name == 'string'"
@@ -37,6 +58,7 @@
                truncate-length="15"
                v-model="field.fieldValue"
             ></v-file-input>
+      </div>
       </div>
     </div>
   </div>

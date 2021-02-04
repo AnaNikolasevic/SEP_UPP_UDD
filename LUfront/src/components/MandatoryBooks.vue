@@ -9,68 +9,41 @@
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
     <v-container class="pt-12 mt-12">
-      <v-row align="center">
-         <v-expansion-panels :popout="true" :multiple="true" :focusable="true">
-          <v-expansion-panel
-            v-for="writer in writers"
-            :key="writer.id"
-            class="detailsBorderColor"
+      <v-row dense>
+        <v-col
+          v-for="(formFieldUnit, i) in formFields"
+            :key="i"
+          cols="12"
+        >
+          <v-card
           >
-            <v-expansion-panel-header>
-              Writer {{ writer.firstName }} {{writer.lastName}}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <v-expansion-panels>
-                <v-expansion-panel
-                  v-for="mandatoryBook in writer.mandatoryBookList"
-                  :key="mandatoryBook.id"
-                  class="cardBorderColor"
-                >
-                  <v-expansion-panel-header>
-                    <v-row no-gutters>
-                      <v-col cols="4" class="primary--text">
-                        Book "{{ mandatoryBook.title }}"
-                      </v-col>
-                      <v-col cols="4" class="primary--text">
-                        <v-btn title="Open">                     
-                            <a
-                            :href="mandatoryBook.path"
-                            >
-                            <v-icon>mdi-file</v-icon>
-                            </a>
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                  </v-expansion-panel-header>
-                </v-expansion-panel>
-                <v-container fluid >
-                  <v-row>
-                    <v-col cols="9"></v-col>
-                    <v-col cols="1">
-                      <v-tooltip bottom color="white">
-                        <template v-slot:activator="{ on }">
-                          <v-btn icon v-on="on" color="yellow" @click="submitMandatoryBookEvaluationForm()">
-                            Vote
-                          </v-btn>
-                        </template>
-                        <span class="yellow--text">Vote</span>
-                      </v-tooltip>
-                    </v-col>
-                  </v-row>
-                  <v-row justify="center">
-                    <v-card-text>
-                      <v-container>
-                        <v-form ref="form">
-                          <FormComponent v-bind:formFields="formFields"> </FormComponent>
-                        </v-form>
-                      </v-container>
-                    </v-card-text>
-                  </v-row>
-                </v-container>
-              </v-expansion-panels>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
+            <div class="d-flex flex-no-wrap justify-space-between">
+              <div>
+                <v-card-title
+                ></v-card-title>
+                <v-row justify="center">
+                  <v-card-text>
+                    <v-container>
+                      <v-form ref="form">
+                          <FormComponent v-bind:formFields="formFieldUnit.formFields"> </FormComponent>
+                      </v-form>
+                    </v-container>
+                  </v-card-text>
+                </v-row>
+                <v-card-actions class="pr-10 pb-10">
+                  <v-tooltip bottom color="white">
+                    <template v-slot:activator="{ on }">
+                      <v-btn icon v-on="on" color="black" @click="submitMandatoryBookEvaluationForm(formFieldUnit.formFields)" justify="end">
+                        Vote
+                      </v-btn>
+                    </template>
+                    <span class="black--text">Vote</span>
+                  </v-tooltip>
+                </v-card-actions>
+              </div>
+            </div>
+          </v-card>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -98,39 +71,6 @@ export default {
     };
   },
   methods: {
-    acceptRequest(comment) {
-        comment.accepted = "true";
-        console.log(comment.accepted);
-      axios
-        .put("/addvertisment-service/comment", comment)
-        .then(response => {
-          this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Comment is accepted!";
-          console.log(response);
-          this.getComments();
-        })
-        .catch(error => {
-          this.snackbarDanger = true;
-          this.snackbarDangerText = "Error";
-          console.log(error);
-        });
-    },
-    declineRequest(comment) {
-        comment.accepted = "false";
-      axios
-        .put("/addvertisment-service/comment", comment)
-        .then(response => {
-          this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Comment is declined!";
-          console.log(response);
-          this.getComments();
-        })
-        .catch(error => {
-          this.snackbarDanger = true;
-          this.snackbarDangerText = "Error";
-          console.log(error);
-        });
-    },
     getWriters() {
       axios
         .get("http://localhost:8080/writer")
@@ -146,7 +86,7 @@ export default {
     loadMandatoryBookEvaluationForm() {
       axios.get("http://localhost:8080/form/" + this.$store.state.user.username + "/mandatoryBookEvaluationForm")
         .then((response) => {
-          this.formFields = response.data[0].formFields;
+          this.formFields = response.data;
           console.log(response);
           //this.$store.state.processID
           this.$store.commit("addProcessID", response.data.processInstanceId);
@@ -158,22 +98,25 @@ export default {
           console.log(error);
         });
     },
-    submitMandatoryBookEvaluationForm() {
+    submitMandatoryBookEvaluationForm(formFields) {
         let formSubmissionDto = new Array();
-        this.formFields.forEach((formField) => {
+        formFields.forEach((formField) => {
           formSubmissionDto.push({
             id: formField.id,
             fieldValue: formField.fieldValue,
           });
         });
         axios.post(
-          "http://localhost:8080/subminForm/" + this.taskId + "/boardMemberDecision",
+          "http://localhost:8080/subminForm/" + this.taskId + "/boardMemberDecisions",
           formSubmissionDto
         )
           .then((response) => {
+            alert("Done");
+            location.reload();
             console.log(response);
           })
           .catch((error) => {
+            alert("Error");
             console.log(error);
           });
     },

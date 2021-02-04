@@ -12,7 +12,7 @@ insert into board_member (id, city, country, email, enabled, first_name, last_na
     values (223, 'Novi Sad', 'Serbia', 'sv@gmail.com', 'true', 'Sara', 'Vukoje', 'sv', 'sv');
 insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
     values (224, 'Novi Sad', 'Serbia', 'mg@gmail.com', 'true', 'Milana', 'Galin', 'mg', 'mg');
-
+    
 insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
     values (113, 'Novi Sad', 'Serbia', 'mm@gmail.com', 'true', 'Masa', 'Matovic', 'mm', 'mm');
 insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
