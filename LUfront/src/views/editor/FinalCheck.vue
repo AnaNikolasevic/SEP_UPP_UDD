@@ -30,6 +30,7 @@
                     v-bind:pageName="pageName"
                   ></DefaultFormValues>
                   <v-btn color="primary" @click="upload(formFieldsDTO)">Upload</v-btn>
+                  <v-btn color="primary" @click="publish(formFieldsDTO)">Publish</v-btn>
                 </div>
               </v-card-text>
             </div>
@@ -67,12 +68,12 @@ export default {
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "UploadBook"
+            "FinalCheckByEditor"
         )
         .then((response) => {
           this.bookPreviews = response.data;
           console.log("Usaooo u responseee");
-          console.log(response);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -84,59 +85,74 @@ export default {
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
         console.log("usaooo u for")
         if (FormFieldsDTO.formFields[i].type.name == "file_upload") {
-          console.log("usaooo u if")
-             if (FormFieldsDTO.formFields[i].fieldValue == null){
+            console.log("usaooo u if")
+            let formSubmissionDto = new Array();
+            
+           
+            if (FormFieldsDTO.formFields[i].fieldValue == null){
                 this.snackbarDangerText="You must select a file"
                 this.snackbarDanger = true;
                 return;
             } else {
-                  let formSubmissionDto = new Array();
-                  var imageData = FormFieldsDTO.formFields[i].fieldValue;    
-                  const storageRef=firebase.storage().ref(`${imageData.name}`).put(imageData);
+                var imageData = FormFieldsDTO.formFields[i].fieldValue; 
+                const storageRef=firebase.storage().ref(`${imageData.name}`).put(imageData);
 
-                  storageRef.on(`state_changed`,snapshot=>{
+                storageRef.on(`state_changed`,snapshot=>{
                     this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-                  }, error=>{console.log(error.message)},
-                  ()=>{this.uploadValue=100;
+                }, error=>{console.log(error.message)},
+                ()=>{this.uploadValue=100;
                     storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-                      console.log("ovde ispiusujem url")
-                      console.log(url);
-                      formSubmissionDto.push({
-                        id: FormFieldsDTO.formFields[1].id,
-                        fieldValue: url,
-                        });   
-                      this.submitForm(formSubmissionDto, FormFieldsDTO); 
-                    
-                    
+                    console.log("ovde ispiusujem url")
+                    console.log(url);
+                    formSubmissionDto.push({
+                            id: FormFieldsDTO.formFields[2].id,
+                            fieldValue: url,
+                        });
+                    formSubmissionDto.push({
+                            id: "forPublish",
+                            fieldValue: false,
                     });
-                  }
+                    console.log(formSubmissionDto);
+                    this.submitForm(formSubmissionDto, FormFieldsDTO);  
+                    });
+                    }
                 );
-                }
-       }
+            }
+            
       }
+      }
+    },
+    publish(formFieldsDTO){
+        let formSubmissionDto = new Array();
+        formSubmissionDto.push({
+                id: "forPublish",
+                fieldValue: true,
+                });
+        this.submitForm(formSubmissionDto, formFieldsDTO);      
+                
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
       console.log("submit");
       console.log(formSubmissionDto);
-      console.log(FormFieldsDTO.formFields);     
+      console.log(FormFieldsDTO);     
       
-      axios
-        .post(
-          "http://localhost:8080/subminForm/" +
-            FormFieldsDTO.taskId +
-            "/" +
-            "form",
-          formSubmissionDto
-        )
-        .then((response) => {
-          this.close();
-          console.log(response);
-          this.getBookPreviews();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-         this.$router.go(this.$router.currentRoute);
+       axios
+         .post(
+           "http://localhost:8080/subminForm/" +
+             FormFieldsDTO.taskId +
+             "/" +
+             "form",
+           formSubmissionDto
+         )
+         .then((response) => {
+           this.close();
+           console.log(response);
+           this.getBookPreviews();
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+          this.$router.go(this.$router.currentRoute);
     },
   },
 

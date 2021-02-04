@@ -11,6 +11,11 @@ import ChooseBetaReaders from "../components/editor/ChooseBetaReaders.vue"
 
 import UploadBook from "../components/homePage/WriterComponents/UploadBook.vue";
 import UploadMandatory from "../components/UploadMandatory.vue"
+import CheckMistakes from "../views/lector/CheckMistakes.vue"
+import UploadEdidetBook from "../components/homePage/WriterComponents/UploadEditedBook.vue"
+import FinalCheck from "../views/editor/FinalCheck.vue"
+import FinalEdit from "../components/homePage/WriterComponents/FinalEdit.vue"
+import FinalApprovement from "../views/editor/FinalApprovement.vue"
 
 Vue.use(VueRouter)
 
@@ -74,6 +79,31 @@ const routes = [{
         name: "ChooseBetaReaders",
         component: ChooseBetaReaders,
     },
+    {
+        path: "/checkMistakes",
+        name: "CheckMistakes",
+        component: CheckMistakes,
+    },
+    {
+        path: "/uploadEdidetBook",
+        name: "UploadEdidetBook",
+        component: UploadEdidetBook,
+    },
+    {
+        path: "/finalChceck",
+        name: "FinalCheck",
+        component: FinalCheck,
+    },
+    {
+        path: "/finalEdit",
+        name: "FinalEdit",
+        component: FinalEdit,
+    },
+    {
+        path: "/finalApprovement",
+        name: "FinalApprovement",
+        component: FinalApprovement
+    }
 
 ]
 

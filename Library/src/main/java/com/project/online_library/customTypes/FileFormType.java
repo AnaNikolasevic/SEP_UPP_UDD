@@ -20,7 +20,6 @@ public class FileFormType  extends SimpleFormFieldType {
             return propertyValue;
         } else {
             final Object value = propertyValue.getValue();
-            System.out.println("ISPISUJEEEEEM VREDNOOOST OVDEEE: " + value);
             return Variables.stringValue((String) value);
         }
     }
