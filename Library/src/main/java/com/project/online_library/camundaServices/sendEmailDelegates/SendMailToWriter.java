@@ -25,6 +25,7 @@ public class SendMailToWriter implements JavaDelegate {
     @Autowired
     BookPrototypeRepository bookPrototypeRepository;
 
+
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 

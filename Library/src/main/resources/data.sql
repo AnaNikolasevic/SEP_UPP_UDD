@@ -13,12 +13,12 @@ insert into board_member (id, city, country, email, enabled, first_name, last_na
 insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
     values (224, 'Novi Sad', 'Serbia', 'mg@gmail.com', 'true', 'Milana', 'Galin', 'mg', 'mg');
 
-insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
-    values (113, 'Novi Sad', 'Serbia', 'mm@gmail.com', 'true', 'Masa', 'Matovic', 'mm', 'mm');
-insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
-    values (114, 'Novi Sad', 'Serbia', 'an@gmail.com', 'true', 'Ana', 'Nikolasevic', 'an', 'an');
-insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
-    values (115, 'Novi Sad', 'Serbia', 'ss@gmail.com', 'true', 'Stanislava', 'Skoric', 'ss', 'ss');
+-- insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
+--     values (113, 'Novi Sad', 'Serbia', 'mm@gmail.com', 'true', 'Masa', 'Matovic', 'mm', 'mm');
+-- insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
+--     values (114, 'Novi Sad', 'Serbia', 'an@gmail.com', 'true', 'Ana', 'Nikolasevic', 'an', 'an');
+-- insert into editor ( id, city, country, email, enabled, first_name, last_name, password, username)
+--     values (115, 'Novi Sad', 'Serbia', 'ss@gmail.com', 'true', 'Stanislava', 'Skoric', 'ss', 'ss');
 
 --insert into board_member (id, city, country, email, enabled, first_name, last_name, password, username)
 --    values (225, 'Novi Sad', 'Serbia', 'it@gmail.com', 'true', 'Isidora', 'Tepic', 'it', 'it');
@@ -43,6 +43,10 @@ insert into beta_reader ( id, city, country, email, enabled, first_name, last_na
     values (316, 'Novi Sad', 'Serbia', 'bm@gmail.com', 'true', 'Branko', 'Culibrk', 'bc', 'bc', 0);
 insert into beta_reader ( id, city, country, email, enabled, first_name, last_name, password, username, penalty_points)
     values (317, 'Novi Sad', 'Serbia', 'milicaculibrk7@gmail.com', 'true', 'Draginja', 'Culibrk', 'dc', 'dc', 4);
+
+insert into lector (id, city, country, email, enabled, first_name, last_name, password, username)
+    values (50, 'Novi Sad', 'Serbia', 'vm@gmail.com', 'true', 'Veljko', 'Matovic', 'vm', 'vm');
+
 
 insert into reader_genre(users_id_seq, genre_id)
     values (315, 1);

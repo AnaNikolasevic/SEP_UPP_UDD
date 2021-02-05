@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Choose if you want to send the book to beta-readers for review:</h1>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
       <span>{{ snackbarSuccessText }}</span>
@@ -27,11 +26,11 @@
               <v-card-text>
                 <div class="font-weight-bold headline">
                   <DefaultFormValues
-                    @accepted="accept"
-                    @denied="deny"
                     v-bind:formFieldsDTO="formFieldsDTO"
                     v-bind:pageName="pageName"
                   ></DefaultFormValues>
+                  <br/>
+                  <v-btn color="primary" @click="publish(formFieldsDTO)">Publish</v-btn>
                 </div>
               </v-card-text>
             </div>
@@ -56,82 +55,65 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      pageName: "ChooseToSendToBetaReaders",
-      interval: null,
+      pageName: "CheckBookPlagiarism",
+      uploadValue: 0
+      
     };
   },
   methods: {
-    getChooseToSendBetaReaders() {
+    getBookPreviews() {
       axios
         .get(
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "ChooseToSendToBetaReaders"
+            "EditorApprovement"
         )
         .then((response) => {
           this.bookPreviews = response.data;
+          console.log("Usaooo u responseee");
           console.log(response.data);
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
-    accept(FormFieldsDTO, formFields) {
-      console.log(formFields);
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = true;
-          let formSubmissionDto = new Array();
-          formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-          this.$router.push("/chooseBetaReaders");
-        }
-      }
-    },
-    deny(FormFieldsDTO, formFields) {
-      console.log(formFields);
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = false;
-          let formSubmissionDto = new Array();
-          formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-          this.$router.push("/");
-        }
-      }
+    publish(formFieldsDTO){
+        let formSubmissionDto = new Array();
+        formSubmissionDto.push({
+                id: "forPublish",
+                fieldValue: true,
+                });
+        this.submitForm(formSubmissionDto, formFieldsDTO);      
+                
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
-      axios
-        .post(
-          "http://localhost:8080/subminForm/" +
-            FormFieldsDTO.taskId +
-            "/" +
-            "form",
-          formSubmissionDto
-        )
-        .then((response) => {
-          this.close();
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      console.log("submit");
+      console.log(formSubmissionDto);
+      console.log(FormFieldsDTO);     
+      
+       axios
+         .post(
+           "http://localhost:8080/subminForm/" +
+             FormFieldsDTO.taskId +
+             "/" +
+             "form",
+           formSubmissionDto
+         )
+         .then((response) => {
+           this.close();
+           console.log(response);
+           this.getBookPreviews();
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+          this.$router.go(this.$router.currentRoute);
     },
   },
+
   mounted() {
-    //this.$forceUpdate();
-    this.getChooseToSendBetaReaders();
+    this.getBookPreviews();
   },
 };
 </script>

@@ -17,13 +17,13 @@
       <bpmn:outgoing>Flow_0ngjoyh</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0e0liuh" sourceRef="StartEvent_1" targetRef="CheckBookForPlagiarism" />
-    <bpmn:sequenceFlow id="Flow_0ngjoyh" sourceRef="CheckBookForPlagiarism" targetRef="Gateway_1v8cjxx" />
+    <bpmn:sequenceFlow id="Flow_0ngjoyh" sourceRef="CheckBookForPlagiarism" targetRef="SetBookStatus" />
     <bpmn:exclusiveGateway id="Gateway_1v8cjxx">
-      <bpmn:incoming>Flow_0ngjoyh</bpmn:incoming>
+      <bpmn:incoming>Flow_0p6t6r1</bpmn:incoming>
       <bpmn:outgoing>isPlagiarism</bpmn:outgoing>
       <bpmn:outgoing>isNotPlagiarism</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sendTask id="SendMailIfPlagiarism" name="Send Mail If Plagiarism" camunda:class="com.project.online_library.camundaServices.sendEmailDelegates.SendIfPlagiarism">
+    <bpmn:sendTask id="SendMailIfPlagiarism" name="Send Mail If Plagiarism" camunda:class="com.project.online_library.camundaServices.sendEmailDelegates.SendMailToWriter">
       <bpmn:incoming>isPlagiarism</bpmn:incoming>
       <bpmn:outgoing>Flow_0nw965g</bpmn:outgoing>
     </bpmn:sendTask>
@@ -41,55 +41,66 @@
     <bpmn:sequenceFlow id="isNotPlagiarism" name="is Not Plagiarism" sourceRef="Gateway_1v8cjxx" targetRef="Event_19g5byw">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isPlagiarism==false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0p6t6r1" sourceRef="SetBookStatus" targetRef="Gateway_1v8cjxx" />
+    <bpmn:serviceTask id="SetBookStatus" name="Set Book Status" camunda:class="com.project.online_library.camundaServices.BookStatusDelegate">
+      <bpmn:incoming>Flow_0ngjoyh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p6t6r1</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:signal id="Signal_0ikcb6g" name="theBookIsPlagiarism" />
   <bpmn:signal id="Signal_1atgjbe" name="Signal_17daqq1" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Plagiarism">
-      <bpmndi:BPMNEdge id="Flow_0nw965g_di" bpmnElement="Flow_0nw965g">
-        <di:waypoint x="720" y="97" />
-        <di:waypoint x="852" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ngjoyh_di" bpmnElement="Flow_0ngjoyh">
-        <di:waypoint x="350" y="97" />
-        <di:waypoint x="445" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0e0liuh_di" bpmnElement="Flow_0e0liuh">
-        <di:waypoint x="215" y="97" />
-        <di:waypoint x="250" y="97" />
+      <bpmndi:BPMNEdge id="Flow_05r8ntj_di" bpmnElement="isNotPlagiarism">
+        <di:waypoint x="600" y="122" />
+        <di:waypoint x="600" y="232" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="608" y="179" width="83" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18opol7_di" bpmnElement="isPlagiarism">
-        <di:waypoint x="495" y="97" />
-        <di:waypoint x="620" y="97" />
+        <di:waypoint x="625" y="97" />
+        <di:waypoint x="750" y="97" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="527" y="79" width="63" height="14" />
+          <dc:Bounds x="657" y="79" width="63" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_05r8ntj_di" bpmnElement="isNotPlagiarism">
-        <di:waypoint x="470" y="122" />
-        <di:waypoint x="470" y="200" />
-        <di:waypoint x="832" y="200" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="504" y="183" width="83" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="Flow_0nw965g_di" bpmnElement="Flow_0nw965g">
+        <di:waypoint x="850" y="97" />
+        <di:waypoint x="982" y="97" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="79" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1is9at8_di" bpmnElement="CheckBookForPlagiarism">
-        <dc:Bounds x="250" y="57" width="100" height="80" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ngjoyh_di" bpmnElement="Flow_0ngjoyh">
+        <di:waypoint x="330" y="97" />
+        <di:waypoint x="410" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e0liuh_di" bpmnElement="Flow_0e0liuh">
+        <di:waypoint x="195" y="97" />
+        <di:waypoint x="230" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p6t6r1_di" bpmnElement="Flow_0p6t6r1">
+        <di:waypoint x="510" y="97" />
+        <di:waypoint x="575" y="97" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Gateway_1v8cjxx_di" bpmnElement="Gateway_1v8cjxx" isMarkerVisible="true">
-        <dc:Bounds x="445" y="72" width="50" height="50" />
+        <dc:Bounds x="575" y="72" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1pzp2h8_di" bpmnElement="SendMailIfPlagiarism">
-        <dc:Bounds x="620" y="57" width="100" height="80" />
+        <dc:Bounds x="750" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_17mhgd0_di" bpmnElement="Event_01pd9v8">
-        <dc:Bounds x="852" y="79" width="36" height="36" />
+        <dc:Bounds x="982" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="159" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1is9at8_di" bpmnElement="CheckBookForPlagiarism">
+        <dc:Bounds x="230" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tae202_di" bpmnElement="SetBookStatus">
+        <dc:Bounds x="410" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_19g5byw_di" bpmnElement="Event_19g5byw">
-        <dc:Bounds x="832" y="182" width="36" height="36" />
+        <dc:Bounds x="582" y="232" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
