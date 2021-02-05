@@ -31,7 +31,7 @@ public class MandatoryBookService implements JavaDelegate{
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO Auto-generated method stub
+		/*// TODO Auto-generated method stub
 		List<FormSubmissionDto> mandatoryBookVariable = (List<FormSubmissionDto>) execution.getVariable("mandatoryBook");
 		String username = (String) execution.getVariable("username");
 		Writer writer = writerRepository.findByUsername(username);
@@ -47,11 +47,11 @@ public class MandatoryBookService implements JavaDelegate{
         
         writer.setMandatoryBookList(mandatoryBookList);
         writerRepository.save(writer);
-        
+        */
         ArrayList<String> boardMemberUsernameList = new ArrayList<String>();
         for (BoardMember boardMember : boardMemberRepository.findAll()) {
-			boardMember.getWriterMembership().put(writer.getUsername(), WriterMembershipStatus.WAITING);
-			boardMemberRepository.save(boardMember);
+			//boardMember.getWriterMembership().put(writer.getUsername(), WriterMembershipStatus.WAITING);
+			//boardMemberRepository.save(boardMember);
 			boardMemberUsernameList.add(boardMember.getUsername());
 		}
         
