@@ -7,9 +7,11 @@ import MandatoryBooks from '../components/MandatoryBooks.vue'
 import BookPreview from "../views/editor/BookPreview.vue";
 import BookPlagiarism from "../views/editor/BookPlagiarism.vue"
 import ChooseToSendToBetaReaders from "../components/editor/ChooseToSendToBetaReaders.vue"
+import ReviewAfterComments from "../views/editor/ReviewAfterComments.vue";
+import ReviewBooks from "../views/betaReader/ReviewBooks.vue"
 import ChooseBetaReaders from "../components/editor/ChooseBetaReaders.vue"
-
 import UploadBook from "../components/homePage/WriterComponents/UploadBook.vue";
+import ViewComments from "../components/homePage/WriterComponents/ViewComments.vue";
 import UploadMandatory from "../components/UploadMandatory.vue"
 import CheckMistakes from "../views/lector/CheckMistakes.vue"
 import UploadEdidetBook from "../components/homePage/WriterComponents/UploadEditedBook.vue"
@@ -78,6 +80,21 @@ const routes = [{
         path: "/chooseBetaReaders",
         name: "ChooseBetaReaders",
         component: ChooseBetaReaders,
+    },
+    {
+        path: "/reviewBooks",
+        name: "ReviewBooks",
+        component: ReviewBooks,
+    },
+    {
+        path: "/viewComments",
+        name: "ViewComments",
+        component: ViewComments,
+    },
+    {
+        path: "/reviewAfterComments",
+        name: "ReviewAfterComments",
+        component: ReviewAfterComments,
     },
     {
         path: "/checkMistakes",

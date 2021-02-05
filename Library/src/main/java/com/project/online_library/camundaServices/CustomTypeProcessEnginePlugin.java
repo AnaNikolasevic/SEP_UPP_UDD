@@ -23,6 +23,7 @@ public class CustomTypeProcessEnginePlugin extends AbstractProcessEnginePlugin{
         List<AbstractFormFieldType> formTypes = processEngineConfiguration.getCustomFormTypes();
         formTypes.add(new MultipleEnumType("genres"));
         formTypes.add(new MultipleEnumType("betaReaders"));
+        formTypes.add(new MultipleEnumType("comments"));
         processEngineConfiguration.getCustomFormTypes().add(new FileFormType("upload"));
         processEngineConfiguration.getCustomFormTypes().add(new FileFormType("view"));
 

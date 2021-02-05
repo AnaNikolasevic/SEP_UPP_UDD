@@ -41,4 +41,5 @@ public class BookPrototypeService implements JavaDelegate {
         bookPrototypeRepository.save(bookPrototype);
 
     }
+
 }

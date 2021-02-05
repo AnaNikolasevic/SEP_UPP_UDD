@@ -2,38 +2,24 @@ package com.project.online_library.camundaHendlers;
 
 import com.project.online_library.model.BetaReader;
 import com.project.online_library.model.Genre;
-import com.project.online_library.repository.BetaReaderRepository;
-import com.project.online_library.repository.GenreRepository;
-import org.camunda.bpm.engine.FormService;
-import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
 import org.camunda.bpm.engine.impl.form.type.EnumFormType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class BetaReaderListener implements TaskListener {
-
-    @Autowired
-    BetaReaderRepository betaReaderRepository;
-
-    @Autowired
-    FormService formService;
-
-    @Autowired
-    TaskService taskService;
+public class CommentListener implements TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
 
-
-        String genre = (String) delegateTask.getVariable("genre");
+        ArrayList<String> comments = (ArrayList<String>) delegateTask.getVariable("comments");
 
         TaskFormData tfd = delegateTask.getExecution().getProcessEngineServices().getFormService().
                 getTaskFormData(delegateTask.getId());
@@ -41,21 +27,18 @@ public class BetaReaderListener implements TaskListener {
         List<FormField> formFieldList = tfd.getFormFields();
         if(formFieldList!=null){
             for(FormField field : formFieldList){
-                if( field.getId().equals("betaReaders")) {
+                if( field.getId().equals("comments")) {
                     EnumFormType enumFormType = (EnumFormType) field.getType();
                     Map<String, String> values = enumFormType.getValues();
                     values.clear();
-                    for (BetaReader betaReader : betaReaderRepository.findAll()) {
-                        for(Genre g : betaReader.getGenreBetaList()) {
-                            if(g.getName().equals(genre)) {
-                                values.put(betaReader.getUsername(), betaReader.getUsername());
-                                System.out.println(betaReader.getUsername());
-                                break;
-                            }
-                        }
+
+                    for (String comment : comments) {
+                        values.put(comment, comment);
+                        System.out.println(comment);
                     }
                 }
             }
         }
+
     }
 }

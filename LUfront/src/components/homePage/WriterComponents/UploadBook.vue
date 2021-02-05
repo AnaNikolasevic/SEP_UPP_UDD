@@ -29,7 +29,9 @@
                     v-bind:formFieldsDTO="formFieldsDTO"
                     v-bind:pageName="pageName"
                   ></DefaultFormValues>
-                  <v-btn color="primary" @click="upload(formFieldsDTO)">Upload</v-btn>
+                  <v-btn color="primary" @click="upload(formFieldsDTO)"
+                    >Upload</v-btn
+                  >
                 </div>
               </v-card-text>
             </div>
@@ -43,7 +45,7 @@
 <script>
 import axios from "axios";
 import DefaultFormValues from "@/components/editor/DefaultFormValues.vue";
-import firebase from 'firebase'
+import firebase from "firebase";
 export default {
   components: {
     DefaultFormValues,
@@ -56,8 +58,7 @@ export default {
       snackbarDangerText: "",
       bookPreviews: [],
       pageName: "CheckBookPlagiarism",
-      uploadValue: 0
-      
+      uploadValue: 0,
     };
   },
   methods: {
@@ -78,11 +79,11 @@ export default {
           console.log(error);
         });
     },
-    upload(FormFieldsDTO){
-      console.log("usaooo u upload")
+    upload(FormFieldsDTO) {
+      console.log("usaooo u upload");
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        console.log("usaooo u for")
+        console.log("usaooo u for");
         if (FormFieldsDTO.formFields[i].type.name == "file_upload") {
           console.log("usaooo u if")
              if (FormFieldsDTO.formFields[i].fieldValue == null){
@@ -118,8 +119,8 @@ export default {
     submitForm(formSubmissionDto, FormFieldsDTO) {
       console.log("submit");
       console.log(formSubmissionDto);
-      console.log(FormFieldsDTO.formFields);     
-      
+      console.log(FormFieldsDTO.formFields);
+
       axios
         .post(
           "http://localhost:8080/subminForm/" +
@@ -136,7 +137,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-         this.$router.go(this.$router.currentRoute);
+      this.$router.go(this.$router.currentRoute);
     },
   },
 

@@ -9,6 +9,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,12 +27,20 @@ public class BookStatusDelegate implements JavaDelegate {
 
         Boolean isInterestedInBook = null;
         Boolean isPlagiarism = null;
+        ArrayList<String> betaReadersUsernameList = null;
+        ArrayList<String> punishedBetaReaders = null;
 
         if((Boolean)delegateExecution.getVariable("isInterestedInBook") != null){
             isInterestedInBook = (Boolean)delegateExecution.getVariable("isInterestedInBook");
         }
         if((Boolean)delegateExecution.getVariable("isPlagiarism") != null){
             isPlagiarism = (Boolean)delegateExecution.getVariable("isPlagiarism");
+        }
+        if((ArrayList<String>)delegateExecution.getVariable("betaReadersUsernameList") != null){
+            betaReadersUsernameList = (ArrayList<String>)delegateExecution.getVariable("betaReadersUsernameList");
+        }
+        if((ArrayList<String>)delegateExecution.getVariable("punishedBetaReaders") != null){
+            punishedBetaReaders = (ArrayList<String>)delegateExecution.getVariable("punishedBetaReaders");
         }
 
 
@@ -44,8 +53,8 @@ public class BookStatusDelegate implements JavaDelegate {
         }else if(isPlagiarism != null && isPlagiarism && bookPrototype.getBookStatus().equals(BookStatus.INTERESTED)){
             bookPrototype.setBookStatus(BookStatus.PLAGIARISM);
             System.out.println(bookPrototype.getBookStatus() + "---------------");
-        }else if(isPlagiarism != null && !isPlagiarism && bookPrototype.getBookStatus().equals(BookStatus.INTERESTED)){
-            bookPrototype.setBookStatus(BookStatus.ACCEPTED);
+        }else if(betaReadersUsernameList != null && bookPrototype.getBookStatus().equals(BookStatus.INTERESTED)) {
+            bookPrototype.setBookStatus(BookStatus.COMMENTED);
             System.out.println(bookPrototype.getBookStatus() + "---------------");
         }
 
