@@ -4,7 +4,6 @@ import org.camunda.bpm.engine.impl.form.type.SimpleFormFieldType;
 import org.camunda.bpm.engine.variable.Variables;
 import org.camunda.bpm.engine.variable.value.FileValue;
 import org.camunda.bpm.engine.variable.value.TypedValue;
-import org.camunda.feel.syntaxtree.Val;
 
 public class FileFormType  extends SimpleFormFieldType {
 
@@ -21,7 +20,6 @@ public class FileFormType  extends SimpleFormFieldType {
             return propertyValue;
         } else {
             final Object value = propertyValue.getValue();
-            System.out.println("ISPISUJEEEEEM VREDNOOOST OVDEEE: " + value);
             return Variables.stringValue((String) value);
         }
     }

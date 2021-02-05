@@ -55,62 +55,62 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      timer: "",
-      pageName: "BookPreview",
+      pageName: "ReviewAfterComments",
+      interval: null,
     };
   },
   methods: {
-    getBookPreviews() {
+    getReviewAterComments() {
       axios
         .get(
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "AcceptBookReveiwForm"
+            "ReviewAfterComments"
         )
         .then((response) => {
           this.bookPreviews = response.data;
+          console.log(response.data);
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
     accept(FormFieldsDTO, formFields) {
-      console.log(formFields);
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = true;
-          let formSubmissionDto = new Array();
+      let formSubmissionDto = new Array();
+      formFields.forEach((formField) => {
+        if (formField.defaultValue == null) {
+          if (formField.type.name == "boolean") {
+            formField.fieldValue = true;
+          }
           formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
+            id: formField.id,
+            fieldValue: formField.fieldValue,
           });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
         }
-      }
+      });
+      console.log(formSubmissionDto);
+      this.submitForm(formSubmissionDto, FormFieldsDTO);
     },
     deny(FormFieldsDTO, formFields) {
-      console.log(formFields);
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = false;
-          let formSubmissionDto = new Array();
+      let formSubmissionDto = new Array();
+      formFields.forEach((formField) => {
+        if (formField.defaultValue == null) {
+          if (formField.type.name == "boolean") {
+            formField.fieldValue = false;
+          }
           formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
+            id: formField.id,
+            fieldValue: formField.fieldValue,
           });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
         }
-      }
+      });
+      console.log(formSubmissionDto);
+      this.submitForm(formSubmissionDto, FormFieldsDTO);
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
-      console.log("submit");
-      console.log(formSubmissionDto);
-      console.log(FormFieldsDTO.formFields);     
-      
       axios
         .post(
           "http://localhost:8080/subminForm/" +
@@ -122,16 +122,15 @@ export default {
         .then((response) => {
           this.close();
           console.log(response);
-          this.getBookPreviews();
         })
         .catch((error) => {
           console.log(error);
         });
-      location.reload();
     },
   },
   mounted() {
-    this.getBookPreviews();
+    //this.$forceUpdate();
+    this.getReviewAterComments();
   },
 };
 </script>

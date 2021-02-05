@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Choose if you want to send the book to beta-readers for review:</h1>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
       <span>{{ snackbarSuccessText }}</span>
@@ -55,27 +56,29 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      timer: "",
-      pageName: "BookPreview",
+      pageName: "ChooseToSendToBetaReaders",
+      interval: null,
     };
   },
   methods: {
-    getBookPreviews() {
+    getChooseToSendBetaReaders() {
       axios
         .get(
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "AcceptBookReveiwForm"
+            "ChooseToSendToBetaReaders"
         )
         .then((response) => {
           this.bookPreviews = response.data;
+          console.log(response.data);
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
     accept(FormFieldsDTO, formFields) {
       console.log(formFields);
       let i = 0;
@@ -88,6 +91,7 @@ export default {
             fieldValue: FormFieldsDTO.formFields[i].value,
           });
           this.submitForm(formSubmissionDto, FormFieldsDTO);
+          this.$router.push("/chooseBetaReaders");
         }
       }
     },
@@ -103,14 +107,11 @@ export default {
             fieldValue: FormFieldsDTO.formFields[i].value,
           });
           this.submitForm(formSubmissionDto, FormFieldsDTO);
+          this.$router.push("/");
         }
       }
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
-      console.log("submit");
-      console.log(formSubmissionDto);
-      console.log(FormFieldsDTO.formFields);     
-      
       axios
         .post(
           "http://localhost:8080/subminForm/" +
@@ -122,16 +123,15 @@ export default {
         .then((response) => {
           this.close();
           console.log(response);
-          this.getBookPreviews();
         })
         .catch((error) => {
           console.log(error);
         });
-      location.reload();
     },
   },
   mounted() {
-    this.getBookPreviews();
+    //this.$forceUpdate();
+    this.getChooseToSendBetaReaders();
   },
 };
 </script>

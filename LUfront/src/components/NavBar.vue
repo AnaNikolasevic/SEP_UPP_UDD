@@ -38,7 +38,7 @@
           "
         />
       </div>
-      <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
+      <div class="mx-2" v-if="this.$store.state.user.role == 'writer'">
         <AddBook />
       </div>
       <v-btn
@@ -62,19 +62,55 @@
       <v-btn
         text
         color="primary"
-        @click="mandatoryUpload()"
-        v-if="this.$store.state.user.role=='writer'"
+        @click="openReviewBooks()"
+        v-if="this.$store.state.user.role == 'betaReader'"
       >
-        <span>Mandatory upload</span>
+        <span>Review Books</span>
         <v-icon right>mdi-book</v-icon>
       </v-btn>
       <v-btn
         text
         color="primary"
+        @click="mandatoryUpload()"
+        v-if="this.$store.state.user.role == 'writer'"
+      >
+        <span>Mandatory upload</span>
+        <v-icon right>mdi-book-arrow-up</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openUploadBook()"
+        v-if="this.$store.state.user.role == 'writer'"
+      >
+        <span>Upload new book</span>
+        <v-icon right>mdi-book-arrow-up</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         @click="manageWriters()"
-        v-if="this.$store.state.user.role=='boardMember'"
+        v-if="this.$store.state.user.role == 'boardMember'"
       >
         <span>Mandatory books</span>
+        <v-icon right>mdi-people</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="viewComments()"
+        v-if="this.$store.state.user.role == 'writer'"
+      >
+        <span>View Comments</span>
+        <v-icon right>mdi-people</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="reviewAfterComments()"
+        v-if="this.$store.state.user.role == 'editor'"
+      >
+        <span>Review after comments</span>
         <v-icon right>mdi-people</v-icon>
       </v-btn>
       <v-btn
@@ -91,11 +127,56 @@
         v-if="this.$store.state.user.role == 'editor'"
       >
         <span @click="openBookPlagiarism()">Check Book Plagiarsim</span>
+        <v-icon right>mdi-book-search</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openCheckMistakes()"
+        v-if="this.$store.state.user.role=='lector'"
+      >
+        <span>Review books</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openUploadEditedBook()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span>Books to edit</span>
+        <v-icon right>mdi-book-edit</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openFinalCheck()"
+        v-if="this.$store.state.user.role=='editor'"
+      >
+        <span>Final check</span>
+        <v-icon right>mdi-book-check</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openFinalEdit()"
+        v-if="this.$store.state.user.role=='writer'"
+      >
+        <span>Final edit</span>
+        <v-icon right>mdi-book-edit</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openFinalApprovement()"
+        v-if="this.$store.state.user.role=='editor'"
+      >
+        <span>Publish</span>
+        <v-icon right>mdi-publish</v-icon>
       </v-btn>
       <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
         <span @click="logout()">Logout</span>
         <v-icon right>mdi-close</v-icon>
-
       </v-btn>
     </v-toolbar>
   </nav>
@@ -139,11 +220,35 @@ export default {
     openBookPreview() {
       this.$router.push("/bookPreview");
     },
-    openBookPlagiarism(){
-       this.$router.push("/bookPlagiarism");
+    openBookPlagiarism() {
+      this.$router.push("/bookPlagiarism");
     },
-    openUploadBook(){
-         this.$router.push("/uploadBook");
+    openUploadBook() {
+      this.$router.push("/uploadBook");
+    },
+    openReviewBooks() {
+      this.$router.push("/reviewBooks");
+    },
+    viewComments() {
+      this.$router.push("/viewComments");
+    },
+    reviewAfterComments() {
+      this.$router.push("/reviewAfterComments");
+    },
+    openCheckMistakes(){
+      this.$router.push("/checkMistakes")
+    },
+    openUploadEditedBook(){
+      this.$router.push("/uploadEdidetBook")
+    },
+    openFinalCheck(){
+      this.$router.push("/finalChceck")
+    },
+    openFinalEdit(){
+      this.$router.push("/finalEdit")
+    },
+    openFinalApprovement(){
+      this.$router.push("/finalApprovement")
     },
     logout() {
       localStorage.removeItem("user");

@@ -55,41 +55,41 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      timer: "",
-      pageName: "BookPreview",
+      pageName: "ReviewBooks",
     };
   },
   methods: {
-    getBookPreviews() {
+    getBooksToComment() {
       axios
         .get(
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "AcceptBookReveiwForm"
+            "AddComment"
         )
         .then((response) => {
           this.bookPreviews = response.data;
-          console.log(response);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
     accept(FormFieldsDTO, formFields) {
-      console.log(formFields);
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = true;
-          let formSubmissionDto = new Array();
+      let formSubmissionDto = new Array();
+      formFields.forEach((formField) => {
+        if (formField.defaultValue == null) {
+          if (formField.type.name == "boolean") {
+            formField.fieldValue = true;
+          }
           formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
+            id: formField.id,
+            fieldValue: formField.fieldValue,
           });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
         }
-      }
+      });
+      console.log(formSubmissionDto);
+      this.submitForm(formSubmissionDto, FormFieldsDTO);
     },
     deny(FormFieldsDTO, formFields) {
       console.log(formFields);
@@ -103,14 +103,12 @@ export default {
             fieldValue: FormFieldsDTO.formFields[i].value,
           });
           this.submitForm(formSubmissionDto, FormFieldsDTO);
+          //this.$router.push("/chooseToSendToBetaReaders");
         }
       }
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
-      console.log("submit");
       console.log(formSubmissionDto);
-      console.log(FormFieldsDTO.formFields);     
-      
       axios
         .post(
           "http://localhost:8080/subminForm/" +
@@ -122,16 +120,16 @@ export default {
         .then((response) => {
           this.close();
           console.log(response);
-          this.getBookPreviews();
         })
         .catch((error) => {
           console.log(error);
         });
-      location.reload();
+      this.$router.go(this.$router.currentRoute);
     },
   },
+
   mounted() {
-    this.getBookPreviews();
+    this.getBooksToComment();
   },
 };
 </script>

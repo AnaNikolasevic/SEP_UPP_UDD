@@ -26,11 +26,11 @@
               <v-card-text>
                 <div class="font-weight-bold headline">
                   <DefaultFormValues
-                    @accepted="accept"
-                    @denied="deny"
                     v-bind:formFieldsDTO="formFieldsDTO"
                     v-bind:pageName="pageName"
                   ></DefaultFormValues>
+                  <br/>
+                  <v-btn color="primary" @click="publish(formFieldsDTO)">Publish</v-btn>
                 </div>
               </v-card-text>
             </div>
@@ -55,8 +55,9 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      timer: "",
-      pageName: "BookPreview",
+      pageName: "CheckBookPlagiarism",
+      uploadValue: 0
+      
     };
   },
   methods: {
@@ -66,70 +67,51 @@ export default {
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "AcceptBookReveiwForm"
+            "EditorApprovement"
         )
         .then((response) => {
           this.bookPreviews = response.data;
-          console.log(response);
+          console.log("Usaooo u responseee");
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    accept(FormFieldsDTO, formFields) {
-      console.log(formFields);
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = true;
-          let formSubmissionDto = new Array();
-          formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-        }
-      }
-    },
-    deny(FormFieldsDTO, formFields) {
-      console.log(formFields);
-      let i = 0;
-      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
-        if (FormFieldsDTO.formFields[i].type.name == "boolean") {
-          FormFieldsDTO.formFields[i].value = false;
-          let formSubmissionDto = new Array();
-          formSubmissionDto.push({
-            id: FormFieldsDTO.formFields[i].id,
-            fieldValue: FormFieldsDTO.formFields[i].value,
-          });
-          this.submitForm(formSubmissionDto, FormFieldsDTO);
-        }
-      }
+    publish(formFieldsDTO){
+        let formSubmissionDto = new Array();
+        formSubmissionDto.push({
+                id: "forPublish",
+                fieldValue: true,
+                });
+        this.submitForm(formSubmissionDto, formFieldsDTO);      
+                
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
       console.log("submit");
       console.log(formSubmissionDto);
-      console.log(FormFieldsDTO.formFields);     
+      console.log(FormFieldsDTO);     
       
-      axios
-        .post(
-          "http://localhost:8080/subminForm/" +
-            FormFieldsDTO.taskId +
-            "/" +
-            "form",
-          formSubmissionDto
-        )
-        .then((response) => {
-          this.close();
-          console.log(response);
-          this.getBookPreviews();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      location.reload();
+       axios
+         .post(
+           "http://localhost:8080/subminForm/" +
+             FormFieldsDTO.taskId +
+             "/" +
+             "form",
+           formSubmissionDto
+         )
+         .then((response) => {
+           this.close();
+           console.log(response);
+           this.getBookPreviews();
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+          this.$router.go(this.$router.currentRoute);
     },
   },
+
   mounted() {
     this.getBookPreviews();
   },

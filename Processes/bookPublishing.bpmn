@@ -77,8 +77,8 @@
       <bpmn:incoming>Flow_02pw5xe</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_02pw5xe" sourceRef="Event_0lf8kzp" targetRef="Event_09wus3j" />
-    <bpmn:sequenceFlow id="Flow_1hj3nhx" sourceRef="CheckPlagiarism" targetRef="ChooseToSendBetaReaders" />
-    <bpmn:userTask id="ChooseToSendBetaReaders" name="Choose To Send To Beta Readers">
+    <bpmn:sequenceFlow id="Flow_1hj3nhx" sourceRef="CheckPlagiarism" targetRef="ChooseToSendToBetaReaders" />
+    <bpmn:userTask id="ChooseToSendToBetaReaders" name="Choose To Send To Beta Readers" camunda:assignee="${editorId}">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="isSentToBetaReaders" label="is Sent To Beta Readers" type="boolean" />
@@ -92,7 +92,7 @@
       <bpmn:outgoing>isNotSentToBetaReadres</bpmn:outgoing>
       <bpmn:outgoing>isSentToBetaReadres</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0o5xf6j" sourceRef="ChooseToSendBetaReaders" targetRef="Gateway_0q0kkrr" />
+    <bpmn:sequenceFlow id="Flow_0o5xf6j" sourceRef="ChooseToSendToBetaReaders" targetRef="Gateway_0q0kkrr" />
     <bpmn:sequenceFlow id="isNotSentToBetaReadres" name="is Not Sent To Beta Readres" sourceRef="Gateway_0q0kkrr" targetRef="addLectorToBook">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isSentToBetaReaders == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -159,15 +159,50 @@ odlučuje da li rukopisu treba još izmena ili se šalje lektoru.</bpmn:text>
   </bpmn:category>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bookPublishing">
-      <bpmndi:BPMNShape id="TextAnnotation_1hsirdr_di" bpmnElement="TextAnnotation_1hsirdr">
-        <dc:Bounds x="1210" y="545" width="100" height="55" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1g6p9d4_di" bpmnElement="TextAnnotation_1g6p9d4">
-        <dc:Bounds x="1190" y="650" width="120" height="161" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1ca6te1_di" bpmnElement="TextAnnotation_1ca6te1">
-        <dc:Bounds x="1670" y="80" width="100" height="84" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_13chgka_di" bpmnElement="Flow_13chgka">
+        <di:waypoint x="1670" y="207" />
+        <di:waypoint x="1810" y="207" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13sctym_di" bpmnElement="Flow_13sctym">
+        <di:waypoint x="1460" y="690" />
+        <di:waypoint x="1515" y="690" />
+        <di:waypoint x="1515" y="237" />
+        <di:waypoint x="1570" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rorlqc_di" bpmnElement="Flow_0rorlqc">
+        <di:waypoint x="1410" y="600" />
+        <di:waypoint x="1410" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15al7sg_di" bpmnElement="Flow_15al7sg">
+        <di:waypoint x="1410" y="490" />
+        <di:waypoint x="1410" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09smlvy_di" bpmnElement="Flow_09smlvy">
+        <di:waypoint x="1410" y="380" />
+        <di:waypoint x="1410" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01q43hs_di" bpmnElement="isSentToBetaReadres">
+        <di:waypoint x="1410" y="232" />
+        <di:waypoint x="1410" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1332" y="260" width="75" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w06mdh_di" bpmnElement="isNotSentToBetaReadres">
+        <di:waypoint x="1435" y="207" />
+        <di:waypoint x="1570" y="207" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1455" y="176" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o5xf6j_di" bpmnElement="Flow_0o5xf6j">
+        <di:waypoint x="1330" y="207" />
+        <di:waypoint x="1385" y="207" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hj3nhx_di" bpmnElement="Flow_1hj3nhx">
+        <di:waypoint x="1180" y="207" />
+        <di:waypoint x="1230" y="207" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02pw5xe_di" bpmnElement="Flow_02pw5xe">
         <di:waypoint x="1160" y="265" />
         <di:waypoint x="1160" y="322" />
@@ -212,50 +247,6 @@ odlučuje da li rukopisu treba još izmena ili se šalje lektoru.</bpmn:text>
         <di:waypoint x="215" y="207" />
         <di:waypoint x="240" y="207" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1hj3nhx_di" bpmnElement="Flow_1hj3nhx">
-        <di:waypoint x="1180" y="207" />
-        <di:waypoint x="1230" y="207" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0o5xf6j_di" bpmnElement="Flow_0o5xf6j">
-        <di:waypoint x="1330" y="207" />
-        <di:waypoint x="1385" y="207" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1w06mdh_di" bpmnElement="isNotSentToBetaReadres">
-        <di:waypoint x="1435" y="207" />
-        <di:waypoint x="1570" y="207" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1455" y="176" width="69" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_01q43hs_di" bpmnElement="isSentToBetaReadres">
-        <di:waypoint x="1410" y="232" />
-        <di:waypoint x="1410" y="300" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1332" y="260" width="75" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09smlvy_di" bpmnElement="Flow_09smlvy">
-        <di:waypoint x="1410" y="380" />
-        <di:waypoint x="1410" y="410" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_15al7sg_di" bpmnElement="Flow_15al7sg">
-        <di:waypoint x="1410" y="490" />
-        <di:waypoint x="1410" y="520" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rorlqc_di" bpmnElement="Flow_0rorlqc">
-        <di:waypoint x="1410" y="600" />
-        <di:waypoint x="1410" y="650" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_13sctym_di" bpmnElement="Flow_13sctym">
-        <di:waypoint x="1460" y="690" />
-        <di:waypoint x="1515" y="690" />
-        <di:waypoint x="1515" y="237" />
-        <di:waypoint x="1570" y="237" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_13chgka_di" bpmnElement="Flow_13chgka">
-        <di:waypoint x="1670" y="207" />
-        <di:waypoint x="1810" y="207" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="189" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -292,20 +283,20 @@ odlučuje da li rukopisu treba još izmena ili se šalje lektoru.</bpmn:text>
       <bpmndi:BPMNShape id="Event_09wus3j_di" bpmnElement="Event_09wus3j">
         <dc:Bounds x="1142" y="322" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0v7iyqp_di" bpmnElement="ChooseToSendBetaReaders">
+      <bpmndi:BPMNShape id="Activity_0v7iyqp_di" bpmnElement="ChooseToSendToBetaReaders">
         <dc:Bounds x="1230" y="167" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0q0kkrr_di" bpmnElement="Gateway_0q0kkrr" isMarkerVisible="true">
         <dc:Bounds x="1385" y="182" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0uf9e5v_di" bpmnElement="BetaReaders">
-        <dc:Bounds x="1360" y="520" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1o2bmuu_di" bpmnElement="ChooseBetaReaders">
         <dc:Bounds x="1360" y="300" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0jo75em_di" bpmnElement="AddBetaReadersToBook">
         <dc:Bounds x="1360" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uf9e5v_di" bpmnElement="BetaReaders">
+        <dc:Bounds x="1360" y="520" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ygzv24_di" bpmnElement="Activity_0ygzv24">
         <dc:Bounds x="1360" y="650" width="100" height="80" />
@@ -315,6 +306,30 @@ odlučuje da li rukopisu treba još izmena ili se šalje lektoru.</bpmn:text>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1mhhai5_di" bpmnElement="Activity_1mhhai5">
         <dc:Bounds x="1810" y="167" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_0km5xi3_di" bpmnElement="Group_0km5xi3">
+        <dc:Bounds x="1255" y="352" width="89" height="95" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1257" y="364" width="86" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1hsirdr_di" bpmnElement="TextAnnotation_1hsirdr">
+        <dc:Bounds x="1210" y="545" width="100" height="55" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1g6p9d4_di" bpmnElement="TextAnnotation_1g6p9d4">
+        <dc:Bounds x="1190" y="650" width="120" height="161" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1ca6te1_di" bpmnElement="TextAnnotation_1ca6te1">
+        <dc:Bounds x="1670" y="80" width="100" height="84" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11xr99k_di" bpmnElement="Event_0lf8kzp">
+        <dc:Bounds x="1142" y="229" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17e5vuw_di" bpmnElement="Event_1ehrf9g">
+        <dc:Bounds x="992" y="229" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0x1629d_di" bpmnElement="Event_0f2n4e9">
+        <dc:Bounds x="842" y="229" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_09ucvzs_di" bpmnElement="Association_09ucvzs">
         <di:waypoint x="1360" y="560" />
@@ -328,21 +343,6 @@ odlučuje da li rukopisu treba još izmena ili se šalje lektoru.</bpmn:text>
         <di:waypoint x="1656" y="167" />
         <di:waypoint x="1670" y="151" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_11xr99k_di" bpmnElement="Event_0lf8kzp">
-        <dc:Bounds x="1142" y="229" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17e5vuw_di" bpmnElement="Event_1ehrf9g">
-        <dc:Bounds x="992" y="229" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0x1629d_di" bpmnElement="Event_0f2n4e9">
-        <dc:Bounds x="842" y="229" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Group_0km5xi3_di" bpmnElement="Group_0km5xi3">
-        <dc:Bounds x="1255" y="352" width="89" height="95" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1257" y="364" width="86" height="66" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

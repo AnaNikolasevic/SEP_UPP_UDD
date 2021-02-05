@@ -52,9 +52,6 @@
       <bpmn:outgoing>Flow_0mymlzk</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_1bzmebi" sourceRef="SendEmailToEditor" targetRef="ReviewBookPrototype" />
-    <bpmn:endEvent id="Event_1dwsfyq">
-      <bpmn:incoming>Flow_10csp8l</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0mymlzk" sourceRef="ReviewBookPrototype" targetRef="WriterUploadBook" />
     <bpmn:endEvent id="Event_0ujcjp4">
       <bpmn:incoming>Flow_048gqp5</bpmn:incoming>
@@ -64,14 +61,13 @@
       <bpmn:signalEventDefinition id="SignalEventDefinition_1r0mm3n" signalRef="Signal_1lf17mv" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_048gqp5" sourceRef="Event_1d8276x" targetRef="Event_0ujcjp4" />
-    <bpmn:sequenceFlow id="Flow_10csp8l" sourceRef="CheckPlagiarism" targetRef="Event_1dwsfyq" />
     <bpmn:callActivity id="CheckPlagiarism" name="Check Plagiarism" calledElement="Plagiarism">
       <bpmn:extensionElements>
         <camunda:in variables="all" />
         <camunda:out variables="all" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0g5we4f</bpmn:incoming>
-      <bpmn:outgoing>Flow_10csp8l</bpmn:outgoing>
+      <bpmn:incoming>Flow_0bwyi1k</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p2z589</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:boundaryEvent id="Event_0384ryr" name="the Book Is Plagiarism" attachedToRef="CheckPlagiarism">
       <bpmn:outgoing>Flow_09z4me5</bpmn:outgoing>
@@ -81,102 +77,519 @@
       <bpmn:incoming>Flow_09z4me5</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_09z4me5" sourceRef="Event_0384ryr" targetRef="Event_0tnho9y" />
-    <bpmn:sequenceFlow id="Flow_0g5we4f" sourceRef="WriterUploadBook" targetRef="CheckPlagiarism" />
+    <bpmn:userTask id="ChooseToSendToBetaReaders" name="Choose To Send To Beta Readers" camunda:assignee="${editorId}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="isSentToBetaReaders" label="is Sent To Beta Readers" type="boolean" />
+          <camunda:formField id="title" label="title" type="string" defaultValue="${title}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0p2z589</bpmn:incoming>
+      <bpmn:outgoing>Flow_1iqlftj</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1iqlftj" sourceRef="ChooseToSendToBetaReaders" targetRef="Gateway_06qvm2r" />
+    <bpmn:exclusiveGateway id="Gateway_06qvm2r">
+      <bpmn:incoming>Flow_1iqlftj</bpmn:incoming>
+      <bpmn:outgoing>isNotSentToBetaReadres</bpmn:outgoing>
+      <bpmn:outgoing>isSentToBetaReadres</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="isNotSentToBetaReadres" name="is Not Sent To Beta Readres" sourceRef="Gateway_06qvm2r" targetRef="LectorChecksForMistakes">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isSentToBetaReaders == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="ChooseBetaReaders" name="Choose Beta Readers" camunda:assignee="${editorId}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="betaReaders" label="Beta Readers" type="multiEnum_betaReaders" />
+          <camunda:formField id="title" label="Title" type="string" defaultValue="${title}" />
+          <camunda:formField id="send" label="Send" type="boolean" />
+        </camunda:formData>
+        <camunda:taskListener delegateExpression="${betaReaderListener}" event="create" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>isSentToBetaReadres</bpmn:incoming>
+      <bpmn:outgoing>Flow_1iqi2a4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="isSentToBetaReadres" name="is Sent To Beta Readres" sourceRef="Gateway_06qvm2r" targetRef="ChooseBetaReaders">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isSentToBetaReaders == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1iqi2a4" sourceRef="ChooseBetaReaders" targetRef="BetaReaders" />
     <bpmn:callActivity id="WriterUploadBook" name="Writer Upload Book" calledElement="WriterUploadBook">
       <bpmn:extensionElements>
         <camunda:in variables="all" />
         <camunda:out variables="all" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0mymlzk</bpmn:incoming>
-      <bpmn:outgoing>Flow_0g5we4f</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1m6g0z6</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:serviceTask id="GetPotentialPlagiarism" name="Get Potential Plagiarism" camunda:class="com.project.online_library.camundaServices.GeneratePotentialPlagiarism">
+      <bpmn:incoming>Flow_1m6g0z6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bwyi1k</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1m6g0z6" sourceRef="WriterUploadBook" targetRef="GetPotentialPlagiarism" />
+    <bpmn:sequenceFlow id="Flow_0bwyi1k" sourceRef="GetPotentialPlagiarism" targetRef="CheckPlagiarism" />
+    <bpmn:sequenceFlow id="Flow_0p2z589" sourceRef="CheckPlagiarism" targetRef="ChooseToSendToBetaReaders" />
+    <bpmn:sequenceFlow id="Flow_0jzfed8" sourceRef="LectorChecksForMistakes" targetRef="Gateway_1v5bcwo" />
+    <bpmn:userTask id="LectorChecksForMistakes" name="Lector Checks For Mistakes" camunda:assignee="${lector}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="title" type="string" defaultValue="${title}" />
+          <camunda:formField id="file_view" type="file_view" defaultValue="${uploadFile}" />
+          <camunda:formField id="uploadFile" type="file_upload" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>doesntneedmorechanges</bpmn:incoming>
+      <bpmn:incoming>Flow_1nfizgw</bpmn:incoming>
+      <bpmn:incoming>isNotSentToBetaReadres</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jzfed8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1v5bcwo">
+      <bpmn:incoming>Flow_0jzfed8</bpmn:incoming>
+      <bpmn:outgoing>BookHasErrors</bpmn:outgoing>
+      <bpmn:outgoing>BookHasNoErrors</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="BookHasErrors" name="Book Has Errors" sourceRef="Gateway_1v5bcwo" targetRef="NotufyWriter">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${mistakes == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="BookHasNoErrors" name="Book Has No Errors" sourceRef="Gateway_1v5bcwo" targetRef="FinalCheckByEditor">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${mistakes == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1w7ws3i">
+      <bpmn:incoming>Flow_1ownhdx</bpmn:incoming>
+      <bpmn:incoming>Flow_0syef10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1loemtu" sourceRef="NotufyWriter" targetRef="UploadEditedBook" />
+    <bpmn:userTask id="FinalCheckByEditor" name="Final Check By Editor" camunda:assignee="${editorId}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="title" type="string" defaultValue="${title}" />
+          <camunda:formField id="showFile" type="file_view" defaultValue="${uploadFile}" />
+          <camunda:formField id="uploadFile" type="file_upload" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>BookHasNoErrors</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cy5crz</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0cy5crz" sourceRef="FinalCheckByEditor" targetRef="Gateway_00auzj7" />
+    <bpmn:sendTask id="NotufyWriter" name="Notify Writer " camunda:class="com.project.online_library.camundaServices.sendEmailDelegates.BookChangedNotification">
+      <bpmn:incoming>BookHasErrors</bpmn:incoming>
+      <bpmn:outgoing>Flow_1loemtu</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_0mz3354" sourceRef="UploadEditedBook" targetRef="SaveNewVerisonOfBook" />
+    <bpmn:userTask id="UploadEditedBook" name="Upload Edited Book" camunda:assignee="${writer}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="title" type="string" defaultValue="${title}" />
+          <camunda:formField id="fileView" type="file_view" defaultValue="${uploadFile}" />
+          <camunda:formField id="uploadFile" type="file_upload" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1loemtu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mz3354</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="SaveNewVerisonOfBook" name="Save New Verison Of Book" camunda:class="com.project.online_library.service.BookPrototypeService">
+      <bpmn:incoming>Flow_0mz3354</bpmn:incoming>
+      <bpmn:outgoing>Flow_00orvz6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_00orvz6" sourceRef="SaveNewVerisonOfBook" targetRef="Gateway_1dh1ep0" />
+    <bpmn:exclusiveGateway id="Gateway_00auzj7">
+      <bpmn:incoming>Flow_0cy5crz</bpmn:incoming>
+      <bpmn:incoming>Flow_16vw7ys</bpmn:incoming>
+      <bpmn:outgoing>ForPublish</bpmn:outgoing>
+      <bpmn:outgoing>NotForPublish</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="ForPublish" name="For Publish" sourceRef="Gateway_00auzj7" targetRef="PublishBook">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${forPublish == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="NotForPublish" name="Not For Publish" sourceRef="Gateway_00auzj7" targetRef="FinalEditByWriter">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${forPublish == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="FinalEditByWriter" name="Final Edit By Writer" camunda:assignee="${writer}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="title" type="string" defaultValue="${title}" />
+          <camunda:formField id="finalEdit" type="file_view" defaultValue="${uploadFile}" />
+          <camunda:formField id="uploadFile" type="file_upload" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>NotForPublish</bpmn:incoming>
+      <bpmn:outgoing>Flow_073eljw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1ownhdx" sourceRef="PublishBook" targetRef="Event_1w7ws3i" />
+    <bpmn:serviceTask id="PublishBook" name="Publish Book" camunda:class="com.project.online_library.camundaServices.PublishBook">
+      <bpmn:incoming>ForPublish</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ownhdx</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_073eljw" sourceRef="FinalEditByWriter" targetRef="SaveFinalVersion" />
+    <bpmn:userTask id="EditorApprovement" name="Editor Approvement" camunda:assignee="${editorId}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="title" type="string" defaultValue="${title}" />
+          <camunda:formField id="finalView" type="file_view" defaultValue="${uploadFile}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18kwrxh</bpmn:incoming>
+      <bpmn:outgoing>Flow_16vw7ys</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_18kwrxh" sourceRef="SaveFinalVersion" targetRef="EditorApprovement" />
+    <bpmn:serviceTask id="SaveFinalVersion" name="Save Final Version" camunda:class="com.project.online_library.service.BookPrototypeService">
+      <bpmn:incoming>Flow_073eljw</bpmn:incoming>
+      <bpmn:outgoing>Flow_18kwrxh</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_19emo9z" attachedToRef="FinalEditByWriter">
+      <bpmn:outgoing>Flow_0syef10</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1cjafai">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT48H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0syef10" sourceRef="Event_19emo9z" targetRef="Event_1w7ws3i" />
+    <bpmn:sequenceFlow id="Flow_16vw7ys" sourceRef="EditorApprovement" targetRef="Gateway_00auzj7" />
+    <bpmn:callActivity id="BetaReaders" name="Beta Readers" calledElement="betaReaders">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+        <camunda:out variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1iqi2a4</bpmn:incoming>
+      <bpmn:outgoing>Flow_10zmjew</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:userTask id="UploadNewVersion" name="Upload New Version" camunda:assignee="${writer}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="title" label="Title" type="string" defaultValue="${title}" />
+          <camunda:formField id="uploadFile" label="Upload File" type="file_upload" />
+          <camunda:formField id="comments" label="Comments" type="multiEnum_comments" />
+        </camunda:formData>
+        <camunda:taskListener delegateExpression="${commentListener}" event="create" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>needsmorechanges</bpmn:incoming>
+      <bpmn:incoming>Flow_10zmjew</bpmn:incoming>
+      <bpmn:outgoing>Flow_0feeli5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="SaveBook" name="Save Book" camunda:class="com.project.online_library.service.BookPrototypeService">
+      <bpmn:incoming>Flow_0feeli5</bpmn:incoming>
+      <bpmn:outgoing>Flow_00z75or</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="ReviewAfterComments" name="Review After Comments" camunda:assignee="${editorId}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="needsMoreChanges" label="Needs More Changes" type="boolean" />
+          <camunda:formField id="title" label="Title" type="string" defaultValue="${title}" />
+          <camunda:formField id="file_view_comments" label="File View" type="file_view" defaultValue="${uploadFile}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00z75or</bpmn:incoming>
+      <bpmn:outgoing>Flow_06obuxb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1lxf0pm">
+      <bpmn:incoming>Flow_06obuxb</bpmn:incoming>
+      <bpmn:outgoing>needsmorechanges</bpmn:outgoing>
+      <bpmn:outgoing>doesntneedmorechanges</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0feeli5" sourceRef="UploadNewVersion" targetRef="SaveBook" />
+    <bpmn:sequenceFlow id="needsmorechanges" name="needs more changes" sourceRef="Gateway_1lxf0pm" targetRef="UploadNewVersion">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${needsMoreChanges == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_00z75or" sourceRef="SaveBook" targetRef="ReviewAfterComments" />
+    <bpmn:sequenceFlow id="Flow_06obuxb" sourceRef="ReviewAfterComments" targetRef="Gateway_1lxf0pm" />
+    <bpmn:sequenceFlow id="Flow_10zmjew" sourceRef="BetaReaders" targetRef="UploadNewVersion" />
+    <bpmn:sequenceFlow id="doesntneedmorechanges" name="doesnt need more changes" sourceRef="Gateway_1lxf0pm" targetRef="LectorChecksForMistakes">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${needsMoreChanges == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1dh1ep0">
+      <bpmn:incoming>Flow_00orvz6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nfizgw</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1nfizgw" sourceRef="Gateway_1dh1ep0" targetRef="LectorChecksForMistakes" />
   </bpmn:process>
   <bpmn:signal id="Signal_1j6g7px" name="PublishmentCanceled" />
   <bpmn:signal id="Signal_1lf17mv" name="BookDenied" />
   <bpmn:signal id="Signal_1md5ai6" name="theBookIsPlagiarism" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bookPublishing">
-      <bpmndi:BPMNEdge id="Flow_09z4me5_di" bpmnElement="Flow_09z4me5">
-        <di:waypoint x="1170" y="175" />
-        <di:waypoint x="1170" y="332" />
+      <bpmndi:BPMNEdge id="Flow_1qjf8yq_di" bpmnElement="doesntneedmorechanges">
+        <di:waypoint x="1855" y="800" />
+        <di:waypoint x="1910" y="800" />
+        <di:waypoint x="1900" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1865" y="806" width="89" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10csp8l_di" bpmnElement="Flow_10csp8l">
-        <di:waypoint x="1190" y="117" />
-        <di:waypoint x="1362" y="117" />
+      <bpmndi:BPMNEdge id="Flow_10zmjew_di" bpmnElement="Flow_10zmjew">
+        <di:waypoint x="1680" y="570" />
+        <di:waypoint x="1680" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06obuxb_di" bpmnElement="Flow_06obuxb">
+        <di:waypoint x="1730" y="920" />
+        <di:waypoint x="1830" y="920" />
+        <di:waypoint x="1830" y="825" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00z75or_di" bpmnElement="Flow_00z75or">
+        <di:waypoint x="1680" y="840" />
+        <di:waypoint x="1680" y="880" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gn4y69_di" bpmnElement="needsmorechanges">
+        <di:waypoint x="1830" y="775" />
+        <di:waypoint x="1830" y="690" />
+        <di:waypoint x="1730" y="690" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1762" y="743" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0feeli5_di" bpmnElement="Flow_0feeli5">
+        <di:waypoint x="1680" y="730" />
+        <di:waypoint x="1680" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16vw7ys_di" bpmnElement="Flow_16vw7ys">
+        <di:waypoint x="2700" y="730" />
+        <di:waypoint x="2970" y="730" />
+        <di:waypoint x="2970" y="320" />
+        <di:waypoint x="2390" y="320" />
+        <di:waypoint x="2390" y="388" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0syef10_di" bpmnElement="Flow_0syef10">
+        <di:waypoint x="2458" y="620" />
+        <di:waypoint x="2730" y="620" />
+        <di:waypoint x="2730" y="431" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18kwrxh_di" bpmnElement="Flow_18kwrxh">
+        <di:waypoint x="2440" y="730" />
+        <di:waypoint x="2600" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_073eljw_di" bpmnElement="Flow_073eljw">
+        <di:waypoint x="2390" y="640" />
+        <di:waypoint x="2390" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ownhdx_di" bpmnElement="Flow_1ownhdx">
+        <di:waypoint x="2640" y="413" />
+        <di:waypoint x="2712" y="413" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yxj5cv_di" bpmnElement="NotForPublish">
+        <di:waypoint x="2390" y="438" />
+        <di:waypoint x="2390" y="560" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2402" y="496" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dlwsh6_di" bpmnElement="ForPublish">
+        <di:waypoint x="2415" y="413" />
+        <di:waypoint x="2540" y="413" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2426" y="393" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00orvz6_di" bpmnElement="Flow_00orvz6">
+        <di:waypoint x="2590" y="197" />
+        <di:waypoint x="2590" y="80" />
+        <di:waypoint x="1905" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mz3354_di" bpmnElement="Flow_0mz3354">
+        <di:waypoint x="2470" y="237" />
+        <di:waypoint x="2540" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cy5crz_di" bpmnElement="Flow_0cy5crz">
+        <di:waypoint x="2300" y="413" />
+        <di:waypoint x="2365" y="413" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1loemtu_di" bpmnElement="Flow_1loemtu">
+        <di:waypoint x="2300" y="237" />
+        <di:waypoint x="2370" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pj2c9r_di" bpmnElement="BookHasNoErrors">
+        <di:waypoint x="2040" y="262" />
+        <di:waypoint x="2040" y="413" />
+        <di:waypoint x="2200" y="413" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2067" y="379" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mwdy3n_di" bpmnElement="BookHasErrors">
+        <di:waypoint x="2065" y="237" />
+        <di:waypoint x="2200" y="237" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2093" y="219" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jzfed8_di" bpmnElement="Flow_0jzfed8">
+        <di:waypoint x="1930" y="237" />
+        <di:waypoint x="2015" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p2z589_di" bpmnElement="Flow_0p2z589">
+        <di:waypoint x="1400" y="237" />
+        <di:waypoint x="1470" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bwyi1k_di" bpmnElement="Flow_0bwyi1k">
+        <di:waypoint x="1210" y="237" />
+        <di:waypoint x="1250" y="237" />
+        <di:waypoint x="1250" y="230" />
+        <di:waypoint x="1300" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m6g0z6_di" bpmnElement="Flow_1m6g0z6">
+        <di:waypoint x="1060" y="237" />
+        <di:waypoint x="1110" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1iqi2a4_di" bpmnElement="Flow_1iqi2a4">
+        <di:waypoint x="1680" y="453" />
+        <di:waypoint x="1680" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02fvr7i_di" bpmnElement="isSentToBetaReadres">
+        <di:waypoint x="1680" y="262" />
+        <di:waypoint x="1680" y="373" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1603" y="316" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14yfwog_di" bpmnElement="isNotSentToBetaReadres">
+        <di:waypoint x="1705" y="237" />
+        <di:waypoint x="1830" y="237" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1705" y="196" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1iqlftj_di" bpmnElement="Flow_1iqlftj">
+        <di:waypoint x="1570" y="237" />
+        <di:waypoint x="1655" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09z4me5_di" bpmnElement="Flow_09z4me5">
+        <di:waypoint x="1380" y="295" />
+        <di:waypoint x="1380" y="382" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_048gqp5_di" bpmnElement="Flow_048gqp5">
-        <di:waypoint x="870" y="175" />
-        <di:waypoint x="870" y="262" />
+        <di:waypoint x="870" y="295" />
+        <di:waypoint x="870" y="382" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mymlzk_di" bpmnElement="Flow_0mymlzk">
-        <di:waypoint x="890" y="117" />
-        <di:waypoint x="930" y="117" />
+        <di:waypoint x="890" y="237" />
+        <di:waypoint x="960" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bzmebi_di" bpmnElement="Flow_1bzmebi">
-        <di:waypoint x="740" y="117" />
-        <di:waypoint x="790" y="117" />
+        <di:waypoint x="740" y="237" />
+        <di:waypoint x="790" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_17x2k9y_di" bpmnElement="Flow_17x2k9y">
-        <di:waypoint x="610" y="117" />
-        <di:waypoint x="640" y="117" />
+        <di:waypoint x="610" y="237" />
+        <di:waypoint x="640" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1euyxja_di" bpmnElement="Flow_1euyxja">
-        <di:waypoint x="480" y="117" />
-        <di:waypoint x="510" y="117" />
+        <di:waypoint x="480" y="237" />
+        <di:waypoint x="510" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0utsk4q_di" bpmnElement="Flow_0utsk4q">
-        <di:waypoint x="340" y="117" />
-        <di:waypoint x="380" y="117" />
+        <di:waypoint x="340" y="237" />
+        <di:waypoint x="380" y="237" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10375b0_di" bpmnElement="Flow_10375b0">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="240" y="117" />
+        <di:waypoint x="198" y="237" />
+        <di:waypoint x="240" y="237" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0g5we4f_di" bpmnElement="Flow_0g5we4f">
-        <di:waypoint x="1030" y="117" />
-        <di:waypoint x="1090" y="117" />
+      <bpmndi:BPMNEdge id="Flow_1nfizgw_di" bpmnElement="Flow_1nfizgw">
+        <di:waypoint x="1880" y="105" />
+        <di:waypoint x="1880" y="197" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <dc:Bounds x="162" y="219" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1r7s1d6_di" bpmnElement="SubmitBookDetailsForm">
-        <dc:Bounds x="240" y="77" width="100" height="80" />
+        <dc:Bounds x="240" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1x44l42_di" bpmnElement="CreateBookPrototype">
-        <dc:Bounds x="380" y="77" width="100" height="80" />
+        <dc:Bounds x="380" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0asak2w_di" bpmnElement="AutoGenerateEditor">
-        <dc:Bounds x="510" y="77" width="100" height="80" />
+        <dc:Bounds x="510" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rud2mh_di" bpmnElement="SendEmailToEditor">
-        <dc:Bounds x="640" y="77" width="100" height="80" />
+        <dc:Bounds x="640" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_184a6lb_di" bpmnElement="ReviewBookPrototype">
-        <dc:Bounds x="790" y="77" width="100" height="80" />
+        <dc:Bounds x="790" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ujcjp4_di" bpmnElement="Event_0ujcjp4">
-        <dc:Bounds x="852" y="262" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1dwsfyq_di" bpmnElement="Event_1dwsfyq">
-        <dc:Bounds x="1362" y="99" width="36" height="36" />
+        <dc:Bounds x="852" y="382" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0p9p1i0_di" bpmnElement="CheckPlagiarism">
-        <dc:Bounds x="1090" y="77" width="100" height="80" />
+        <dc:Bounds x="1300" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0tnho9y_di" bpmnElement="Event_0tnho9y">
-        <dc:Bounds x="1152" y="332" width="36" height="36" />
+        <dc:Bounds x="1362" y="382" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_152rwkk_di" bpmnElement="ChooseToSendToBetaReaders">
+        <dc:Bounds x="1470" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06qvm2r_di" bpmnElement="Gateway_06qvm2r" isMarkerVisible="true">
+        <dc:Bounds x="1655" y="212" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1094s6w_di" bpmnElement="ChooseBetaReaders">
+        <dc:Bounds x="1630" y="373" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0md1e2u_di" bpmnElement="WriterUploadBook">
-        <dc:Bounds x="930" y="77" width="100" height="80" />
+        <dc:Bounds x="960" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0awfh9o_di" bpmnElement="Event_1d8276x">
-        <dc:Bounds x="852" y="139" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0dlc4h7_di" bpmnElement="GetPotentialPlagiarism">
+        <dc:Bounds x="1110" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06b91s8_di" bpmnElement="LectorChecksForMistakes">
+        <dc:Bounds x="1830" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1v5bcwo_di" bpmnElement="Gateway_1v5bcwo" isMarkerVisible="true">
+        <dc:Bounds x="2015" y="212" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1w7ws3i_di" bpmnElement="Event_1w7ws3i">
+        <dc:Bounds x="2712" y="395" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1uxgr8a_di" bpmnElement="FinalCheckByEditor">
+        <dc:Bounds x="2200" y="373" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gbwkf1_di" bpmnElement="NotufyWriter">
+        <dc:Bounds x="2200" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uhaqpm_di" bpmnElement="UploadEditedBook">
+        <dc:Bounds x="2370" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0p6gb6m_di" bpmnElement="SaveNewVerisonOfBook">
+        <dc:Bounds x="2540" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_00auzj7_di" bpmnElement="Gateway_00auzj7" isMarkerVisible="true">
+        <dc:Bounds x="2365" y="388" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hlegm9_di" bpmnElement="FinalEditByWriter">
+        <dc:Bounds x="2340" y="560" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m7n1cb_di" bpmnElement="PublishBook">
+        <dc:Bounds x="2540" y="373" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0303qxm_di" bpmnElement="EditorApprovement">
+        <dc:Bounds x="2600" y="690" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hfmu35_di" bpmnElement="SaveFinalVersion">
+        <dc:Bounds x="2340" y="690" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rtzbtp_di" bpmnElement="BetaReaders">
+        <dc:Bounds x="1630" y="490" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bsnvjm_di" bpmnElement="UploadNewVersion">
+        <dc:Bounds x="1630" y="650" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0o5zb4i_di" bpmnElement="SaveBook">
+        <dc:Bounds x="1630" y="760" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1czlnmz_di" bpmnElement="ReviewAfterComments">
+        <dc:Bounds x="1630" y="880" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1lxf0pm_di" bpmnElement="Gateway_1lxf0pm" isMarkerVisible="true">
+        <dc:Bounds x="1805" y="775" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1dh1ep0_di" bpmnElement="Gateway_1dh1ep0" isMarkerVisible="true">
+        <dc:Bounds x="1855" y="55" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05x0fqx_di" bpmnElement="Event_19emo9z">
+        <dc:Bounds x="2422" y="602" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n7a9z6_di" bpmnElement="Event_0384ryr">
-        <dc:Bounds x="1152" y="139" width="36" height="36" />
+        <dc:Bounds x="1362" y="259" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1172" y="182" width="55" height="27" />
+          <dc:Bounds x="1382" y="302" width="55" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0awfh9o_di" bpmnElement="Event_1d8276x">
+        <dc:Bounds x="852" y="259" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -20,6 +20,10 @@ public class BookPrototype {
     private String synopsis;
 
     @Column
+    private String path;
+
+
+    @Column
     private BookStatus bookStatus;
 
     @Column
@@ -105,5 +109,37 @@ public class BookPrototype {
 
     public void setWriter(Writer writer) {
         this.writer = writer;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public BetaReader getBetaReader() {
+        return betaReader;
+    }
+
+    public void setBetaReader(BetaReader betaReader) {
+        this.betaReader = betaReader;
+    }
+
+    public Lector getLector() {
+        return lector;
+    }
+
+    public void setLector(Lector lector) {
+        this.lector = lector;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
