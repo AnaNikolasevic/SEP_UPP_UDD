@@ -107,10 +107,29 @@
       <bpmn:incoming>Flow_1giej4b</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1y7orh6" sourceRef="Event_1qrfv7c" targetRef="TokenExpiredMail" />
+    <bpmn:sequenceFlow id="Flow_019y5c1" sourceRef="SaveUser" targetRef="Gateway_1ss2hsr" />
     <bpmn:serviceTask id="SaveUser" name="Save User" camunda:class="com.project.online_library.service.UserService">
       <bpmn:incoming>Flow_1a83tw6</bpmn:incoming>
       <bpmn:outgoing>Flow_019y5c1</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1ss2hsr">
+      <bpmn:incoming>Flow_019y5c1</bpmn:incoming>
+      <bpmn:outgoing>Flow_18aa9ie</bpmn:outgoing>
+      <bpmn:outgoing>Flow_18mdrno</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_18aa9ie" name="is not writer" sourceRef="Gateway_1ss2hsr" targetRef="Gateway_1y8olft">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType != 'writer'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1y8olft">
+      <bpmn:incoming>Flow_18aa9ie</bpmn:incoming>
+      <bpmn:incoming>Flow_1ad9b2s</bpmn:incoming>
+      <bpmn:outgoing>Flow_02jdtag</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_02jdtag" sourceRef="Gateway_1y8olft" targetRef="Event_0kpdc73" />
+    <bpmn:sequenceFlow id="Flow_18mdrno" name="is writer" sourceRef="Gateway_1ss2hsr" targetRef="mandatoryPublicationOfBooks">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType == 'writer'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1ad9b2s" sourceRef="mandatoryPublicationOfBooks" targetRef="Gateway_1y8olft" />
     <bpmn:sequenceFlow id="Flow_1giej4b" sourceRef="TokenExpiredMail" targetRef="Event_02v26ce" />
     <bpmn:serviceTask id="TokenExpiredMail" name="Token expired mail" camunda:class="com.project.online_library.camundaServices.sendEmailDelegates.SendExpirationTokenEmail">
       <bpmn:incoming>Flow_1y7orh6</bpmn:incoming>
@@ -138,24 +157,6 @@
       <bpmn:outgoing>Flow_08ersw8</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_08ersw8" sourceRef="DataEntryBeta" targetRef="CreateUser" />
-    <bpmn:exclusiveGateway id="Gateway_1ss2hsr">
-      <bpmn:incoming>Flow_019y5c1</bpmn:incoming>
-      <bpmn:outgoing>Flow_18mdrno</bpmn:outgoing>
-      <bpmn:outgoing>Flow_18aa9ie</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_019y5c1" sourceRef="SaveUser" targetRef="Gateway_1ss2hsr" />
-    <bpmn:exclusiveGateway id="Gateway_1y8olft">
-      <bpmn:incoming>Flow_18aa9ie</bpmn:incoming>
-      <bpmn:incoming>Flow_1ad9b2s</bpmn:incoming>
-      <bpmn:outgoing>Flow_02jdtag</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_02jdtag" sourceRef="Gateway_1y8olft" targetRef="Event_0kpdc73" />
-    <bpmn:sequenceFlow id="Flow_18mdrno" name="is writer" sourceRef="Gateway_1ss2hsr" targetRef="mandatoryPublicationOfBooks">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType == 'writer'}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_18aa9ie" name="is not writer" sourceRef="Gateway_1ss2hsr" targetRef="Gateway_1y8olft">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userType != 'writer'}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:callActivity id="mandatoryPublicationOfBooks" name="Mandatory publication of books" calledElement="mandatoryPublicationOfBooks">
       <bpmn:extensionElements>
         <camunda:in variables="all" />
@@ -163,38 +164,9 @@
       <bpmn:incoming>Flow_18mdrno</bpmn:incoming>
       <bpmn:outgoing>Flow_1ad9b2s</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_1ad9b2s" sourceRef="mandatoryPublicationOfBooks" targetRef="Gateway_1y8olft" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="registration_process">
-      <bpmndi:BPMNEdge id="Flow_1ad9b2s_di" bpmnElement="Flow_1ad9b2s">
-        <di:waypoint x="1260" y="230" />
-        <di:waypoint x="1340" y="230" />
-        <di:waypoint x="1340" y="142" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_18aa9ie_di" bpmnElement="Flow_18aa9ie">
-        <di:waypoint x="1115" y="117" />
-        <di:waypoint x="1315" y="117" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1188" y="99" width="58" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_18mdrno_di" bpmnElement="Flow_18mdrno">
-        <di:waypoint x="1090" y="142" />
-        <di:waypoint x="1090" y="230" />
-        <di:waypoint x="1160" y="230" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1100" y="183" width="40" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_02jdtag_di" bpmnElement="Flow_02jdtag">
-        <di:waypoint x="1365" y="117" />
-        <di:waypoint x="1442" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_019y5c1_di" bpmnElement="Flow_019y5c1">
-        <di:waypoint x="1030" y="117" />
-        <di:waypoint x="1065" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08ersw8_di" bpmnElement="Flow_08ersw8">
         <di:waypoint x="430" y="280" />
         <di:waypoint x="540" y="280" />
@@ -217,6 +189,34 @@
       <bpmndi:BPMNEdge id="Flow_1giej4b_di" bpmnElement="Flow_1giej4b">
         <di:waypoint x="840" y="300" />
         <di:waypoint x="840" y="362" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ad9b2s_di" bpmnElement="Flow_1ad9b2s">
+        <di:waypoint x="1260" y="230" />
+        <di:waypoint x="1340" y="230" />
+        <di:waypoint x="1340" y="142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18mdrno_di" bpmnElement="Flow_18mdrno">
+        <di:waypoint x="1090" y="142" />
+        <di:waypoint x="1090" y="230" />
+        <di:waypoint x="1160" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1100" y="183" width="40" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02jdtag_di" bpmnElement="Flow_02jdtag">
+        <di:waypoint x="1365" y="117" />
+        <di:waypoint x="1442" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18aa9ie_di" bpmnElement="Flow_18aa9ie">
+        <di:waypoint x="1115" y="117" />
+        <di:waypoint x="1315" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1188" y="99" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_019y5c1_di" bpmnElement="Flow_019y5c1">
+        <di:waypoint x="1030" y="117" />
+        <di:waypoint x="1065" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y7orh6_di" bpmnElement="Flow_1y7orh6">
         <di:waypoint x="840" y="175" />
@@ -266,6 +266,12 @@
       <bpmndi:BPMNShape id="Activity_0e9g06q_di" bpmnElement="SaveUser">
         <dc:Bounds x="930" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ss2hsr_di" bpmnElement="Gateway_1ss2hsr" isMarkerVisible="true">
+        <dc:Bounds x="1065" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1y8olft_di" bpmnElement="Gateway_1y8olft" isMarkerVisible="true">
+        <dc:Bounds x="1315" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sx88q8_di" bpmnElement="TokenExpiredMail">
         <dc:Bounds x="790" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -277,12 +283,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_043wk7d_di" bpmnElement="DataEntryBeta">
         <dc:Bounds x="330" y="240" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1ss2hsr_di" bpmnElement="Gateway_1ss2hsr" isMarkerVisible="true">
-        <dc:Bounds x="1065" y="92" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1y8olft_di" bpmnElement="Gateway_1y8olft" isMarkerVisible="true">
-        <dc:Bounds x="1315" y="92" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1ho4vez_di" bpmnElement="mandatoryPublicationOfBooks">
         <dc:Bounds x="1160" y="190" width="100" height="80" />
