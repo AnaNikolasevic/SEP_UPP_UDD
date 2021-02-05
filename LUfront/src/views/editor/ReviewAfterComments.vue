@@ -1,9 +1,5 @@
 <template>
   <div>
-    <h1>
-      Choose beta-readers interested in the book genre whom you want to send the
-      book for review:
-    </h1>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
       <span>{{ snackbarSuccessText }}</span>
@@ -59,18 +55,18 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      formFieldsDTO: [],
-      pageName: "ChooseBetaReaders",
+      pageName: "ReviewAfterComments",
+      interval: null,
     };
   },
   methods: {
-    getChooseBetaReaders() {
+    getReviewAterComments() {
       axios
         .get(
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "ChooseBetaReaders"
+            "ReviewAfterComments"
         )
         .then((response) => {
           this.bookPreviews = response.data;
@@ -85,7 +81,7 @@ export default {
     accept(FormFieldsDTO, formFields) {
       let formSubmissionDto = new Array();
       formFields.forEach((formField) => {
-        if (formField.type.name != "string") {
+        if (formField.defaultValue == null) {
           if (formField.type.name == "boolean") {
             formField.fieldValue = true;
           }
@@ -98,9 +94,23 @@ export default {
       console.log(formSubmissionDto);
       this.submitForm(formSubmissionDto, FormFieldsDTO);
     },
-    submitForm(formSubmissionDto, FormFieldsDTO) {
+    deny(FormFieldsDTO, formFields) {
+      let formSubmissionDto = new Array();
+      formFields.forEach((formField) => {
+        if (formField.defaultValue == null) {
+          if (formField.type.name == "boolean") {
+            formField.fieldValue = false;
+          }
+          formSubmissionDto.push({
+            id: formField.id,
+            fieldValue: formField.fieldValue,
+          });
+        }
+      });
       console.log(formSubmissionDto);
-      console.log(FormFieldsDTO);
+      this.submitForm(formSubmissionDto, FormFieldsDTO);
+    },
+    submitForm(formSubmissionDto, FormFieldsDTO) {
       axios
         .post(
           "http://localhost:8080/subminForm/" +
@@ -116,11 +126,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      this.$router.go(this.$router.currentRoute);
     },
   },
   mounted() {
-    this.getChooseBetaReaders();
+    //this.$forceUpdate();
+    this.getReviewAterComments();
   },
 };
 </script>

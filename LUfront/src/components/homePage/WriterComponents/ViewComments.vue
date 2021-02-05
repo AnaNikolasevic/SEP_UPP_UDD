@@ -1,9 +1,5 @@
 <template>
   <div>
-    <h1>
-      Choose beta-readers interested in the book genre whom you want to send the
-      book for review:
-    </h1>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
       <span>{{ snackbarSuccessText }}</span>
@@ -30,11 +26,12 @@
               <v-card-text>
                 <div class="font-weight-bold headline">
                   <DefaultFormValues
-                    @accepted="accept"
-                    @denied="deny"
                     v-bind:formFieldsDTO="formFieldsDTO"
                     v-bind:pageName="pageName"
                   ></DefaultFormValues>
+                  <v-btn color="primary" @click="upload(formFieldsDTO)"
+                    >Upload</v-btn
+                  >
                 </div>
               </v-card-text>
             </div>
@@ -48,6 +45,7 @@
 <script>
 import axios from "axios";
 import DefaultFormValues from "@/components/editor/DefaultFormValues.vue";
+import firebase from "firebase";
 export default {
   components: {
     DefaultFormValues,
@@ -59,48 +57,70 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       bookPreviews: [],
-      formFieldsDTO: [],
-      pageName: "ChooseBetaReaders",
+      pageName: "ViewComments",
     };
   },
   methods: {
-    getChooseBetaReaders() {
+    getNewVersionUpload() {
       axios
         .get(
           "http://localhost:8080/form/" +
             this.$store.state.user.username +
             "/" +
-            "ChooseBetaReaders"
+            "UploadNewVersion"
         )
         .then((response) => {
           this.bookPreviews = response.data;
           console.log(response.data);
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    upload(FormFieldsDTO) {
+      console.log("usaooo u upload");
+      let i = 0;
+      for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
+        console.log("usaooo u for");
+        if (FormFieldsDTO.formFields[i].type.name == "file_upload") {
+          console.log("usaooo u if");
+          let formSubmissionDto = new Array();
+          var imageData = FormFieldsDTO.formFields[i].fieldValue;
+          const storageRef = firebase
+            .storage()
+            .ref(`${imageData.name}`)
+            .put(imageData);
 
-    accept(FormFieldsDTO, formFields) {
-      let formSubmissionDto = new Array();
-      formFields.forEach((formField) => {
-        if (formField.type.name != "string") {
-          if (formField.type.name == "boolean") {
-            formField.fieldValue = true;
-          }
-          formSubmissionDto.push({
-            id: formField.id,
-            fieldValue: formField.fieldValue,
-          });
+          storageRef.on(
+            `state_changed`,
+            (snapshot) => {
+              this.uploadValue =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            },
+            (error) => {
+              console.log(error.message);
+            },
+            () => {
+              this.uploadValue = 100;
+              storageRef.snapshot.ref.getDownloadURL().then((url) => {
+                console.log("ovde ispiusujem url");
+                console.log(url);
+                formSubmissionDto.push({
+                  id: FormFieldsDTO.formFields[1].id,
+                  fieldValue: url,
+                });
+                this.submitForm(formSubmissionDto, FormFieldsDTO);
+              });
+            }
+          );
         }
-      });
-      console.log(formSubmissionDto);
-      this.submitForm(formSubmissionDto, FormFieldsDTO);
+      }
     },
     submitForm(formSubmissionDto, FormFieldsDTO) {
+      console.log("submit");
       console.log(formSubmissionDto);
-      console.log(FormFieldsDTO);
+      console.log(FormFieldsDTO.formFields);
+
       axios
         .post(
           "http://localhost:8080/subminForm/" +
@@ -112,6 +132,7 @@ export default {
         .then((response) => {
           this.close();
           console.log(response);
+          this.getBookPreviews();
         })
         .catch((error) => {
           console.log(error);
@@ -119,8 +140,9 @@ export default {
       this.$router.go(this.$router.currentRoute);
     },
   },
+
   mounted() {
-    this.getChooseBetaReaders();
+    this.getNewVersionUpload();
   },
 };
 </script>

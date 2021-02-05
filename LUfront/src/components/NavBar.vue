@@ -38,7 +38,7 @@
           "
         />
       </div>
-      <div class="mx-2"  v-if="this.$store.state.user.role == 'writer'">
+      <div class="mx-2" v-if="this.$store.state.user.role == 'writer'">
         <AddBook />
       </div>
       <v-btn
@@ -62,17 +62,26 @@
       <v-btn
         text
         color="primary"
+        @click="openReviewBooks()"
+        v-if="this.$store.state.user.role == 'betaReader'"
+      >
+        <span>Review Books</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         @click="mandatoryUpload()"
-        v-if="this.$store.state.user.role=='writer'"
+        v-if="this.$store.state.user.role == 'writer'"
       >
         <span>Mandatory upload</span>
         <v-icon right>mdi-book</v-icon>
       </v-btn>
-        <v-btn
+      <v-btn
         text
         color="primary"
         @click="openUploadBook()"
-        v-if="this.$store.state.user.role=='writer'"
+        v-if="this.$store.state.user.role == 'writer'"
       >
         <span>Upload new book</span>
         <v-icon right>mdi-book</v-icon>
@@ -81,9 +90,27 @@
         text
         color="primary"
         @click="manageWriters()"
-        v-if="this.$store.state.user.role=='boardMember'"
+        v-if="this.$store.state.user.role == 'boardMember'"
       >
         <span>Mandatory books</span>
+        <v-icon right>mdi-people</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="viewComments()"
+        v-if="this.$store.state.user.role == 'writer'"
+      >
+        <span>View Comments</span>
+        <v-icon right>mdi-people</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="reviewAfterComments()"
+        v-if="this.$store.state.user.role == 'editor'"
+      >
+        <span>Review after comments</span>
         <v-icon right>mdi-people</v-icon>
       </v-btn>
       <v-btn
@@ -104,7 +131,6 @@
       <v-btn text color="primary" v-if="this.$store.state.user.role != 'none'">
         <span @click="logout()">Logout</span>
         <v-icon right>mdi-close</v-icon>
-
       </v-btn>
     </v-toolbar>
   </nav>
@@ -148,11 +174,20 @@ export default {
     openBookPreview() {
       this.$router.push("/bookPreview");
     },
-    openBookPlagiarism(){
-       this.$router.push("/bookPlagiarism");
+    openBookPlagiarism() {
+      this.$router.push("/bookPlagiarism");
     },
-    openUploadBook(){
-         this.$router.push("/uploadBook");
+    openUploadBook() {
+      this.$router.push("/uploadBook");
+    },
+    openReviewBooks() {
+      this.$router.push("/reviewBooks");
+    },
+    viewComments() {
+      this.$router.push("/viewComments");
+    },
+    reviewAfterComments() {
+      this.$router.push("/reviewAfterComments");
     },
     logout() {
       localStorage.removeItem("user");

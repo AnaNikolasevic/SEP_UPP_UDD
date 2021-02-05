@@ -91,6 +91,7 @@ export default {
             fieldValue: FormFieldsDTO.formFields[i].value,
           });
           this.submitForm(formSubmissionDto, FormFieldsDTO);
+          this.$router.push("/chooseBetaReaders");
         }
       }
     },
@@ -125,7 +126,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      this.$router.push("/chooseBetaReaders");
     },
   },
   mounted() {

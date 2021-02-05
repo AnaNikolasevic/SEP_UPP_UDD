@@ -5,7 +5,15 @@
       :key="index * 1.285"
     >
       <div class="mt-2" v-if="field.type.name == 'string'">
-        {{ field.defaultValue }}
+        <div v-if="field.defaultValue == null">
+          <v-text-field
+            :label="field.id"
+            v-model="field.fieldValue"
+          ></v-text-field>
+        </div>
+        <div v-else>
+          {{ field.defaultValue }}
+        </div>
       </div>
       <div v-if="field.type.name == 'multiEnum_betaReaders'">
         <v-combobox
@@ -15,7 +23,13 @@
           outlined
           dense
           multiple
+          required
         ></v-combobox>
+      </div>
+      <div v-if="field.type.name == 'multiEnum_comments'">
+        <v-list-item v-for="(value, i) in field.type.values" :key="i">
+          <v-list-item-content v-text="value"> </v-list-item-content>
+        </v-list-item>
       </div>
       <div v-if="field.type.name == 'boolean'">
         <v-tooltip bottom color="black">
@@ -38,35 +52,42 @@
           </div>
         </v-tooltip>
         <template v-if="pageName != 'ChooseBetaReaders'">
-          <v-tooltip bottom color="black">
-            <template #activator="{ on: tooltip }">
-              <v-btn icon v-on="{ ...tooltip }" color="primary" @click="deny()">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </template>
-            <div v-if="pageName == 'BookPreview'">
-              <span class="primary--text">deny</span>
-            </div>
-            <div v-if="pageName == 'CheckBookPlagiarism'">
-              <span class="primary--text">is not plagiarism</span>
-            </div>
-            <div v-if="pageName == 'ChooseToSendToBetaReaders'">
-              <span class="primary--text">don't send to beta-readers</span>
-            </div>
-          </v-tooltip>
+          <template v-if="pageName != 'ReviewBooks'">
+            <v-tooltip bottom color="black">
+              <template #activator="{ on: tooltip }">
+                <v-btn
+                  icon
+                  v-on="{ ...tooltip }"
+                  color="primary"
+                  @click="deny()"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </template>
+              <div v-if="pageName == 'BookPreview'">
+                <span class="primary--text">deny</span>
+              </div>
+              <div v-if="pageName == 'CheckBookPlagiarism'">
+                <span class="primary--text">is not plagiarism</span>
+              </div>
+              <div v-if="pageName == 'ChooseToSendToBetaReaders'">
+                <span class="primary--text">don't send to beta-readers</span>
+              </div>
+            </v-tooltip>
+          </template>
         </template>
-      </div >
+      </div>
       <div v-else-if="field.type.name == 'file_upload'">
-            <v-file-input
-               label="Choose pdf"
-               truncate-length="15"
-               v-model="field.fieldValue"
-            ></v-file-input>
+        <v-file-input
+          label="Choose pdf"
+          truncate-length="15"
+          v-model="field.fieldValue"
+        ></v-file-input>
       </div>
       <div v-else-if="field.type.name == 'file_view'">
-        <v-btn title="Open" color="primary" :href="field.value.value" download>                     
-        <v-icon>mdi-file</v-icon>
-      </v-btn>
+        <v-btn title="Open" color="primary" :href="field.value.value" download>
+          <v-icon>mdi-file</v-icon>
+        </v-btn>
       </div>
     </div>
   </div>

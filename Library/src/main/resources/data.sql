@@ -40,12 +40,16 @@ insert into writer ( id, city, country, email, enabled, first_name, last_name, p
 insert into beta_reader ( id, city, country, email, enabled, first_name, last_name, password, username, penalty_points)
     values (315, 'Novi Sad', 'Serbia', 'sm@gmail.com', 'true', 'Sanja', 'Culibrk', 'sc', 'sc', 2);
 insert into beta_reader ( id, city, country, email, enabled, first_name, last_name, password, username, penalty_points)
-    values (316, 'Novi Sad', 'Serbia', 'bm@gmail.com', 'true', 'Branko', 'Culibrk', 'bc', 'bc', 1);
+    values (316, 'Novi Sad', 'Serbia', 'bm@gmail.com', 'true', 'Branko', 'Culibrk', 'bc', 'bc', 0);
+insert into beta_reader ( id, city, country, email, enabled, first_name, last_name, password, username, penalty_points)
+    values (317, 'Novi Sad', 'Serbia', 'milicaculibrk7@gmail.com', 'true', 'Draginja', 'Culibrk', 'dc', 'dc', 4);
 
 insert into reader_genre(users_id_seq, genre_id)
     values (315, 1);
 insert into reader_genre(users_id_seq, genre_id)
     values (316, 1);
+insert into reader_genre(users_id_seq, genre_id)
+    values (317, 1);
 
 insert into reader_genre_beta(users_id_seq, genre_beta_id)
     values (315, 1);
@@ -61,6 +65,8 @@ insert into reader_genre_beta(users_id_seq, genre_beta_id)
     values (315, 6);
 insert into reader_genre_beta(users_id_seq, genre_beta_id)
     values (316, 1);
+insert into reader_genre_beta(users_id_seq, genre_beta_id)
+    values (317, 1);
 
 insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
     values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The Count of Monte Cristo', null, 112, 5, null, null);

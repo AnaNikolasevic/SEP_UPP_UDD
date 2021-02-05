@@ -92,7 +92,6 @@ export default {
       }
     },
     deny(FormFieldsDTO, formFields) {
-      console.log("milica");
       console.log(formFields);
       let i = 0;
       for (i = 0; i <= FormFieldsDTO.formFields.length; i++) {
