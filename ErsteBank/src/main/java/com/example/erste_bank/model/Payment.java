@@ -1,4 +1,4 @@
-package com.project.aik_bank.model;
+package com.example.erste_bank.model;
 
 import javax.persistence.*;
 
@@ -8,7 +8,6 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-    //customer who receives the payment
     @ManyToOne
     private Customer payee;
     //paying customer
@@ -17,10 +16,6 @@ public class Payment {
     @Column
     private float amount;
     @Column
-    private String merchant_timestamp;
-    @Column
-    private Long merchant_order_id;
-    @Column
     private String success_url;
     @Column
     private String failed_url;
@@ -28,6 +23,8 @@ public class Payment {
     private String error_url;
     @Column
     private String status;
+    @Column
+    private String timestamp;
 
     public Payment() {
     }
@@ -64,14 +61,6 @@ public class Payment {
         this.amount = amount;
     }
 
-    public String getMerchant_timestamp() {
-        return merchant_timestamp;
-    }
-
-    public void setMerchant_timestamp(String merchant_timestamp) {
-        this.merchant_timestamp = merchant_timestamp;
-    }
-
     public String getSuccess_url() {
         return success_url;
     }
@@ -104,11 +93,11 @@ public class Payment {
         this.status = status;
     }
 
-    public Long getMerchant_order_id() {
-        return merchant_order_id;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setMerchant_order_id(Long merchant_order_id) {
-        this.merchant_order_id = merchant_order_id;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -1,4 +1,4 @@
-package com.project.aik_bank;
+package com.project.pcc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class AikBankApplication {
+public class PccApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AikBankApplication.class, args);
+        SpringApplication.run(PccApplication.class, args);
     }
 
     @Bean

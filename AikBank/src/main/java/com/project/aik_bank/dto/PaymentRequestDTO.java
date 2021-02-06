@@ -1,5 +1,7 @@
 package com.project.aik_bank.dto;
 
+
+//crate payment from token
 public class PaymentRequestDTO {
 
     private Long id;
