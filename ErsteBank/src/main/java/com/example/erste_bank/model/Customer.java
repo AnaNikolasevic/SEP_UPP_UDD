@@ -1,4 +1,4 @@
-package com.project.aik_bank.model;
+package com.example.erste_bank.model;
 
 import javax.persistence.*;
 
@@ -19,6 +19,7 @@ public class Customer {
     private double reservedFunds;
     @Column
     private String currency;
+
     @Column(unique = true)
     private String PAN;
     @Column

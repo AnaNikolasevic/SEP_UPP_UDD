@@ -1,5 +1,8 @@
 package com.project.aik_bank.dto;
 
+
+
+// submit payment form dto
 public class PayeerFormDTO {
 
     private Long paymentId;

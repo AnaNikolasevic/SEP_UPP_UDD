@@ -1,0 +1,2 @@
+INSERT INTO public.bank(id, name, panid, url) VALUES (1, 'AikBank', '656', 'http://localhost:8090/pay');
+INSERT INTO public.bank(id, name, panid, url) VALUES (2, 'ErsteBank', '444', 'http://localhost:8091/pay');
