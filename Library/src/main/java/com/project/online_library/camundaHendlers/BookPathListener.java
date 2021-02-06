@@ -38,7 +38,7 @@ public class BookPathListener implements TaskListener {
                 if( field.getId().equals("bookPaths")){
                 	EnumFormType enumFormType = (EnumFormType) field.getType();				
     				Map<String, String> values = enumFormType.getValues();
-    				//values.clear();
+    				values.clear();
     				List<String> list= (List<String>)delegateTask.getVariable("mandatoryBooksPaths");
     				for (String bookPath : list) {
                     	values.put(bookPath, bookPath);

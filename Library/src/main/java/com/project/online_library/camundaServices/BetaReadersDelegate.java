@@ -10,6 +10,7 @@ import org.glassfish.jersey.Beta;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -26,6 +27,7 @@ public class BetaReadersDelegate implements JavaDelegate {
         ArrayList<String> betaReadersThatCommented = new ArrayList<String>();
         ArrayList<String> punishedBetaReaders = new ArrayList<String>();
         ArrayList<String> comments = new ArrayList<String>();
+
 
         String noSpaceStr = betaReadersUsernamesString.replaceAll("\\s", "");
         int stringLength = noSpaceStr.length();

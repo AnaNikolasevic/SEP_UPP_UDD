@@ -79,6 +79,40 @@ public class CamundaController {
         return new ResponseEntity<List<FormFieldsDto>>(dtos, HttpStatus.OK);
     }
 
+    @PostMapping(path = "/subminForm/{taskId}/{variableName}", consumes="application/json", produces = "application/json")
+    public @ResponseBody
+    ResponseEntity crate(@RequestBody List<FormSubmissionDto> dto, @PathVariable String taskId,  @PathVariable String variableName) {
+        HashMap<String, Object> map = this.mapListToDto(dto);
+        System.out.println(map.toString());
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        if(variableName.equals("boardMemberDecisions")) {
+            camundaService.makeAndFillList(processInstanceId, dto.get(2).getFieldValue().toString(), variableName);
+        } else if (variableName.equals("mandatoryBooksPaths")) {
+            camundaService.makeAndFillList(processInstanceId, dto.get(0).getFieldValue().toString(), variableName);
+        } else if (variableName.equals("replacementEditorsList")) {
+            camundaService.makeAndFillList(processInstanceId, dto.get(2).getFieldValue().toString(), variableName);
+        } else if (variableName.equals("boardMemberPlagiatDecisions")) {
+            camundaService.makeAndFillList(processInstanceId, dto.get(3).getFieldValue().toString(), variableName);
+        } else {
+            runtimeService.setVariable(processInstanceId, variableName, dto);
+        }
+        formService.submitTaskForm(taskId, map);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    private HashMap<String, Object> mapListToDto(List<FormSubmissionDto> list)
+    {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        for(FormSubmissionDto temp : list){
+            System.out.println(temp.getId());
+            System.out.println(temp.getFieldValue());
+            map.put(temp.getId(), temp.getFieldValue());
+        }
+
+        return map;
+    }
+
     @GetMapping("/form/{username}")
     public ResponseEntity<List<FormFieldsDto>> getNextUserTasks(@PathVariable String username) {
         // return new ResponseEntity<List<BookPrototypeDTO>>(bookPrototypeService.getAllEditorsBookPrototypes(username), HttpStatus.OK);
@@ -112,36 +146,6 @@ public class CamundaController {
         }
 
         return new FormFieldsDto(task.getId(), pi.getId(), properties);
-    }
-
-    @PostMapping(path = "/subminForm/{taskId}/{variableName}", consumes="application/json", produces = "application/json")
-    public @ResponseBody
-    ResponseEntity crate(@RequestBody List<FormSubmissionDto> dto, @PathVariable String taskId,  @PathVariable String variableName) {
-        HashMap<String, Object> map = this.mapListToDto(dto);
-        System.out.println(map.toString());
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        String processInstanceId = task.getProcessInstanceId();
-        if(variableName.equals("boardMemberDecisions")) {
-        	camundaService.makeAndFillList(processInstanceId, dto.get(2).getFieldValue().toString(), variableName);
-        } else if (variableName.equals("mandatoryBooksPaths")) {
-        	camundaService.makeAndFillList(processInstanceId, dto.get(0).getFieldValue().toString(), variableName);
-        } else {
-        	runtimeService.setVariable(processInstanceId, variableName, dto);
-        }
-        formService.submitTaskForm(taskId, map);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
-
-    private HashMap<String, Object> mapListToDto(List<FormSubmissionDto> list)
-    {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        for(FormSubmissionDto temp : list){
-            System.out.println(temp.getId());
-            System.out.println(temp.getFieldValue());
-            map.put(temp.getId(), temp.getFieldValue());
-        }
-
-        return map;
     }
 
 

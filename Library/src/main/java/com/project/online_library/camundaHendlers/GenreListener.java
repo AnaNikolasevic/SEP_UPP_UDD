@@ -36,6 +36,7 @@ public class GenreListener implements TaskListener {
                 	EnumFormType enumFormType = (EnumFormType) field.getType();
     				
     				Map<String, String> values = enumFormType.getValues();
+    				values.clear();
                     for(Genre genre : genreRepository.findAll()){
                     	values.put(genre.getName(), genre.getName());
                     }
@@ -44,6 +45,7 @@ public class GenreListener implements TaskListener {
                 	EnumFormType enumFormType = (EnumFormType) field.getType();
     				
     				Map<String, String> values = enumFormType.getValues();
+					values.clear();
                     for(Genre genre : genreRepository.findAll()){
                     	values.put(genre.getName(), genre.getName());
                     }

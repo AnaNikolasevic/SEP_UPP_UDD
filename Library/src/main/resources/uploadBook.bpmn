@@ -27,17 +27,17 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="WriterUploadBook">
-      <bpmndi:BPMNEdge id="Flow_175kue0_di" bpmnElement="Flow_175kue0">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+      <bpmndi:BPMNEdge id="Flow_0vmr7ox_di" bpmnElement="Flow_0vmr7ox">
+        <di:waypoint x="570" y="117" />
+        <di:waypoint x="732" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xlr48w_di" bpmnElement="Flow_1xlr48w">
         <di:waypoint x="370" y="117" />
         <di:waypoint x="470" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0vmr7ox_di" bpmnElement="Flow_0vmr7ox">
-        <di:waypoint x="570" y="117" />
-        <di:waypoint x="732" y="117" />
+      <bpmndi:BPMNEdge id="Flow_175kue0_di" bpmnElement="Flow_175kue0">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />

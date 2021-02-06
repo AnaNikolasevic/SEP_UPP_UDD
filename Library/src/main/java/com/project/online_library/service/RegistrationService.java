@@ -87,7 +87,7 @@ public class RegistrationService implements JavaDelegate {
 
     public void saveWriter(List<FormSubmissionDto> registration){
     	List<Genre> genreList = fillGenreList(registration.get(7).getFieldValue());
-        Writer writer = new Writer(registration.get(0).getFieldValue().toString(), registration.get(1).getFieldValue().toString(), registration.get(2).getFieldValue().toString(), registration.get(6).getFieldValue().toString(), registration.get(5).getFieldValue().toString(), registration.get(3).getFieldValue().toString(), registration.get(4).getFieldValue().toString(), false, genreList);
+        Writer writer = new Writer(registration.get(0).getFieldValue().toString(), registration.get(1).getFieldValue().toString(), registration.get(2).getFieldValue().toString(), registration.get(6).getFieldValue().toString(), registration.get(5).getFieldValue().toString(), registration.get(3).getFieldValue().toString(), registration.get(4).getFieldValue().toString(), false, genreList, false);
         writerRepository.save(writer);
     }
 

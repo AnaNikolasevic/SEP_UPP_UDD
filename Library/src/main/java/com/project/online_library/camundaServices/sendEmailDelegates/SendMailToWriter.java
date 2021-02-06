@@ -37,12 +37,22 @@ public class SendMailToWriter implements JavaDelegate {
         String title = (String)delegateExecution.getVariable("title");
         BookPrototype bookPrototype = bookPrototypeRepository.findByTitle(title);
 
+        String plagiatDecision = (String) delegateExecution.getVariable("plagiatDecision");
+
         if(bookPrototype.getBookStatus().equals(BookStatus.INTERESTED)){
             this.sendInterested(writer, recipient, title);
         }else if(bookPrototype.getBookStatus().equals(BookStatus.DENIED)){
             this.sendDenied(writer, recipient, title);
         }else if(bookPrototype.getBookStatus().equals(BookStatus.ACCEPTED)) {
-            this.sendAccepted(writer, recipient, title);
+            if(plagiatDecision != null){
+                if(plagiatDecision.equals("isPlagiarism")){
+                    this.notifyWritersAboutPlagiarismTrue(writer, recipient, title);
+                }else if(plagiatDecision.equals("isNotPlagiarism")){
+                    this.notifyWritersAboutPlagiarismFalse(writer, recipient, title);
+                }
+            }else{
+                this.sendAccepted(writer, recipient, title);
+            }
         }
     }
 
@@ -74,6 +84,22 @@ public class SendMailToWriter implements JavaDelegate {
         String subject = "Obaveštenje o plagijarizmu";
         String body = "Poštovani/a " +  writer.getFirstName()+
                 ",\n\n Vaša knjiga "  + title + " " + "je pala test na pagijarizam.\n\n" +
+                "\n\n Srdačan pozdrav!\n\n";
+        emailService.sendEmail(recipient, subject, body);
+    }
+
+    public void notifyWritersAboutPlagiarismTrue(Writer writer, String recipient, String title) throws InterruptedException {
+        String subject = "Obaveštenje o plagijarizmu";
+        String body = "Poštovani/a " +  writer.getFirstName()+
+                ",\n\n Knjiga "  + title + " " + "koju ste prijavili je označena kao plagijat! \n\n" +
+                "\n\n Srdačan pozdrav!\n\n";
+        emailService.sendEmail(recipient, subject, body);
+    }
+
+    public void notifyWritersAboutPlagiarismFalse(Writer writer, String recipient, String title) throws InterruptedException {
+        String subject = "Obaveštenje o plagijarizmu";
+        String body = "Poštovani/a " +  writer.getFirstName()+
+                ",\n\n Knjiga "  + title + " " + "koju ste prijavili nije plagijat! \n\n" +
                 "\n\n Srdačan pozdrav!\n\n";
         emailService.sendEmail(recipient, subject, body);
     }

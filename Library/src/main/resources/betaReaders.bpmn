@@ -9,7 +9,12 @@
         <camunda:formData>
           <camunda:formField id="title" label="Title" type="string" defaultValue="${title}" />
           <camunda:formField id="file_view" label="File View" type="file_view" defaultValue="${uploadFile}" />
-          <camunda:formField id="comment" label="Comment" type="string" />
+          <camunda:formField id="comment" label="Comment" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="minlength" config="10" />
+            </camunda:validation>
+          </camunda:formField>
           <camunda:formField id="send" label="Send" type="boolean" />
         </camunda:formData>
         <camunda:taskListener delegateExpression="${addCommentOnDeleteListener}" event="delete" id="" />
@@ -32,7 +37,7 @@
     <bpmn:boundaryEvent id="commentTimer" attachedToRef="AddComment">
       <bpmn:outgoing>Flow_091h55o</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_00yfan1">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT72H</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:endEvent id="Event_166erlj">
@@ -62,6 +67,18 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="betaReaders">
+      <bpmndi:BPMNEdge id="Flow_0t40fwx_di" bpmnElement="Flow_0t40fwx">
+        <di:waypoint x="820" y="117" />
+        <di:waypoint x="932" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_020zlkx_di" bpmnElement="Flow_020zlkx">
+        <di:waypoint x="670" y="280" />
+        <di:waypoint x="750" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yfvkrt_di" bpmnElement="Flow_0yfvkrt">
+        <di:waypoint x="470" y="117" />
+        <di:waypoint x="540" y="117" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_091h55o_di" bpmnElement="Flow_091h55o">
         <di:waypoint x="620" y="175" />
         <di:waypoint x="620" y="240" />
@@ -82,38 +99,26 @@
         <di:waypoint x="168" y="117" />
         <di:waypoint x="200" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0yfvkrt_di" bpmnElement="Flow_0yfvkrt">
-        <di:waypoint x="470" y="117" />
-        <di:waypoint x="540" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_020zlkx_di" bpmnElement="Flow_020zlkx">
-        <di:waypoint x="670" y="280" />
-        <di:waypoint x="750" y="280" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0t40fwx_di" bpmnElement="Flow_0t40fwx">
-        <di:waypoint x="820" y="117" />
-        <di:waypoint x="932" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="132" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1bpfvcb_di" bpmnElement="GetBetaReadersList">
-        <dc:Bounds x="200" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0gfjg1u_di" bpmnElement="Event_0gfjg1u">
-        <dc:Bounds x="932" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0e5fple_di" bpmnElement="NotifyBetaReaders">
-        <dc:Bounds x="370" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0jwpbxk_di" bpmnElement="AddComment">
         <dc:Bounds x="540" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_06jpzxc_di" bpmnElement="SendLossStatusMail">
-        <dc:Bounds x="750" y="240" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_0gfjg1u_di" bpmnElement="Event_0gfjg1u">
+        <dc:Bounds x="932" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bpfvcb_di" bpmnElement="GetBetaReadersList">
+        <dc:Bounds x="200" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_166erlj_di" bpmnElement="Event_166erlj">
         <dc:Bounds x="912" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06jpzxc_di" bpmnElement="SendLossStatusMail">
+        <dc:Bounds x="750" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e5fple_di" bpmnElement="NotifyBetaReaders">
+        <dc:Bounds x="370" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z0tnz6_di" bpmnElement="Activity_0z0tnz6">
         <dc:Bounds x="570" y="240" width="100" height="80" />

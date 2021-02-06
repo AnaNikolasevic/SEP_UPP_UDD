@@ -109,8 +109,8 @@ export default {
     submitForm(formSubmissionDto, FormFieldsDTO) {
       console.log("submit");
       console.log(formSubmissionDto);
-      console.log(FormFieldsDTO.formFields);     
-      
+      console.log(FormFieldsDTO.formFields);
+
       axios
         .post(
           "http://localhost:8080/subminForm/" +
