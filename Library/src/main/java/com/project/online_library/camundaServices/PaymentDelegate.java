@@ -32,8 +32,8 @@ public class PaymentDelegate implements JavaDelegate{
 
         String username = (String) execution.getVariable("writer");
         Writer writer = writerRepository.findByUsername(username);
-        //writer.setActiveAccount(true);
-        //writerRepository.save(writer);
+        writer.setPublishEnabled(true);
+        writerRepository.save(writer);
 	}
 
 }

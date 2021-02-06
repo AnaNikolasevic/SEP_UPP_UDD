@@ -2,6 +2,7 @@ package com.project.online_library.camundaServices.sendEmailDelegates;
 
 import java.util.List;
 
+import com.project.online_library.repository.WriterRepository;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -31,6 +32,9 @@ public class SendRejectionEmailToWriter implements JavaDelegate{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    WriterRepository writerRepository;
+
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
@@ -41,5 +45,8 @@ public class SendRejectionEmailToWriter implements JavaDelegate{
         String body = "Poštovani " +
                 ",\n\n Nasi clanovi odbora su odlucili da niste podobni za clanstvo.\n\n";
         emailService.sendEmail(recipient, subject, body );
+
+        writerRepository.delete(writerRepository.getByUsername(writerUsername));
+
     }
 }

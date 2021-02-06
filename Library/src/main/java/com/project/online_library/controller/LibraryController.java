@@ -40,6 +40,7 @@ public class LibraryController {
 		//provera da li korisnik sa id-jem pera postoji
 		//List<User> users = identityService.createUserQuery().userId("pera").list();
 		ProcessInstance pi = runtimeService.startProcessInstanceByKey("registration_process");
+		ProcessInstance pi2 = runtimeService.startProcessInstanceByKey("plagiarismProcess");
 
 		Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
 		TaskFormData tfd = formService.getTaskFormData(task.getId());

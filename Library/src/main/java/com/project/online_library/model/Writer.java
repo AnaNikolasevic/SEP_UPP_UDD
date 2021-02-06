@@ -2,16 +2,13 @@ package com.project.online_library.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Writer extends Users{
+
+    @Column
+    private Boolean publishEnabled;
 
     @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private List<BookPrototype> bookPrototypeList;
@@ -29,9 +26,10 @@ public class Writer extends Users{
     public Writer() {
     }
 
-    public Writer(String firstName, String lastName, String email, String password, String username, String city, String country, boolean enabled, List<Genre> genreList) {
+    public Writer(String firstName, String lastName, String email, String password, String username, String city, String country, boolean enabled, List<Genre> genreList, Boolean publishEnabled) {
         super(firstName, lastName, email, password, username, city, country, enabled);
         this.genreList = genreList;
+        this.publishEnabled = publishEnabled;
     }
 
     public List<BookPrototype> getBookPrototypeList() {
@@ -57,6 +55,12 @@ public class Writer extends Users{
 	public void setGenreList(List<Genre> genreList) {
 		this.genreList = genreList;
 	}
-    
-    
+
+    public Boolean getPublishEnabled() {
+        return publishEnabled;
+    }
+
+    public void setPublishEnabled(Boolean publishEnabled) {
+        this.publishEnabled = publishEnabled;
+    }
 }
