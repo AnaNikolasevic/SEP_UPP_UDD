@@ -46,50 +46,17 @@ export default {
     add(){
         axios
         .put(
-          "http://localhost:8082/seller/paymentTypes/" + this.idLU + "/" + this.choosenType.id)
+          "http://localhost:8082/seller/paymentTypes/" + this.idLU + "/" + this.choosenType.id, this.seller)
         .then((response) => {
           console.log(response);
-          this.addPaymentInfo();
+          alert("Successfully added!")
+          location.reload();
         })
         .catch((error) => {
-          console.log(error);
+          alert("This seller already has this payment type.");
+          console.log(error.data);
         });
     },
-    addPaymentInfo(){
-        if (this.choosenType.name == "paypal")
-            this.addPayPal();
-        else if (this.choosenType.name == "bitcoin")
-            this.addBitcoin();
-        else if (this.choosenType.name == "card")
-            this.addCard();
-    },
-    addPayPal(){
-        axios
-        .post(
-          "http://localhost:8081/seller", this.seller)
-        .then((response) => {
-          console.log(response);
-           alert('you have successfully added this payment type');
-        })
-        .catch(() => {
-         
-           alert('you already have this payment type');
-        });
-    },
-    addBitcoin(){
-      axios
-        .post(
-          "http://localhost:8089/seller", this.seller)
-        .then((response) => {
-          console.log(response);
-          alert('you have successfully added this payment type');
-        })
-        .catch(() => {
-          console.log('you already have this payment type');
-          alert('you already have this payment type');
-        });
-    },
-    addCard(){},
   },
   mounted() {
     axios
