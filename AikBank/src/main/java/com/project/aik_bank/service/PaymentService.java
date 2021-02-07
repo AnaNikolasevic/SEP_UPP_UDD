@@ -1,5 +1,6 @@
 package com.project.aik_bank.service;
 
+import com.project.aik_bank.dto.KpResponseDTO;
 import com.project.aik_bank.dto.PayeerFormDTO;
 import com.project.aik_bank.dto.PaymentRequestDTO;
 import com.project.aik_bank.dto.ResponseDTO;
@@ -24,6 +25,8 @@ import java.util.NoSuchElementException;
 public class PaymentService {
 
     private static String PCC_URL = "http://localhost:8092";
+    private static String KP_URL = "http://localhost:8082";
+
 
     @Autowired
     RestTemplate restTemplate;
@@ -71,9 +74,10 @@ public class PaymentService {
         // ukoliko se kupac ne nadje kao korsnik u ovoj banci, zahtev se prosledjuje na PCC
         if (payeer == null){
 
+            //slajne zahteva na pcc
             PCCRequest pccRequest = this.createPCCRequest(payeerFormDTO, payment);
-
             ResponseEntity<ResponseDTO> response = restTemplate.postForEntity(PCC_URL + "/createPayment", pccRequest, ResponseDTO.class);
+
 
             if (response.getBody().getStatus().equals("SUSCCESSFUL")){
                 Customer payee = payment.getPayee();
@@ -81,18 +85,28 @@ public class PaymentService {
                 customerRepository.save(payee);
                 payment.setStatus("SUSCCESSFUL");
                 paymentRepository.save(payment);
-                return "http://localhost:8083/aikBank/success/" + payment.getMerchant_order_id();
+                //slanje podataka na kp
+                KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
+                restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
+                return payment.getSuccess_url();
+
             } else if (response.getBody().getStatus().equals("FAILED")){
                 payment.setStatus("FAILED");
                 paymentRepository.save(payment);
-                return "http://localhost:8083/aikBank/failed/" + payment.getMerchant_order_id();
+                KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
+                restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
+               return payment.getFailed_url();
             } else {
+
                 payment.setStatus("ERROR");
                 paymentRepository.save(payment);
-                return "http://localhost:8083/aikBank/error/" + payment.getMerchant_order_id();
+                KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
+                restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
+                return payment.getError_url();
 
             }
         } else {
+
             if (validation(payeerFormDTO, payeer) == true) {
                 payment.setPayeer(payeer);
 
@@ -105,19 +119,24 @@ public class PaymentService {
                     customerRepository.save(payee);
                     payment.setStatus("SUSCCESSFUL");
                     paymentRepository.save(payment);
-                    return "http://localhost:8083/aikBank/success/" + payment.getMerchant_order_id();
-
+                    KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
+                    restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
+                    return payment.getSuccess_url();
                 } else {
                     payment.setStatus("FAILED");
                     paymentRepository.save(payment);
-                    return "http://localhost:8083/aikBank/failed/" + payment.getMerchant_order_id();
+                    KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
+                    restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
+                    return payment.getFailed_url();
                 }
 
 
             } else {
                 payment.setStatus("ERROR");
                 paymentRepository.save(payment);
-                return "http://localhost:8083/aikBank/error/" + payment.getMerchant_order_id();
+                KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
+                restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
+                return payment.getError_url();
             }
         }
 
@@ -135,9 +154,25 @@ public class PaymentService {
         pccRequest.setSecurityCode(payeerFormDTO.getSecurityCode());
         pccRequest.setBankName("AikBank");
         pccRequestRepository.save(pccRequest);
-
-
         return pccRequest;
+
+    }
+    public KpResponseDTO crateKpResponse(ResponseDTO responseDTO, Payment payment){
+        KpResponseDTO kpResponseDTO = new KpResponseDTO();
+        kpResponseDTO.setMerchantOrderId(payment.getMerchant_order_id());
+        kpResponseDTO.setPaymentId(payment.getId());
+        kpResponseDTO.setAcquirerOrderId(responseDTO.getAcquirerOrderId());
+        kpResponseDTO.setAcquirerTimestamp(responseDTO.getAcquirerTimestamp());
+        kpResponseDTO.setStatus(payment.getStatus());
+        return kpResponseDTO;
+
+    }
+    public KpResponseDTO crateKpResponse(Payment payment){
+        KpResponseDTO kpResponseDTO = new KpResponseDTO();
+        kpResponseDTO.setMerchantOrderId(payment.getMerchant_order_id());
+        kpResponseDTO.setPaymentId(payment.getId());
+        kpResponseDTO.setStatus(payment.getStatus());
+        return kpResponseDTO;
 
     }
 
@@ -160,5 +195,7 @@ public class PaymentService {
         }
         return  true;
     }
+
+
 
 }

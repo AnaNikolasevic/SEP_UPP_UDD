@@ -16,6 +16,13 @@ public class PaymentType {
 	
 	@Column
 	private String name;
+	@Column
+	private String success_url;
+	@Column
+	private String failed_url;
+	@Column
+	private String error_url;
+
 	public PaymentType() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -32,5 +39,28 @@ public class PaymentType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public String getSuccess_url() {
+		return success_url;
+	}
+
+	public void setSuccess_url(String success_url) {
+		this.success_url = success_url;
+	}
+
+	public String getFailed_url() {
+		return failed_url;
+	}
+
+	public void setFailed_url(String failed_url) {
+		this.failed_url = failed_url;
+	}
+
+	public String getError_url() {
+		return error_url;
+	}
+
+	public void setError_url(String error_url) {
+		this.error_url = error_url;
+	}
 }

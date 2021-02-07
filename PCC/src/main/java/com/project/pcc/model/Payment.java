@@ -1,7 +1,5 @@
 package com.project.pcc.model;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 import javax.persistence.*;
 
 @Entity

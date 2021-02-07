@@ -11,7 +11,9 @@ export default new Vuex.Store({
         user: {
             username: "",
             role: "none"
-        }
+        },
+        booksInCart: [],
+        purchasedBooks: []
     },
 
     mutations: {
@@ -26,6 +28,25 @@ export default new Vuex.Store({
         logout(state) {
             state.user = {}
         },
+        addBooksInCart(state, book) {
+        // mutate state
+            state.booksInCart.push(book);
+            
+        },
+        deleteBook(state, book) {
+            var index = state.booksInCart.findIndex((c) => c.id == book.id);
+            state.booksInCart.splice(index, 1);
+        },
+        deleteAll(state) {
+            state.booksInCart = [];
+        },
+        addPurchasedBooks(state, book) {
+        // mutate state
+            state.purchasedBooks.push(book);         
+        },
+        deleteAllPurchasedBooks(state) {
+            state.purchasedBooks = [];
+        }
     },
     actions: {},
     modules: {}

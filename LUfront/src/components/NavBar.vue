@@ -13,6 +13,14 @@
 
     <!-- gornji toolbar -->
     <v-toolbar flat class="mx-12">
+      <v-btn
+        text
+        color="primary"
+        @click="Home()"
+        v-if="this.$store.state.user.role == 'none'"
+      >
+        <v-icon right>mdi-home</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
       <div class="mx-2">
         <LoginComponent
@@ -50,6 +58,15 @@
         <span>Add payment</span>
         <v-icon right>mdi-plus</v-icon>
       </v-btn>
+      <!-- <v-btn
+        text
+        color="primary"
+        @click="openMyBooks()"
+        v-if="this.$store.state.user.role == 'none'"
+      >
+        <span>My books</span>
+        <v-icon right>mdi-book</v-icon>
+      </v-btn> -->
       <v-btn
         text
         color="primary"
@@ -202,6 +219,9 @@ export default {
     };
   },
   methods: {
+    Home(){
+      this.$router.push("/");
+    },
     openCart() {
       this.$router.push("/cart");
     },
@@ -249,6 +269,9 @@ export default {
     },
     openFinalApprovement(){
       this.$router.push("/finalApprovement")
+    },
+    openMyBooks(){
+      this.$router.push("/myBooks")
     },
     logout() {
       localStorage.removeItem("user");

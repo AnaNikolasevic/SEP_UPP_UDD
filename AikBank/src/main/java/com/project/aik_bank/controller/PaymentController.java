@@ -47,8 +47,6 @@ public class PaymentController {
     @PutMapping(path= "/pay", consumes = "application/json", produces = "application/json")
     public ResponseEntity pay(@RequestBody PayeerFormDTO payeerFormDTO) throws  NoSuchElementException {
 
-        System.out.println("USAO SAM U KONTROLEEERR");
-
         String url = "";
         try{
             url = paymentService.pay(payeerFormDTO);
