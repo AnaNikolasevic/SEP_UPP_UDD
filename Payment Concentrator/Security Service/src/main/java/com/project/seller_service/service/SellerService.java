@@ -3,6 +3,8 @@ package com.project.seller_service.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,8 @@ import net.minidev.json.JSONObject;
 public class SellerService {
 	@Autowired
 	private SellerRepository repository;
+	
+	Logger logger = LoggerFactory.getLogger(SellerService.class);
 	
 	public List<Seller> getAll() {
 	    return repository.findAll();
@@ -69,6 +73,7 @@ public class SellerService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		System.out.println("Sending seller card request to card service ...");
+		logger.info("Sending seller card request to card service ...");
 		RestTemplate restClient = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(map.toString(), headers);
 		ResponseEntity<String> response = restClient.postForEntity(url, request, String.class);
@@ -86,6 +91,7 @@ public class SellerService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		System.out.println("Sending seller bitcoin request to bitcoin service ...");
+		logger.info("Sending seller bitcoin request to bitcoin service ...");
 		RestTemplate restClient = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(map.toString(), headers);
 		ResponseEntity<String> response = restClient.postForEntity(url, request, String.class);
@@ -104,6 +110,7 @@ public class SellerService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		System.out.println("Sending seller paypal request to paypal service ...");
+		logger.info("Sending seller paypal request to paypal service ...");
 		RestTemplate restClient = new RestTemplate();
 		HttpEntity<String> request = new HttpEntity<String>(map.toString(), headers);
 		ResponseEntity<String> response = restClient.postForEntity(url, request, String.class);
@@ -113,9 +120,11 @@ public class SellerService {
 	public void checkIfExist(int sellerId) {
 		// TODO Auto-generated method stub
 		if(!repository.existsById(Long.valueOf(sellerId))) {
+			logger.info("This seller is not initialized. Creating seller . . .");
 			Seller seller = new Seller();
 			seller.setPaymentTypes(new ArrayList<PaymentType>());
 			repository.save(seller);
+			logger.info("Seller created in Payment Concentrator.");
 		}
 	}
 

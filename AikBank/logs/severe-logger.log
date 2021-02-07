@@ -1,0 +1,5 @@
+2021-02-07 20:18:31,238 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on AnaPC with PID 11976 (D:\fax\SEP_UPP_UDD\SEP_UPP_UDD\AikBank\target\classes started by 23nik in D:\fax\SEP_UPP_UDD\SEP_UPP_UDD\AikBank)
+2021-02-07 20:18:31,272 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 20:19:13,779 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 46.144 seconds (JVM running for 49.935)
+2021-02-07 20:26:05,370 INFO com.project.aik_bank.service.PaymentService [http-nio-8090-exec-1] [CARD] Order with price: 12.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 20:27:05,952 INFO com.project.aik_bank.service.PaymentService [http-nio-8090-exec-4] [CARD] payment request with id: 1updated status to: SUSCCESSFUL

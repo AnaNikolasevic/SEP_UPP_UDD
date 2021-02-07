@@ -10,6 +10,9 @@ import com.project.aik_bank.model.Payment;
 import com.project.aik_bank.repository.CustomerRepository;
 import com.project.aik_bank.repository.PCCRequestRepository;
 import com.project.aik_bank.repository.PaymentRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -40,7 +43,7 @@ public class PaymentService {
     @Autowired
     PCCRequestRepository pccRequestRepository;
 
-
+    Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
     public Payment create(PaymentRequestDTO paymentRequestDTO) throws ValidationException {
 
@@ -63,6 +66,9 @@ public class PaymentService {
         payment.setFailed_url(paymentRequestDTO.getFailed_url());
         payment.setStatus("CREATED");
         paymentRepository.save(payment);
+        logger.info("[CARD] Order with price: " + paymentRequestDTO.getPrice()+paymentRequestDTO.getCurrency()
+		+ " bought at Literary association " + paymentRequestDTO.getSellerId()+ ","
+		+ " created in CARD service and saved with status " + payment.getStatus());
         return payment;
     }
 
@@ -73,6 +79,7 @@ public class PaymentService {
 
         // ukoliko se kupac ne nadje kao korsnik u ovoj banci, zahtev se prosledjuje na PCC
         if (payeer == null){
+    		logger.info("Sending request to PCC . . .");
 
             //slajne zahteva na pcc
             PCCRequest pccRequest = this.createPCCRequest(payeerFormDTO, payment);
@@ -85,6 +92,7 @@ public class PaymentService {
                 customerRepository.save(payee);
                 payment.setStatus("SUSCCESSFUL");
                 paymentRepository.save(payment);
+                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                 //slanje podataka na kp
                 KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
                 restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
@@ -93,13 +101,16 @@ public class PaymentService {
             } else if (response.getBody().getStatus().equals("FAILED")){
                 payment.setStatus("FAILED");
                 paymentRepository.save(payment);
+                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                 KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
                 restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                return payment.getFailed_url();
+               
             } else {
 
                 payment.setStatus("ERROR");
                 paymentRepository.save(payment);
+                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                 KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
                 restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                 return payment.getError_url();
@@ -119,12 +130,14 @@ public class PaymentService {
                     customerRepository.save(payee);
                     payment.setStatus("SUSCCESSFUL");
                     paymentRepository.save(payment);
+                    logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                     KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
                     restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                     return payment.getSuccess_url();
                 } else {
                     payment.setStatus("FAILED");
                     paymentRepository.save(payment);
+                    logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                     KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
                     restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                     return payment.getFailed_url();
@@ -135,6 +148,7 @@ public class PaymentService {
                 payment.setStatus("ERROR");
                 paymentRepository.save(payment);
                 KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
+                logger.info("Card payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                 restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                 return payment.getError_url();
             }
@@ -154,6 +168,7 @@ public class PaymentService {
         pccRequest.setSecurityCode(payeerFormDTO.getSecurityCode());
         pccRequest.setBankName("AikBank");
         pccRequestRepository.save(pccRequest);
+        logger.info("PCC request created.");
         return pccRequest;
 
     }

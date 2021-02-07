@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import com.project.seller_service.dto.OrderRequestDto;
 import com.project.seller_service.model.OrderRequest;
 import com.project.seller_service.service.OrderRequestService;
-import sun.security.ec.CurveDB;
 
 @CrossOrigin
 @RestController
