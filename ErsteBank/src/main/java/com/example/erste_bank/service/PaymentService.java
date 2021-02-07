@@ -8,11 +8,13 @@ import com.example.erste_bank.model.Payment;
 import com.example.erste_bank.repository.CustomerRepository;
 import com.example.erste_bank.repository.PaymentRepository;
 
+import com.google.common.hash.Hashing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,7 +87,7 @@ public class PaymentService {
         if (!pccRequestDTO.getCardHolderName().equals(payeer.getCardHolderName())){
             return false;
         }
-        if (pccRequestDTO.getSecurityCode() != payeer.getCreditCardSecurityNumber()){
+        if (!pccRequestDTO.getSecurityCode().equals(payeer.getCreditCardSecurityNumber())){
             return false;
         }
         return  true;

@@ -1,5 +1,6 @@
 package com.project.aik_bank.service;
 
+import com.google.common.hash.Hashing;
 import com.project.aik_bank.dto.KpResponseDTO;
 import com.project.aik_bank.dto.PayeerFormDTO;
 import com.project.aik_bank.dto.PaymentRequestDTO;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.bind.ValidationException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -74,7 +76,10 @@ public class PaymentService {
 
     public String pay (PayeerFormDTO payeerFormDTO) throws ParseException {
 
-        Customer payeer = customerRepository.findByPAN(payeerFormDTO.getPan());
+        String hashPAN = Hashing.sha256()
+                .hashString(payeerFormDTO.getPan(), StandardCharsets.UTF_8)
+                .toString();
+        Customer payeer = customerRepository.findByPAN(hashPAN);
         Payment payment = paymentRepository.findById(payeerFormDTO.getPaymentId()).orElse(null);
 
         // ukoliko se kupac ne nadje kao korsnik u ovoj banci, zahtev se prosledjuje na PCC
@@ -164,9 +169,16 @@ public class PaymentService {
         pccRequest.setAmount(payment.getAmount());
         pccRequest.setCardHolderName(payeerFormDTO.getCardHolderName());
         pccRequest.setExpirationDate(payeerFormDTO.getExpirationDate());
-        pccRequest.setPan(payeerFormDTO.getPan());
-        pccRequest.setSecurityCode(payeerFormDTO.getSecurityCode());
+        String hashPAN = Hashing.sha256()
+                .hashString(payeerFormDTO.getPan(), StandardCharsets.UTF_8)
+                .toString();
+        pccRequest.setPan(hashPAN);
+        String hashSC = Hashing.sha256()
+                .hashString(Long.toString(payeerFormDTO.getSecurityCode()), StandardCharsets.UTF_8)
+                .toString();
+        pccRequest.setSecurityCode(hashSC);
         pccRequest.setBankName("AikBank");
+        pccRequest.setPanId(payeerFormDTO.getPan().substring(0,3));
         pccRequestRepository.save(pccRequest);
         logger.info("PCC request created.");
         return pccRequest;
@@ -205,7 +217,10 @@ public class PaymentService {
         if (!payeerFormDTO.getCardHolderName().equals(payeer.getCardHolderName())){
             return false;
         }
-        if (payeerFormDTO.getSecurityCode() != payeer.getCreditCardSecurityNumber()){
+        String hashSC = Hashing.sha256()
+                .hashString(Long.toString(payeerFormDTO.getSecurityCode()), StandardCharsets.UTF_8)
+                .toString();
+        if (!hashSC.equals(payeer.getCreditCardSecurityNumber())){
             return false;
         }
         return  true;

@@ -31,8 +31,7 @@ public class PaymentService {
 
     public ResponseDTO createPayment(PCCRequestDTO pccRequestDTO){
     	logger.info("PCC accepted payment request from Aik Bank.");
-        String panID = pccRequestDTO.getPan().substring(0,3);
-        Bank bank = bankRepository.findByPanID(panID);
+        Bank bank = bankRepository.findByPanID(pccRequestDTO.getPanId());
         if (bank == null){
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.setAcquirerOrderId(pccRequestDTO.getAcquirerOrderId());

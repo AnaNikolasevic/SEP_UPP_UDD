@@ -16,7 +16,7 @@ public class PCCRequest {
     @Column
     private String pan;
     @Column
-    private long securityCode;
+    private String securityCode;
     @Column
     private String cardHolderName;
     @Column
@@ -25,6 +25,8 @@ public class PCCRequest {
     private float amount;
     @Column
     private String bankName;
+    @Column
+    private String panId;
 
     public PCCRequest() {
     }
@@ -61,11 +63,11 @@ public class PCCRequest {
         this.pan = pan;
     }
 
-    public long getSecurityCode() {
+    public String getSecurityCode() {
         return securityCode;
     }
 
-    public void setSecurityCode(long securityCode) {
+    public void setSecurityCode(String securityCode) {
         this.securityCode = securityCode;
     }
 
@@ -99,5 +101,13 @@ public class PCCRequest {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public String getPanId() {
+        return panId;
+    }
+
+    public void setPanId(String panId) {
+        this.panId = panId;
     }
 }
