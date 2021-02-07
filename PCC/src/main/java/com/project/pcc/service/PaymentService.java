@@ -30,7 +30,7 @@ public class PaymentService {
 
 
     public ResponseDTO createPayment(PCCRequestDTO pccRequestDTO){
-
+    	logger.info("PCC accepted payment request from Aik Bank.");
         String panID = pccRequestDTO.getPan().substring(0,3);
         Bank bank = bankRepository.findByPanID(panID);
         if (bank == null){
@@ -50,11 +50,12 @@ public class PaymentService {
 
 
         ResponseEntity<ResponseDTO> response = restTemplate.postForEntity(bank.getUrl(), pccRequestDTO, ResponseDTO.class);
+    	logger.info("PCC send request to Erste Bank.");
         payment.setStatus(response.getBody().getStatus());
         payment.setIssuerOrderId(response.getBody().getIssuerOrderId());
         payment.setIssuerTimestamp(response.getBody().getIssuerTimestamp());
         paymentRepository.save(payment);
-        logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+        logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
         return response.getBody();
     }
 

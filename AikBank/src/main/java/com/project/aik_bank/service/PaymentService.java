@@ -92,7 +92,7 @@ public class PaymentService {
                 customerRepository.save(payee);
                 payment.setStatus("SUSCCESSFUL");
                 paymentRepository.save(payment);
-                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+                logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
                 //slanje podataka na kp
                 KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
                 restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
@@ -101,7 +101,7 @@ public class PaymentService {
             } else if (response.getBody().getStatus().equals("FAILED")){
                 payment.setStatus("FAILED");
                 paymentRepository.save(payment);
-                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+                logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
                 KpResponseDTO kpResponseDTO = this.crateKpResponse(response.getBody(), payment);
                 restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                return payment.getFailed_url();
@@ -130,14 +130,14 @@ public class PaymentService {
                     customerRepository.save(payee);
                     payment.setStatus("SUSCCESSFUL");
                     paymentRepository.save(payment);
-                    logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+                    logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
                     KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
                     restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                     return payment.getSuccess_url();
                 } else {
                     payment.setStatus("FAILED");
                     paymentRepository.save(payment);
-                    logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+                    logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
                     KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
                     restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                     return payment.getFailed_url();
@@ -148,7 +148,7 @@ public class PaymentService {
                 payment.setStatus("ERROR");
                 paymentRepository.save(payment);
                 KpResponseDTO kpResponseDTO =  this.crateKpResponse(payment);
-                logger.info("Card payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+                logger.info("Card payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
                 restTemplate.put(KP_URL + "/orderRequest/edit", kpResponseDTO);
                 return payment.getError_url();
             }
