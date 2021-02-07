@@ -117,12 +117,12 @@ public class PaypalService {
         if(payment.getState().equals("approved")) {
             po.setStatus(PaymentOrderStatus.PAID);
             System.out.println("Paypal order paypalId="+ paymentId +" approved");
-            logger.info("[PAYPAL] payment request with id: " + po.getId() + "updated status to: " + po.getStatus());
+            logger.info("[PAYPAL] payment request with id: " + po.getId() + " updated status to: " + po.getStatus());
 
         }else {
             po.setStatus(PaymentOrderStatus.FAILED);
             System.out.println("Paypal order paypalId="+ paymentId +" failed");
-            logger.info("[PAYPAL] payment request with id: " + po.getId() + "updated status to: " + po.getStatus());
+            logger.info("[PAYPAL] payment request with id: " + po.getId() + " updated status to: " + po.getStatus());
 
         }
 

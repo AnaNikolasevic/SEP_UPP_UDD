@@ -43,7 +43,7 @@ public class PaymentService {
             responseDTO.setStatus("ERROR");
             payment.setStatus("ERROR");
             paymentRepository.save(payment);
-            logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+            logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
             return responseDTO;
 
         } else {
@@ -55,14 +55,14 @@ public class PaymentService {
                 responseDTO.setStatus("SUSCCESSFUL");
                 payment.setStatus("SUSCCESSFUL");
                 paymentRepository.save(payment);
-                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+                logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
                 return responseDTO;
 
             } else {
                 responseDTO.setStatus("FAILED");
                 payment.setStatus("FAILED");
                 paymentRepository.save(payment);
-                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+                logger.info("[CARD] payment request with id: " + payment.getId() + " updated status to: " + payment.getStatus());
                 return responseDTO;
             }
 
@@ -99,7 +99,8 @@ public class PaymentService {
         payment.setTimestamp(timeStamp);
         payment.setStatus("CREATED");
         paymentRepository.save(payment);
-        logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+        logger.info("[CARD] Order with price: " + payment.getAmount()
+		+ " created in CARD service and saved with status " + payment.getStatus());
 
         return payment;
     }

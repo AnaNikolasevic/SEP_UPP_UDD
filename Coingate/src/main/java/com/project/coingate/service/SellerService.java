@@ -17,7 +17,7 @@ public class SellerService {
 	public void addSeller(Seller seller) {
 		// TODO Auto-generated method stub
 		repository.save(seller);
-		logger.info("Literary association with id " + seller.getId() + "added Bitcoin payment.");
+		logger.info("Literary association with id " + seller.getId() + " added Bitcoin payment.");
 
 	}
 

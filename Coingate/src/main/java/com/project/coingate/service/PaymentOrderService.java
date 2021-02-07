@@ -22,7 +22,7 @@ public class PaymentOrderService {
 		PaymentOrder paymentOrder = paymentOrderRepository.getOne( Long.parseLong(paymentOrderId));
 		paymentOrder.setStatus(PaymentOrderStatus.PAID);
 		paymentOrderRepository.save(paymentOrder);
-        logger.info("[BITCOIN] payment request with id: " + paymentOrder.getId() + "updated status to: " + paymentOrder.getStatus());
+        logger.info("[BITCOIN] payment request with id: " + paymentOrder.getId() + " updated status to: " + paymentOrder.getStatus());
 
 	}
 
@@ -31,7 +31,7 @@ public class PaymentOrderService {
 		PaymentOrder paymentOrder = paymentOrderRepository.getOne( Long.parseLong(paymentOrderId));
 		paymentOrder.setStatus(PaymentOrderStatus.CANCELED);
 		paymentOrderRepository.save(paymentOrder);
-        logger.info("[BITCOIN] payment request with id: " + paymentOrder.getId() + "updated status to: " + paymentOrder.getStatus());
+        logger.info("[BITCOIN] payment request with id: " + paymentOrder.getId() + " updated status to: " + paymentOrder.getStatus());
 
 	}
 
