@@ -1,6 +1,9 @@
 package com.project.seller_service.service;
 
+import com.project.seller_service.dto.KpResponseDTO;
+import com.project.seller_service.model.PaymentType;
 import com.project.seller_service.model.Seller;
+import com.project.seller_service.repository.PaymentTypeRepository;
 import com.project.seller_service.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ public class OrderRequestService {
 	OrderRequestRepository repository;
 	@Autowired
 	SellerRepository sellerRepository;
+	@Autowired
+	PaymentTypeRepository paymentTypeRepository;
 
 
 	public OrderRequest add(OrderRequestDto orderRequestDto) {
@@ -40,6 +45,7 @@ public class OrderRequestService {
 
 	public OrderRequest getOrderRequest(Long valueOf, String paymentType) {
 		// TODO Auto-generated method stub
+		PaymentType paymentType1 = paymentTypeRepository.findByName(paymentType);
 		OrderRequest orderRequest = repository.getOne(valueOf);
 		if (orderRequest == null){
 			throw new NoSuchElementException("there is no such order");
@@ -52,9 +58,9 @@ public class OrderRequestService {
 			}
 			orderRequest.setMerchant_id(seller.getMerchant_id());
 			orderRequest.setMerchant_password(seller.getMerchant_password());
-			orderRequest.setError_url("");
-			orderRequest.setFailed_url("");
-			orderRequest.setSuccess_url("");
+			orderRequest.setError_url(paymentType1.getError_url());
+			orderRequest.setFailed_url(paymentType1.getFailed_url());
+			orderRequest.setSuccess_url(paymentType1.getSuccess_url());
 		}
 		repository.save(orderRequest);
 		return orderRequest;
@@ -71,6 +77,14 @@ public class OrderRequestService {
 		orderRequest.setStatus(status);
 		repository.save(orderRequest);
 
+	}
+	public void editOrder (KpResponseDTO kpResponseDTO){
+		OrderRequest orderRequest = repository.findById(kpResponseDTO.getMerchantOrderId()).orElse(null);
+		orderRequest.setStatus(kpResponseDTO.getStatus());
+		orderRequest.setAcquirerOrderId(kpResponseDTO.getAcquirerOrderId());
+		orderRequest.setAcquirerTimestamp(kpResponseDTO.getAcquirerTimestamp());
+		orderRequest.setPaymentId(kpResponseDTO.getPaymentId());
+		repository.save(orderRequest);
 	}
 
 	public void changeOrderRequestStatus(Long id, String status){

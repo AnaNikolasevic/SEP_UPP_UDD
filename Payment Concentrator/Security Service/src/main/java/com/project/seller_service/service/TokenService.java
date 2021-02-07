@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.project.seller_service.model.Seller;
+import com.project.seller_service.repository.PaymentTypeRepository;
 import com.project.seller_service.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class TokenService {
     @Autowired
     SellerRepository sellerRepository;
 
+    @Autowired
+    PaymentTypeRepository paymentTypeRepository;
+
     public String getToken(OrderRequestDto orderRequestDto){
 
         Map<String, Object> claimsMap = new HashMap<>();
@@ -37,6 +41,7 @@ public class TokenService {
 
 
         if (orderRequestDto.getPayment_type().equals("card")){
+
             claimsMap.put("merchant_id", orderRequestDto.getMerchant_id());
             claimsMap.put("merchant_password", orderRequestDto.getMerchant_password());
             claimsMap.put("success_url", orderRequestDto.getSuccess_url());

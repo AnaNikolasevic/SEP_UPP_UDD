@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.seller_service.dto.SellerDTO;
 import com.project.seller_service.model.PaymentType;
 import com.project.seller_service.model.Seller;
 import com.project.seller_service.service.PaymentTypeService;
@@ -33,15 +35,14 @@ public class SellerController {
         return new ResponseEntity<List<PaymentType>>(service.getSellerPaymentTypes(Long.valueOf(sellerId)), HttpStatus.OK);
     }
 	
-
 	@PutMapping("/paymentTypes/{sellerId}/{paymentTypeId}")
-    public ResponseEntity<?> getSellerPaymentTypes(@PathVariable int sellerId, @PathVariable int paymentTypeId) {
-		PaymentType paymentType = (PaymentType) servicePT.getOne(Long.valueOf(paymentTypeId));
+    public ResponseEntity<?> getSellerPaymentTypes(@PathVariable int sellerId, @PathVariable int paymentTypeId, @RequestBody SellerDTO seller) {
+		PaymentType paymentType = servicePT.getOne(Long.valueOf(paymentTypeId));
 		service.checkIfExist(sellerId);
 		if(service.getSellerPaymentTypes(Long.valueOf(sellerId)).contains(paymentType)) {
 	        return new ResponseEntity<>("This seller already contains this payment type", HttpStatus.BAD_REQUEST);
 		} else {
-			service.addSellerPaymentTypes(Long.valueOf(sellerId), paymentType);
+			service.addSellerPaymentTypes(Long.valueOf(sellerId), paymentType, seller);
 			return new ResponseEntity<>("Payment " + paymentType.getName() + "succesfully added!", HttpStatus.OK);
 		}
     }

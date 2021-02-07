@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Your payment was successfull!</h1>
-    <v-btn text color="primary" @click="redirectToLU()">Return to LU</v-btn>
+    <v-btn text color="primary" @click="redirectToLU()">See your books</v-btn>
   </div>
 </template>
 <script>
@@ -28,7 +28,7 @@ export default {
       this.paymentOrderId = this.urlParams.get("orderId");
     },
     redirectToLU() {
-      window.location = window.open("http://localhost:8084");
+       window.location = window.open("http://localhost:8084/purchasedBooks/successfull");
     },
     changeOrderRequestStatus() {
       this.getUrlParametres();

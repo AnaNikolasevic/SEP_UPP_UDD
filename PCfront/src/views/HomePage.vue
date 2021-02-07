@@ -135,7 +135,7 @@ export default {
     //dobavljanje liste nacina placanje, nekog selera!
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const idSeller = urlParams.get("idSeller");
+    const idSeller = urlParams.get('idSeller');
     axios
       .get("http://localhost:8082/seller/paymentTypes/" + idSeller)
       .then((response) => {

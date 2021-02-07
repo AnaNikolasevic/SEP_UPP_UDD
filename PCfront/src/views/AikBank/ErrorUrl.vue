@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
 export default {
   data() {
     return {
@@ -20,7 +20,7 @@ export default {
     }
   },
   mounted() {
-    this.orderId = this.$route.params.id;
+   /* this.orderId = this.$route.params.id;
      axios
           .put("http://localhost:8082/orderRequest/edit/" + this.orderId + "/" + "ERROR")
           .then(() => {
@@ -29,6 +29,6 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-  }
+  */}
 };
 </script>

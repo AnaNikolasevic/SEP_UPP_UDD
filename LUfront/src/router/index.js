@@ -18,6 +18,8 @@ import UploadEdidetBook from "../components/homePage/WriterComponents/UploadEdit
 import FinalCheck from "../views/editor/FinalCheck.vue"
 import FinalEdit from "../components/homePage/WriterComponents/FinalEdit.vue"
 import FinalApprovement from "../views/editor/FinalApprovement.vue"
+import PurchasedBooks from "../views/PurchasedBooks.vue"
+import MyBooks from "../views/MyBooks.vue"
 
 Vue.use(VueRouter)
 
@@ -120,6 +122,16 @@ const routes = [{
         path: "/finalApprovement",
         name: "FinalApprovement",
         component: FinalApprovement
+    },
+    {
+        path: "/purchasedBooks/:status",
+        name: "PurchasedBooks",
+        component: PurchasedBooks
+    },
+    {
+        path: "/myBooks",
+        name: "MyBooks",
+        component: MyBooks
     }
 
 ]

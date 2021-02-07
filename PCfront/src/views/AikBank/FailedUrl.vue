@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
 export default {
   data() {
     return {
@@ -20,16 +20,16 @@ export default {
     }
   },
   mounted() {
-    this.orderId = this.$route.params.id;
-     axios
-          .put("http://localhost:8082/orderRequest/edit/" + this.orderId + "/" + "FAILED")
-          .then(() => {
-            console.log("USPESNOO");
+    // this.orderId = this.$route.params.id;
+    //  axios
+    //       .put("http://localhost:8082/orderRequest/edit/" + this.orderId + "/" + "FAILED")
+    //       .then(() => {
+    //         console.log("USPESNOO");
 
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
   }
 };
 </script>

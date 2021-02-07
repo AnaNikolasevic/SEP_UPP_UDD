@@ -22,11 +22,17 @@
         <v-card hover elevation="2" class="text-center ma-6">
           <div class="cardBorderColor">
             <v-card-title class="headline"
-              >Title: "{{ book.title }}"</v-card-title
+              >Author: {{ book.author }}</v-card-title
             >
-            <v-card-text>author: {{ book.author }}</v-card-text>
-            <v-card-text>price: {{ book.price }} USD</v-card-text>
-            <v-card-actions></v-card-actions>
+            <v-card-text class="text font-weight-medium headline">Title: "{{ book.title }}"</v-card-text>
+            <v-card-text class="my-4 subtitle-1">$: {{ book.price }}</v-card-text>
+            <v-card-actions>
+                  <template >
+                    <v-btn  color="primary" @click="deleteBook(book)"> 
+                      <v-icon right>mdi-trash-can-outline</v-icon>
+                    </v-btn>
+                  </template> 
+            </v-card-actions>  
           </div>
         </v-card>
       </v-flex>
@@ -73,16 +79,6 @@ export default {
       bundleOrder: [],
       //singleOrders: [],
       books: [
-        {
-          title: "Real Life Paperback",
-          author: "Brandon Taylor",
-          price: 25,
-        },
-        {
-          title: "The Buried Giant",
-          author: "Kazuo Ishiguro",
-          price: 20,
-        },
       ],
       orderRequest: {
         price: "",
@@ -112,25 +108,41 @@ export default {
           /*this.snackbarSuccess = true;
           this.$store.commit("deleteAll");
           this.emptyBasket = true;*/
-          window.open("http://localhost:8083/?id=" + response.data.id);
+          window.open("http://localhost:8083/?idSeller=1&id=" + response.data.id);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
+    deleteBook(book){
+        this.checkBasket();
+        this.$store.commit("deleteBook", book);
+        this.totalPrice = 0;
+        this.$store.state.booksInCart.forEach((element) => {
+        this.totalPrice += element.price;
+        });
+        this.orderRequest.price = this.totalPrice;
+    },
     checkBasket() {
-      /*console.log(this.$store.state.carsInCart.length);
-      if (this.$store.state.carsInCart.length == 0) {
+      //console.log(this.$store.state.booksInCart.length);
+      if (this.$store.state.booksInCart.length == 0) {
         this.emptyBasket = true;
-      }*/
+      }
     },
   },
   mounted() {
-    this.books.forEach((element) => {
+
+    if (this.$store.state.booksInCart.length == 0) {
+        this.emptyBasket = true;
+        console.log("usao u if")
+    } else {
+      console.log("usao u else")
+      this.books = this.$store.state.booksInCart
+      this.books.forEach((element) => {
       this.totalPrice += element.price;
-    });
-    this.orderRequest.price = this.totalPrice;
+      });
+      this.orderRequest.price = this.totalPrice;
+    }
   },
   computed: {},
 };
@@ -138,10 +150,10 @@ export default {
 
 <style scoped>
 .cardBorderColor {
-  border-left: 1px solid #ff8a65;
-  border-top: 1px solid #ff8a65;
-  border-right: 1px solid #ff8a65;
-  border-bottom: 1px solid #ff8a65;
+  border-left: 1px solid #9575CD;
+  border-top: 1px solid #9575CD;
+  border-right: 1px solid #9575CD;
+  border-bottom: 1px solid #9575CD;
 }
 .detailsBorderColor {
   border-left: 1.5px solid #ff8a65;
