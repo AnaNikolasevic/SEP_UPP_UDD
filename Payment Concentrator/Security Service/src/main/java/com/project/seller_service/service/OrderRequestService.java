@@ -16,7 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.util.NoSuchElementException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class OrderRequestService {
@@ -27,10 +28,12 @@ public class OrderRequestService {
 	SellerRepository sellerRepository;
 	@Autowired
 	PaymentTypeRepository paymentTypeRepository;
-
+	
+	Logger logger = LoggerFactory.getLogger(OrderRequestService.class);
 
 	public OrderRequest add(OrderRequestDto orderRequestDto) {
 		// TODO Auto-generated method stub
+		logger.info("Creating order . . .");
 		OrderRequest orderRequest = new OrderRequest();
 		orderRequest.setPrice(orderRequestDto.getPrice());
 		orderRequest.setCurrency(orderRequestDto.getCurrency());
@@ -39,7 +42,9 @@ public class OrderRequestService {
 		orderRequest.setStatus("CREATED");
 		orderRequest.setMerchant_timestamp(timeStamp);
 		repository.save(orderRequest);
-
+		logger.info("Order with price: " + orderRequestDto.getPrice()+orderRequestDto.getCurrency()
+					+ " bought at Literary association " + orderRequestDto.getSellerId() + "at " + timeStamp + ","
+					+ " created and saved with status 'created'.");
 		return orderRequest;
 	}
 
@@ -76,6 +81,7 @@ public class OrderRequestService {
 		}
 		orderRequest.setStatus(status);
 		repository.save(orderRequest);
+		logger.info("Status of order request with id: " + id + " changed to: " + status);
 
 	}
 	public void editOrder (KpResponseDTO kpResponseDTO){
@@ -85,13 +91,16 @@ public class OrderRequestService {
 		orderRequest.setAcquirerTimestamp(kpResponseDTO.getAcquirerTimestamp());
 		orderRequest.setPaymentId(kpResponseDTO.getPaymentId());
 		repository.save(orderRequest);
+		logger.info("Status of order request with id: " + orderRequest.getId() + " changed to: " + orderRequest.getStatus());
+		
 	}
 
 	public void changeOrderRequestStatus(Long id, String status){
 
 		OrderRequest orderRequest = repository.getOne(id);
 		orderRequest.setStatus(status);
-	  repository.save(orderRequest);
+		repository.save(orderRequest);
+		logger.info("Status of order request with id: " + id + " changed to: " + status);
 
 	}
 	

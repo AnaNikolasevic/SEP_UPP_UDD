@@ -81,11 +81,12 @@ public class PaypalService {
         payment.setRedirectUrls(redirectUrls);
 
         payment = payment.create(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()));
-        logger.info("Paypal order paypalId="+ payment.getId() +" created sellerId="+pr.getSellerId());
 
         po.setPaymentId(payment.getId());
         paymentOrderRepository.save(po);
-
+        logger.info("[PAYPAL] Order with price: " + po.getPrice()+po.getCurrency()
+		+ " bought at Literary association " + po.getSeller().getId()+ ","
+		+ " created in PAYPAL service and saved with status " + po.getStatus());
         return payment;
     }
 
@@ -114,13 +115,15 @@ public class PaypalService {
         payment = payment.execute(getApiContext(seller.getPaypalClientId(), seller.getPaypalSecret()), paymentExecute);
 
         if(payment.getState().equals("approved")) {
-            logger.info("Paypal order paypalId="+ paymentId +" approved");
             po.setStatus(PaymentOrderStatus.PAID);
             System.out.println("Paypal order paypalId="+ paymentId +" approved");
+            logger.info("[PAYPAL] payment request with id: " + po.getId() + "updated status to: " + po.getStatus());
+
         }else {
-            logger.info("Paypal order paypalId="+ paymentId +" failed");
             po.setStatus(PaymentOrderStatus.FAILED);
             System.out.println("Paypal order paypalId="+ paymentId +" failed");
+            logger.info("[PAYPAL] payment request with id: " + po.getId() + "updated status to: " + po.getStatus());
+
         }
 
         paymentOrderRepository.save(po);

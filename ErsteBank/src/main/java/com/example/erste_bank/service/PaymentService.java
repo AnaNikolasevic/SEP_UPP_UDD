@@ -7,6 +7,9 @@ import com.example.erste_bank.model.Customer;
 import com.example.erste_bank.model.Payment;
 import com.example.erste_bank.repository.CustomerRepository;
 import com.example.erste_bank.repository.PaymentRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class PaymentService {
 
     @Autowired
     PaymentRepository paymentRepository;
+    
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     public ResponseDTO pay (PCCRequestDTO pccRequestDTO) throws ParseException {
 
@@ -37,6 +43,7 @@ public class PaymentService {
             responseDTO.setStatus("ERROR");
             payment.setStatus("ERROR");
             paymentRepository.save(payment);
+            logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
             return responseDTO;
 
         } else {
@@ -48,12 +55,14 @@ public class PaymentService {
                 responseDTO.setStatus("SUSCCESSFUL");
                 payment.setStatus("SUSCCESSFUL");
                 paymentRepository.save(payment);
+                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                 return responseDTO;
 
             } else {
                 responseDTO.setStatus("FAILED");
                 payment.setStatus("FAILED");
                 paymentRepository.save(payment);
+                logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
                 return responseDTO;
             }
 
@@ -90,6 +99,8 @@ public class PaymentService {
         payment.setTimestamp(timeStamp);
         payment.setStatus("CREATED");
         paymentRepository.save(payment);
+        logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
+
         return payment;
     }
 

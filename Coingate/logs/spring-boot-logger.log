@@ -1,0 +1,3 @@
+2021-02-07 20:18:45,787 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 20:19:03,190 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 20:19:31,130 INFO org.springframework.boot.StartupInfoLogger [main] Started CoingateApplication in 62.033 seconds (JVM running for 67.284)
