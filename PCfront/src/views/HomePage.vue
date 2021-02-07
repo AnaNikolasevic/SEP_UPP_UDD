@@ -133,8 +133,11 @@ export default {
     this.$store.commit("removeToken");
 
     //dobavljanje liste nacina placanje, nekog selera!
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const idSeller = urlParams.get('idSeller');
     axios
-      .get("http://localhost:8082/seller/paymentTypes/" + 1)
+      .get("http://localhost:8082/seller/paymentTypes/" + idSeller)
       .then((response) => {
         console.log(response.data);
         this.paymentTypes = response.data;

@@ -1,1 +1,1 @@
-INSERT INTO seller (paypal_client_id, paypal_secret, email) VALUES ('AXXIDwEXUnuCzsLiPb-lrXmOn2Va0F-hL8_cnY4GXVGIWnSl1vfoMOrJtqU3iXTosKfOQsLelxEgUfq3', 'EG11XV372E61NsoFg-P6Ot5XMnKw-Bqj0p0fpeMgR9J4Q7Ji6-Nv8xnoIBjGlAjt_ROQG-mTVkBqaa_r', 'mc@gmail.com');
+INSERT INTO seller (id, paypal_client_id, paypal_secret, email) VALUES (1, 'AXXIDwEXUnuCzsLiPb-lrXmOn2Va0F-hL8_cnY4GXVGIWnSl1vfoMOrJtqU3iXTosKfOQsLelxEgUfq3', 'EG11XV372E61NsoFg-P6Ot5XMnKw-Bqj0p0fpeMgR9J4Q7Ji6-Nv8xnoIBjGlAjt_ROQG-mTVkBqaa_r', 'mc@gmail.com');

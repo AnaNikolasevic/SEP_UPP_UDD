@@ -7,6 +7,8 @@ import com.project.seller_service.model.PaymentType;
 
 public interface PaymentTypeRepository extends JpaRepository<PaymentType,Long>{
 
+
     PaymentType findByName(String name);
+
 
 }

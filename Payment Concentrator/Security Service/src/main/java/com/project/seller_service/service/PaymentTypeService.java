@@ -19,9 +19,14 @@ public class PaymentTypeService {
 	    return repository.findAll();
 	}
 
-	public Object getOne(Long paymentTypeId) {
+	public PaymentType getOne(Long paymentTypeId) {
 		// TODO Auto-generated method stub
-		return repository.getOne(paymentTypeId);
+		for (PaymentType pt : repository.findAll()) {
+			if(pt.getId().equals(paymentTypeId)) {
+				return pt;
+			}
+		}
+		return null;
 	}
 
 

@@ -44,6 +44,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cancel/*").permitAll()
                 .antMatchers("/error*").permitAll()
                 .antMatchers("/confir*").permitAll()
+                .antMatchers("/seller*").permitAll()
                 .anyRequest().authenticated();
         //.anyRequest().permitAll();
 
