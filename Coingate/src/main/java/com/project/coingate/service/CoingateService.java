@@ -63,6 +63,7 @@ public class CoingateService {
 		headers.set("Content-Type", "application/x-www-form-urlencoded");
 		
 		System.out.println("Creating request for coingate API - Create Order");
+		logger.info("Creating request for BITCOIN payment . . .");
 		RestTemplate restClient = new RestTemplate();
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 		ResponseEntity<String> response = restClient.postForEntity(url, request, String.class);
@@ -73,10 +74,12 @@ public class CoingateService {
 			po.setPaymentId((String)basicJsonParser.parseMap(response.getBody()).get("token"));
 			po.setStatus(PaymentOrderStatus.NEW);
 			System.out.println("Redirecting user to coingate payment link: " + paymentUrl);
-			
-			logger.info("Coingate order coingateId="+ "" +" created sellerId="+pr.getSellerId());
-			
+		
 			paymentOrderRepository.save(po);
+			logger.info("[BITCOIN] Order with price: " + po.getPrice()+po.getCurrency()
+			+ " bought at Literary association " + po.getSeller().getId()+ ","
+			+ " created in BITCOIN service and saved with status " + po.getStatus());
+			
 			return new ResponseEntity<String>(paymentUrl, HttpStatus.OK);	
 		}
 		

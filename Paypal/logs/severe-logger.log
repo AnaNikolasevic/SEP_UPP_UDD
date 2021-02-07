@@ -1,0 +1,4 @@
+2021-02-07 20:17:11,996 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 20:18:21,256 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 77.959 seconds (JVM running for 82.177)
+2021-02-07 20:20:10,283 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-1] [PAYPAL] Order with price: 12.0USD bought at Literary association 1, created in PAYPAL service and saved with status CREATED
+2021-02-07 20:22:25,487 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-5] [PAYPAL] payment request with id: 1updated status to: PAID

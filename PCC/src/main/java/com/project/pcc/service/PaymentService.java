@@ -6,6 +6,9 @@ import com.project.pcc.model.Bank;
 import com.project.pcc.model.Payment;
 import com.project.pcc.repository.BankRepository;
 import com.project.pcc.repository.PaymentRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,9 @@ public class PaymentService {
 
     @Autowired
     PaymentRepository paymentRepository;
+    
+	Logger logger = LoggerFactory.getLogger(PaymentService.class);
+
 
     public ResponseDTO createPayment(PCCRequestDTO pccRequestDTO){
 
@@ -48,7 +54,7 @@ public class PaymentService {
         payment.setIssuerOrderId(response.getBody().getIssuerOrderId());
         payment.setIssuerTimestamp(response.getBody().getIssuerTimestamp());
         paymentRepository.save(payment);
-
+        logger.info("[CARD] payment request with id: " + payment.getId() + "updated status to: " + payment.getStatus());
         return response.getBody();
     }
 
