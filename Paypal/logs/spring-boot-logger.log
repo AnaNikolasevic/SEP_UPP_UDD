@@ -3,3 +3,55 @@
 2021-02-07 20:18:21,256 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 77.959 seconds (JVM running for 82.177)
 2021-02-07 20:20:10,283 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-1] [PAYPAL] Order with price: 12.0USD bought at Literary association 1, created in PAYPAL service and saved with status CREATED
 2021-02-07 20:22:25,487 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-5] [PAYPAL] payment request with id: 1updated status to: PAID
+2021-02-07 21:11:35,056 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:11:36,959 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:11:42,734 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 9.016 seconds (JVM running for 9.998)
+2021-02-07 21:22:10,283 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:22:13,257 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:22:20,636 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 12.391 seconds (JVM running for 13.884)
+2021-02-07 21:27:00,825 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:27:02,686 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:27:07,794 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 8.286 seconds (JVM running for 9.211)
+2021-02-07 21:30:32,363 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:30:34,249 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:30:39,137 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 8.183 seconds (JVM running for 9.322)
+2021-02-07 21:38:23,257 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:38:26,015 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:38:33,570 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 12.379 seconds (JVM running for 14.209)
+2021-02-07 21:41:12,962 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:41:14,940 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:41:20,305 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 8.744 seconds (JVM running for 9.77)
+2021-02-07 21:42:40,396 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:42:42,342 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:42:47,021 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 7.942 seconds (JVM running for 8.909)
+2021-02-07 21:55:50,156 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 21:55:51,962 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 21:55:56,828 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 7.914 seconds (JVM running for 8.904)
+2021-02-07 22:00:53,857 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 22:00:55,993 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 22:01:03,527 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 11.157 seconds (JVM running for 12.206)
+2021-02-07 22:04:02,003 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 22:04:04,063 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 22:04:08,890 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 8.24 seconds (JVM running for 9.238)
+2021-02-07 22:06:50,405 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 22:06:52,242 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 22:06:56,778 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 7.66 seconds (JVM running for 8.74)
+2021-02-07 22:09:31,115 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 22:09:32,956 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 22:09:37,768 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 7.909 seconds (JVM running for 8.843)
+2021-02-07 22:18:54,929 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 22:18:56,760 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 22:19:01,868 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 8.218 seconds (JVM running for 9.249)
+2021-02-07 23:04:37,540 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 23:04:39,357 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 23:04:44,062 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 7.779 seconds (JVM running for 8.674)
+2021-02-07 23:08:46,181 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-8] [PAYPAL] Order with price: 41.0USD bought at Literary association 1, created in PAYPAL service and saved with status CREATED
+2021-02-07 23:12:08,350 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-1] [PAYPAL] Order with price: 59.0USD bought at Literary association 1, created in PAYPAL service and saved with status CREATED
+2021-02-07 23:12:30,536 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-2] [PAYPAL] payment request with id: 11updated status to: PAID
+2021-02-07 23:18:49,305 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-02-07 23:18:51,332 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'jwtTokenAuthenticationFilter' configured for use
+2021-02-07 23:18:55,900 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started PaypalApplication in 7.943 seconds (JVM running for 8.935)
+2021-02-07 23:27:01,250 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-4] [PAYPAL] Order with price: 18.0USD bought at Literary association 1, created in PAYPAL service and saved with status CREATED
+2021-02-07 23:27:30,088 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-5] [PAYPAL] payment request with id: 12updated status to: PAID
+2021-02-07 23:27:44,039 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-6] [PAYPAL] Order with price: 18.0USD bought at Literary association 1, created in PAYPAL service and saved with status CREATED
+2021-02-07 23:27:52,020 INFO com.project.paypal.service.PaypalService [http-nio-8081-exec-7] Paypal orderId=13 canceled

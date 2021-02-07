@@ -12,3 +12,34 @@
 2021-02-07 20:25:54,538 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Creating order . . .
 2021-02-07 20:25:54,661 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Order with price: 12USD bought at Literary association 1at 07/02/2021 20:25:54, created and saved with status 'created'.
 2021-02-07 20:27:06,005 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Status of order request with id: 2 changed to: SUSCCESSFUL
+2021-02-07 21:37:43,069 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 21:37:49,659 INFO org.springframework.boot.StartupInfoLogger [main] Started SellerServiceApplication in 8.448 seconds (JVM running for 10.071)
+2021-02-07 21:39:39,877 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Creating order . . .
+2021-02-07 21:39:39,925 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Order with price: 23USD bought at Literary association 1at 07/02/2021 21:39:39, created and saved with status 'created'.
+2021-02-07 21:41:19,859 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Creating order . . .
+2021-02-07 21:41:19,871 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Order with price: 23USD bought at Literary association 1at 07/02/2021 21:41:19, created and saved with status 'created'.
+2021-02-07 21:42:53,063 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Creating order . . .
+2021-02-07 21:42:53,070 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Order with price: 23USD bought at Literary association 1at 07/02/2021 21:42:53, created and saved with status 'created'.
+2021-02-07 21:57:23,083 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Creating order . . .
+2021-02-07 21:57:23,094 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Order with price: 23USD bought at Literary association 1at 07/02/2021 21:57:23, created and saved with status 'created'.
+2021-02-07 22:02:15,312 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Creating order . . .
+2021-02-07 22:02:15,318 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Order with price: 23USD bought at Literary association 1at 07/02/2021 22:02:15, created and saved with status 'created'.
+2021-02-07 22:04:50,272 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Creating order . . .
+2021-02-07 22:04:50,282 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Order with price: 23USD bought at Literary association 1at 07/02/2021 22:04:50, created and saved with status 'created'.
+2021-02-07 22:07:40,302 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Creating order . . .
+2021-02-07 22:07:40,317 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Order with price: 23USD bought at Literary association 1at 07/02/2021 22:07:40, created and saved with status 'created'.
+2021-02-07 22:16:50,533 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Creating order . . .
+2021-02-07 22:16:50,540 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Order with price: 23USD bought at Literary association 1at 07/02/2021 22:16:50, created and saved with status 'created'.
+2021-02-07 22:19:17,368 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Creating order . . .
+2021-02-07 22:19:17,371 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Order with price: 23USD bought at Literary association 1at 07/02/2021 22:19:17, created and saved with status 'created'.
+2021-02-07 23:08:35,046 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Creating order . . .
+2021-02-07 23:08:35,066 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Order with price: 41USD bought at Literary association 1at 07/02/2021 23:08:35, created and saved with status 'created'.
+2021-02-07 23:12:02,294 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Creating order . . .
+2021-02-07 23:12:02,301 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Order with price: 59USD bought at Literary association 1at 07/02/2021 23:12:02, created and saved with status 'created'.
+2021-02-07 23:12:26,589 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Status of order request with id: 11 changed to: paid
+2021-02-07 23:26:55,604 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-7] Creating order . . .
+2021-02-07 23:26:55,615 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-7] Order with price: 18USD bought at Literary association 1at 07/02/2021 23:26:55, created and saved with status 'created'.
+2021-02-07 23:27:26,460 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Status of order request with id: 12 changed to: paid
+2021-02-07 23:27:39,320 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Creating order . . .
+2021-02-07 23:27:39,324 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Order with price: 18USD bought at Literary association 1at 07/02/2021 23:27:39, created and saved with status 'created'.
+2021-02-07 23:27:52,018 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Status of order request with id: 13 changed to: canceled

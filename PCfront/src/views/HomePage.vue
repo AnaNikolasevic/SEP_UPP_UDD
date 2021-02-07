@@ -10,16 +10,7 @@
       dense
       @change="setOrder()"
     ></v-combobox>
-    <v-combobox
-      v-model="chosenSubscriptionType"
-      :items="subscriptionTypes"
-      item-text="name"
-      label="Choose subscription type"
-      outlined
-      dense
-    ></v-combobox>
     <v-btn text color="primary" @click="proceed()">Proceed</v-btn>
-    <v-btn text color="primary" @click="subscribe()">Subscribe</v-btn>
   </div>
 </template>
 
@@ -37,36 +28,8 @@ export default {
       choosenType: "",
       token: "",
       proba: {},
-      chosenSubscriptionType: "",
-      subscriptionTypes: ["monthly", "yearly"],
       orderRequest: {
         currency: "",
-      },
-      subscriptionRequestDTO: {
-        sellerId: 1,
-        name: "mothlySubscription",
-        description: "mothlySubscription",
-        type: "FIXED",
-        frequency: "MONTH",
-        frequencyIntrval: "1",
-        cycles: "12",
-        amount: "20",
-        currency: "USD",
-        successURL: "http://localhost:8083/paypalSuccess/?orderId=1",
-        failureUrl: "AA",
-      },
-      subscriptionRequestDTO1: {
-        sellerId: 1,
-        name: "yearlySubscription",
-        description: "yearlySubscription",
-        type: "FIXED",
-        frequency: "YEAR",
-        frequencyIntrval: "1",
-        cycles: "1",
-        amount: "200",
-        currency: "USD",
-        successURL: "http://localhost:8083/paypalSuccess/?orderId=1",
-        failureUrl: "AA",
       },
     };
   },
@@ -130,39 +93,7 @@ export default {
           });
       }
     },
-    subscribe() {
-      console.log("uso");
-      console.log(this.chosenSubscriptionType);
-      if (this.chosenSubscriptionType == "monthly") {
-        console.log("milica");
-        axios
-          .post(
-            "http://localhost:8081/createSubscription",
-            this.subscriptionRequestDTO
-          )
-          .then((response) => {
-            console.log(response);
-            window.location.href = response.data.paymentUrl;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else if (this.chosenSubscriptionType == "yearly") {
-        console.log("masa");
-        axios
-          .post(
-            "http://localhost:8081/createSubscription",
-            this.subscriptionRequestDTO1
-          )
-          .then((response) => {
-            console.log(response);
-            window.location.href = response.data.paymentUrl;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    },
+
     setOrder() {
       console.log("prosledjenjo");
       console.log(this.choosenType.name);

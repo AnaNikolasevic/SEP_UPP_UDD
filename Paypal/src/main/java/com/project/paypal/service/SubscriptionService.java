@@ -82,12 +82,12 @@ public class SubscriptionService {
         agreement.setPlan(newPlan);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(KP_URL+"/cancelSubscription.html?id="+subscription.getId());
-        redirectUrls.setReturnUrl("https://localhost:8083/confirmSubscription");
+        redirectUrls.setCancelUrl("http://localhost:8083/cancelSubscription");
+        redirectUrls.setReturnUrl("http://localhost:8083/confirmSubscription");
 
         MerchantPreferences merchantPreferences = new MerchantPreferences();
-        merchantPreferences.setCancelUrl(KP_URL+"/cancelSubscription.html?id=");
-        merchantPreferences.setReturnUrl("https://localhost:8083/confirmSubscription");
+        merchantPreferences.setCancelUrl("http://localhost:8083/cancelSubscription");
+        merchantPreferences.setReturnUrl("http://localhost:8083/confirmSubscription");
         agreement.setOverrideMerchantPreferences(merchantPreferences);
 
 
@@ -161,8 +161,8 @@ public class SubscriptionService {
             System.out.println(merchantPreferences.getSetupFee() + "---------------------");
         }
 
-        merchantPreferences.setCancelUrl("http://www.cancel.com");
-        merchantPreferences.setReturnUrl("http://www.return.com");
+        merchantPreferences.setCancelUrl("http://localhost:8083/cancelSubscription");
+        merchantPreferences.setReturnUrl("http://localhost:8083/confirmSubscription");
         //merchantPreferences.setMaxFailAttempts("0");
         //merchantPreferences.setAutoBillAmount("YES");
         //merchantPreferences.setInitialFailAmountAction("CONTINUE");*/

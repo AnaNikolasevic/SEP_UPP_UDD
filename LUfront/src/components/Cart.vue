@@ -24,15 +24,19 @@
             <v-card-title class="headline"
               >Author: {{ book.author }}</v-card-title
             >
-            <v-card-text class="text font-weight-medium headline">Title: "{{ book.title }}"</v-card-text>
-            <v-card-text class="my-4 subtitle-1">$: {{ book.price }}</v-card-text>
+            <v-card-text class="text font-weight-medium headline"
+              >Title: "{{ book.title }}"</v-card-text
+            >
+            <v-card-text class="my-4 subtitle-1"
+              >$: {{ book.price }}</v-card-text
+            >
             <v-card-actions>
-                  <template >
-                    <v-btn  color="primary" @click="deleteBook(book)"> 
-                      <v-icon right>mdi-trash-can-outline</v-icon>
-                    </v-btn>
-                  </template> 
-            </v-card-actions>  
+              <template>
+                <v-btn color="primary" @click="deleteBook(book)">
+                  <v-icon right>mdi-trash-can-outline</v-icon>
+                </v-btn>
+              </template>
+            </v-card-actions>
           </div>
         </v-card>
       </v-flex>
@@ -78,8 +82,7 @@ export default {
       checkList: [],
       bundleOrder: [],
       //singleOrders: [],
-      books: [
-      ],
+      books: [],
       orderRequest: {
         price: "",
         currency: "USD",
@@ -108,20 +111,22 @@ export default {
           /*this.snackbarSuccess = true;
           this.$store.commit("deleteAll");
           this.emptyBasket = true;*/
-          window.open("http://localhost:8083/?idSeller=1&id=" + response.data.id);
+          window.open(
+            "http://localhost:8083/?idSeller=1&id=" + response.data.id
+          );
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    deleteBook(book){
-        this.checkBasket();
-        this.$store.commit("deleteBook", book);
-        this.totalPrice = 0;
-        this.$store.state.booksInCart.forEach((element) => {
+    deleteBook(book) {
+      this.checkBasket();
+      this.$store.commit("deleteBook", book);
+      this.totalPrice = 0;
+      this.$store.state.booksInCart.forEach((element) => {
         this.totalPrice += element.price;
-        });
-        this.orderRequest.price = this.totalPrice;
+      });
+      this.orderRequest.price = this.totalPrice;
     },
     checkBasket() {
       //console.log(this.$store.state.booksInCart.length);
@@ -131,15 +136,14 @@ export default {
     },
   },
   mounted() {
-
     if (this.$store.state.booksInCart.length == 0) {
-        this.emptyBasket = true;
-        console.log("usao u if")
+      this.emptyBasket = true;
+      console.log("usao u if");
     } else {
-      console.log("usao u else")
-      this.books = this.$store.state.booksInCart
+      console.log("usao u else");
+      this.books = this.$store.state.booksInCart;
       this.books.forEach((element) => {
-      this.totalPrice += element.price;
+        this.totalPrice += element.price;
       });
       this.orderRequest.price = this.totalPrice;
     }
@@ -150,10 +154,10 @@ export default {
 
 <style scoped>
 .cardBorderColor {
-  border-left: 1px solid #9575CD;
-  border-top: 1px solid #9575CD;
-  border-right: 1px solid #9575CD;
-  border-bottom: 1px solid #9575CD;
+  border-left: 1px solid #9575cd;
+  border-top: 1px solid #9575cd;
+  border-right: 1px solid #9575cd;
+  border-bottom: 1px solid #9575cd;
 }
 .detailsBorderColor {
   border-left: 1.5px solid #ff8a65;
