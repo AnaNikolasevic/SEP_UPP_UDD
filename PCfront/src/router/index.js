@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
+import Subscription from '../views/Subscription.vue'
 import ConfirmSubscription from '../views/ConfirmSubscription.vue'
+import CancelSubscription from '../views/CancelSubscription.vue'
 import AikBankForm from '../views/AikBank/AikBankForm.vue'
 import AikBankSuccess from '../views/AikBank/SuccesUrl.vue'
 import AikBankFailed from '../views/AikBank/FailedUrl.vue'
 import AikBankError from '../views/AikBank/ErrorUrl.vue'
 import PaypalSuccess from '../components/status/PaypalSuccess.vue'
+import SubscriptionSuccess from '../components/status/SubscriptionSuccess.vue'
 import PaypalError from '../components/status/PaypalError.vue'
 import AddPayment from '../views/AddPayment.vue'
 import BitcoinSuccess from '../components/status/BitcoinSuccess.vue'
@@ -67,8 +70,23 @@ const routes = [{
     },
     {
         path: '/confirmSubscription',
-        name: 'confirmSubscription',
+        name: 'ConfirmSubscription',
         component: ConfirmSubscription
+    },
+    {
+        path: '/subscriptionSuccess',
+        name: 'SubscriptionSuccess',
+        component: SubscriptionSuccess
+    },
+    {
+        path: '/subscription',
+        name: 'Subscription',
+        component: Subscription
+    },
+    {
+        path: '/cancelSubscription',
+        name: 'CancelSubscription',
+        component: CancelSubscription
     }
 
 ]
