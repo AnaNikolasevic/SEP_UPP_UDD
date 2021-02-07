@@ -2,13 +2,13 @@
   <div>
     <h1>Welcome!</h1>
     <v-combobox
-        v-model="choosenType"
-        :items="paymentTypes"
-        item-text="name"
-        label="Choose payment type"
-        outlined
-        dense
-        @change="setOrder()"
+      v-model="choosenType"
+      :items="paymentTypes"
+      item-text="name"
+      label="Choose payment type"
+      outlined
+      dense
+      @change="setOrder()"
     ></v-combobox>
     <v-btn text color="primary" @click="proceed()">Proceed</v-btn>
   </div>
@@ -26,45 +26,54 @@ export default {
         },
       ],
       choosenType: "",
-      token: '',
+      token: "",
       proba: {},
-      orderRequest:{
-        currency: '',
-
-      }
+      orderRequest: {
+        currency: "",
+      },
+      subscriptionRequestDTO: {
+        sellerId: 1,
+        name: "subscription",
+        description: "description",
+        type: "FIXED",
+        frequency: "MONTH",
+        frequencyIntrval: "2",
+        cycles: "2",
+        amount: "20",
+        currency: "USD",
+        successURL: "http://localhost:8083/paypalSuccess/?orderId=1",
+        failureUrl: "AA",
+      },
     };
   },
   methods: {
     proceed() {
       if (this.choosenType.name == "paypal") {
         axios
-        .post(
-          "http://localhost:8081/pay",
-          { action: "dashboard" },
-          {
-            headers: {
-              Authorization: this.$store.state.token,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          window.location.href = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      } else if (this.choosenType.name == 'bitcoin') {
+          .post(
+            "http://localhost:8081/createSubscription",
+            this.subscriptionRequestDTO
+          )
+          .then((response) => {
+            console.log(response);
+            window.location.href = response.data.paymentUrl;
+            //this.executeSubscription(response.data.token);
+
+            //window.location.href = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (this.choosenType.name == "bitcoin") {
         axios
           .post(
-          "http://localhost:8089/pay",
-          { action: "dashboard" },
-          {
-            headers: {
-              Authorization: this.$store.state.token,
-            },
-          }
-
+            "http://localhost:8089/pay",
+            { action: "dashboard" },
+            {
+              headers: {
+                Authorization: this.$store.state.token,
+              },
+            }
           )
           .then((response) => {
             console.log(response);
@@ -73,63 +82,77 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-      } else if (this.choosenType.name == 'card') {
-        console.log('ovo je token u proceed metodi');
+      } else if (this.choosenType.name == "card") {
+        console.log("ovo je token u proceed metodi");
         console.log(this.$store.state.token);
         axios
           .post(
-          "http://localhost:8090/pay",
-          { action: "dashboard" },
-          {
-            headers: {
-              Authorization: this.$store.state.token,
-            },
-          }
+            "http://localhost:8090/pay",
+            { action: "dashboard" },
+            {
+              headers: {
+                Authorization: this.$store.state.token,
+              },
+            }
           )
-          .then(response => {
+          .then((response) => {
             console.log(response);
             window.open(response.data);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       }
     },
 
-    setOrder(){
-      console.log('prosledjenjo')
+    setOrder() {
+      console.log("prosledjenjo");
       console.log(this.choosenType.name);
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
-      const id = urlParams.get('id');
+      const id = urlParams.get("id");
       axios
-          .put("http://localhost:8082/orderRequest/" + id + "/" + this.choosenType.name)
-          .then((response) => {
-            console.log("serOrder response");
-            console.log(response.data);
-            this.getToken(response.data); 
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-
+        .put(
+          "http://localhost:8082/orderRequest/" +
+            id +
+            "/" +
+            this.choosenType.name
+        )
+        .then((response) => {
+          console.log("serOrder response");
+          console.log(response.data);
+          this.getToken(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    getToken(order){
-        axios
-          .post("http://localhost:8082/token", order)
-          .then((response) => {
-            this.$store.commit("addToken", response.data);
-            console.log("token u soridzu");
-            console.log(this.$store.state.token);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    getToken(order) {
+      axios
+        .post("http://localhost:8082/token", order)
+        .then((response) => {
+          this.$store.commit("addToken", response.data);
+          console.log("token u soridzu");
+          console.log(this.$store.state.token);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-
+    executeSubscription(token) {
+      axios
+        .post("http://localhost:8081/executeSubscription/" + token + "/1")
+        .then((response) => {
+          console.log(response);
+          //window.location.href = response.data.paymentUrl;
+          //window.location.href = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   mounted() {
-
     this.$store.commit("removeToken");
 
     //dobavljanje liste nacina placanje, nekog selera!
@@ -142,6 +165,6 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-  }
+  },
 };
 </script>
