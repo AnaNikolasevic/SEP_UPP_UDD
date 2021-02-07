@@ -22,7 +22,7 @@ public class Customer {
     @Column(unique = true)
     private String PAN;
     @Column
-    private long creditCardSecurityNumber;
+    private String creditCardSecurityNumber;
     @Column
     private String cardHolderName;
     @Column
@@ -88,11 +88,11 @@ public class Customer {
         this.PAN = PAN;
     }
 
-    public long getCreditCardSecurityNumber() {
+    public String getCreditCardSecurityNumber() {
         return creditCardSecurityNumber;
     }
 
-    public void setCreditCardSecurityNumber(long creditCardSecurityNumber) {
+    public void setCreditCardSecurityNumber(String creditCardSecurityNumber) {
         this.creditCardSecurityNumber = creditCardSecurityNumber;
     }
 
@@ -122,7 +122,7 @@ public class Customer {
 		this.reservedFunds = reservedFunds;
 		this.currency = currency;
 		PAN = pAN;
-		this.creditCardSecurityNumber = creditCardSecurityNumber;
+	//	this.creditCardSecurityNumber = creditCardSecurityNumber;
 		this.cardHolderName = cardHolderName;
 		this.expirationDate = expirationDate;
 	}

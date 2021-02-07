@@ -6,17 +6,18 @@ public class PCCRequestDTO {
     private Long acquirerOrderId;
     private String acquirerTimestamp;
     private String pan;
-    private long securityCode;
+    private String securityCode;
     private String cardHolderName;
     private String expirationDate;
     private float amount;
     private String bankName;
+    private String panId;
 
     public PCCRequestDTO() {
 
     }
 
-    public PCCRequestDTO(Long id, Long acquirerOrderId, String acquirerTimestamp, String pan, long securityCode, String cardHolderName, String expirationDate, float amount) {
+    public PCCRequestDTO(Long id, Long acquirerOrderId, String acquirerTimestamp, String pan, String securityCode, String cardHolderName, String expirationDate, float amount, String bankName, String panId) {
         this.id = id;
         this.acquirerOrderId = acquirerOrderId;
         this.acquirerTimestamp = acquirerTimestamp;
@@ -25,6 +26,8 @@ public class PCCRequestDTO {
         this.cardHolderName = cardHolderName;
         this.expirationDate = expirationDate;
         this.amount = amount;
+        this.bankName = bankName;
+        this.panId = panId;
     }
 
     public Long getId() {
@@ -59,14 +62,6 @@ public class PCCRequestDTO {
         this.pan = pan;
     }
 
-    public long getSecurityCode() {
-        return securityCode;
-    }
-
-    public void setSecurityCode(long securityCode) {
-        this.securityCode = securityCode;
-    }
-
     public String getCardHolderName() {
         return cardHolderName;
     }
@@ -97,5 +92,21 @@ public class PCCRequestDTO {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public String getSecurityCode() {
+        return securityCode;
+    }
+
+    public void setSecurityCode(String securityCode) {
+        this.securityCode = securityCode;
+    }
+
+    public String getPanId() {
+        return panId;
+    }
+
+    public void setPanId(String panId) {
+        this.panId = panId;
     }
 }

@@ -12,6 +12,7 @@
           id="cardNumber"
           class="card-input__input"
           autocomplete="off"
+          type="password"
         />
       </div>
       <div class="card-input">
@@ -70,6 +71,7 @@
               class="card-input__input"
               id="cardCvv"
               autocomplete="off"
+              type="password"
             />
           </div>
         </div>
@@ -95,7 +97,7 @@ export default {
       payeerFrom :{
         paymentId: 0,
         pan: '',
-        securityCode: 0,
+        securityCode: '',
         cardHolderName: '',
         expirationDate: ''
       }

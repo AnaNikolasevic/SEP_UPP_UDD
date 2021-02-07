@@ -3,3 +3,219 @@
 2021-02-07 20:19:13,779 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 46.144 seconds (JVM running for 49.935)
 2021-02-07 20:26:05,370 INFO com.project.aik_bank.service.PaymentService [http-nio-8090-exec-1] [CARD] Order with price: 12.0USD bought at Literary association null, created in CARD service and saved with status CREATED
 2021-02-07 20:27:05,952 INFO com.project.aik_bank.service.PaymentService [http-nio-8090-exec-4] [CARD] payment request with id: 1updated status to: SUSCCESSFUL
+2021-02-07 22:01:07,125 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 11548 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:01:07,170 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:01:37,936 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 32.95 seconds (JVM running for 36.044)
+2021-02-07 22:02:15,787 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:02:38,144 INFO org.springframework.boot.StartupInfoLogger [main] Starting PccApplication on DESKTOP-VGVTA2M with PID 2100 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\PCC\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:02:38,165 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:03:02,327 INFO org.springframework.boot.StartupInfoLogger [main] Started PccApplication in 26.099 seconds (JVM running for 35.965)
+2021-02-07 22:03:14,240 INFO org.springframework.boot.StartupInfoLogger [main] Started SellerServiceApplication in 70.721 seconds (JVM running for 76.482)
+2021-02-07 22:06:24,224 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Creating order . . .
+2021-02-07 22:06:24,500 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Order with price: 18USD bought at Literary association 1at 07/02/2021 22:06:24, created and saved with status 'created'.
+2021-02-07 22:06:41,270 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] [CARD] Order with price: 18.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:07:42,478 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-4] Sending request to PCC . . .
+2021-02-07 22:07:42,524 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-4] PCC request created.
+2021-02-07 22:08:22,580 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 16904 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:08:22,592 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:08:35,367 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 14.123 seconds (JVM running for 16.301)
+2021-02-07 22:10:14,737 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 6504 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:10:14,745 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:10:31,164 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 7532 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:10:31,172 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:10:43,486 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 13.312 seconds (JVM running for 20.248)
+2021-02-07 22:11:22,812 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Creating order . . .
+2021-02-07 22:11:23,055 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Order with price: 41USD bought at Literary association 1at 07/02/2021 22:11:22, created and saved with status 'created'.
+2021-02-07 22:11:31,809 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] [CARD] Order with price: 41.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:11:51,296 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] Sending request to PCC . . .
+2021-02-07 22:14:12,933 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] PCC request created.
+2021-02-07 22:28:00,189 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 12332 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:28:00,199 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:28:12,653 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 14.114 seconds (JVM running for 16.38)
+2021-02-07 22:29:12,410 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-7] Creating order . . .
+2021-02-07 22:29:12,576 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-7] Order with price: 18USD bought at Literary association 1at 07/02/2021 22:29:12, created and saved with status 'created'.
+2021-02-07 22:29:18,380 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] [CARD] Order with price: 18.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:29:52,788 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-4] [CARD] payment request with id: 1 updated status to: SUSCCESSFUL
+2021-02-07 22:29:53,190 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Status of order request with id: 3 changed to: SUSCCESSFUL
+2021-02-07 22:30:26,837 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-4] Creating order . . .
+2021-02-07 22:30:26,846 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-4] Order with price: 23USD bought at Literary association 1at 07/02/2021 22:30:26, created and saved with status 'created'.
+2021-02-07 22:30:33,111 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] [CARD] Order with price: 23.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:31:14,671 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] Card payment request with id: 2 updated status to: ERROR
+2021-02-07 22:31:14,688 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Status of order request with id: 4 changed to: ERROR
+2021-02-07 22:31:31,470 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Creating order . . .
+2021-02-07 22:31:31,477 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Order with price: 23USD bought at Literary association 1at 07/02/2021 22:31:31, created and saved with status 'created'.
+2021-02-07 22:31:35,296 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] [CARD] Order with price: 23.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:31:53,964 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Creating order . . .
+2021-02-07 22:31:53,969 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Order with price: 41USD bought at Literary association 1at 07/02/2021 22:31:53, created and saved with status 'created'.
+2021-02-07 22:32:02,325 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-8] [CARD] Order with price: 41.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:32:26,580 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] Card payment request with id: 4 updated status to: ERROR
+2021-02-07 22:32:26,592 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Status of order request with id: 6 changed to: ERROR
+2021-02-07 22:32:42,503 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-7] Creating order . . .
+2021-02-07 22:32:42,538 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-7] Order with price: 41USD bought at Literary association 1at 07/02/2021 22:32:42, created and saved with status 'created'.
+2021-02-07 22:32:48,567 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-7] [CARD] Order with price: 41.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:33:24,645 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] Sending request to PCC . . .
+2021-02-07 22:33:24,790 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] PCC request created.
+2021-02-07 22:33:30,606 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] Sending request to PCC . . .
+2021-02-07 22:33:30,611 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] PCC request created.
+2021-02-07 22:45:30,585 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 12648 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:45:30,594 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:45:46,727 INFO org.springframework.boot.StartupInfoLogger [main] Starting PccApplication on DESKTOP-VGVTA2M with PID 9016 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\PCC\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 22:45:46,737 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 22:45:52,048 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 23.209 seconds (JVM running for 25.882)
+2021-02-07 22:46:03,149 INFO org.springframework.boot.StartupInfoLogger [main] Started PccApplication in 18.209 seconds (JVM running for 21.45)
+2021-02-07 22:48:06,046 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Creating order . . .
+2021-02-07 22:48:06,171 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Order with price: 59USD bought at Literary association 1at 07/02/2021 22:48:06, created and saved with status 'created'.
+2021-02-07 22:48:14,020 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] [CARD] Order with price: 59.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:52:20,620 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-4] Creating order . . .
+2021-02-07 22:52:20,652 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-4] Order with price: 59USD bought at Literary association 1at 07/02/2021 22:52:20, created and saved with status 'created'.
+2021-02-07 22:52:23,929 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] [CARD] Order with price: 59.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:52:49,066 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] Sending request to PCC . . .
+2021-02-07 22:52:49,095 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] PCC request created.
+2021-02-07 22:52:50,813 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-1] PCC accepted payment request from Aik Bank.
+2021-02-07 22:52:51,599 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] [CARD] payment request with id: 2updated status to: ERROR
+2021-02-07 22:52:51,628 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Status of order request with id: 9 changed to: ERROR
+2021-02-07 22:53:13,482 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Creating order . . .
+2021-02-07 22:53:13,491 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Order with price: 59USD bought at Literary association 1at 07/02/2021 22:53:13, created and saved with status 'created'.
+2021-02-07 22:53:16,977 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-10] [CARD] Order with price: 59.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:53:44,475 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] Sending request to PCC . . .
+2021-02-07 22:53:44,480 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] PCC request created.
+2021-02-07 22:53:44,491 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-2] PCC accepted payment request from Aik Bank.
+2021-02-07 22:53:44,503 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] [CARD] payment request with id: 3updated status to: ERROR
+2021-02-07 22:53:44,529 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Status of order request with id: 10 changed to: ERROR
+2021-02-07 22:57:38,504 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Creating order . . .
+2021-02-07 22:57:38,517 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Order with price: 18USD bought at Literary association 1at 07/02/2021 22:57:38, created and saved with status 'created'.
+2021-02-07 22:57:42,901 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-8] [CARD] Order with price: 18.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 22:58:12,180 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] Sending request to PCC . . .
+2021-02-07 22:58:12,194 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] PCC request created.
+2021-02-07 22:58:12,276 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-4] PCC accepted payment request from Aik Bank.
+2021-02-07 22:58:12,336 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] [CARD] payment request with id: 4updated status to: ERROR
+2021-02-07 22:58:12,353 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Status of order request with id: 11 changed to: ERROR
+2021-02-07 23:00:15,547 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 1672 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 23:00:15,559 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 23:00:26,988 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 13.437 seconds (JVM running for 16.31)
+2021-02-07 23:01:21,082 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Creating order . . .
+2021-02-07 23:01:21,301 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Order with price: 18USD bought at Literary association 1at 07/02/2021 23:01:21, created and saved with status 'created'.
+2021-02-07 23:01:26,932 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] [CARD] Order with price: 18.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:12:26,326 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 14928 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 23:12:26,337 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 23:13:04,022 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 39.983 seconds (JVM running for 43.525)
+2021-02-07 23:13:09,995 INFO org.springframework.boot.StartupInfoLogger [main] Starting PccApplication on DESKTOP-VGVTA2M with PID 8984 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\PCC\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 23:13:10,009 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 23:13:20,391 INFO org.springframework.boot.StartupInfoLogger [main] Started PccApplication in 11.913 seconds (JVM running for 15.273)
+2021-02-07 23:14:52,546 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Creating order . . .
+2021-02-07 23:14:52,691 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Order with price: 36USD bought at Literary association 1at 07/02/2021 23:14:52, created and saved with status 'created'.
+2021-02-07 23:14:58,929 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] [CARD] Order with price: 36.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:15:28,113 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] Sending request to PCC . . .
+2021-02-07 23:15:28,127 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] PCC request created.
+2021-02-07 23:15:28,563 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-1] PCC accepted payment request from Aik Bank.
+2021-02-07 23:15:30,571 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-1] PCC send request to Erste Bank.
+2021-02-07 23:15:30,637 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-1] [CARD] payment request with id: 1 updated status to: SUSCCESSFUL
+2021-02-07 23:15:30,688 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] [CARD] payment request with id: 1 updated status to: SUSCCESSFUL
+2021-02-07 23:15:30,711 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Status of order request with id: 13 changed to: SUSCCESSFUL
+2021-02-07 23:16:10,299 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Creating order . . .
+2021-02-07 23:16:10,306 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Order with price: 18USD bought at Literary association 1at 07/02/2021 23:16:10, created and saved with status 'created'.
+2021-02-07 23:16:14,581 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-8] [CARD] Order with price: 18.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:16:36,221 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-10] Sending request to PCC . . .
+2021-02-07 23:16:36,227 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-10] PCC request created.
+2021-02-07 23:16:36,235 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-2] PCC accepted payment request from Aik Bank.
+2021-02-07 23:16:36,263 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-2] PCC send request to Erste Bank.
+2021-02-07 23:16:36,267 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-2] [CARD] payment request with id: 2 updated status to: ERROR
+2021-02-07 23:16:36,274 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-10] [CARD] payment request with id: 2updated status to: ERROR
+2021-02-07 23:16:36,302 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Status of order request with id: 14 changed to: ERROR
+2021-02-07 23:16:55,035 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Creating order . . .
+2021-02-07 23:16:55,042 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Order with price: 89USD bought at Literary association 1at 07/02/2021 23:16:55, created and saved with status 'created'.
+2021-02-07 23:16:59,126 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-7] [CARD] Order with price: 89.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:17:19,465 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] Sending request to PCC . . .
+2021-02-07 23:17:19,469 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] PCC request created.
+2021-02-07 23:17:19,476 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-3] PCC accepted payment request from Aik Bank.
+2021-02-07 23:17:19,499 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-3] PCC send request to Erste Bank.
+2021-02-07 23:17:19,503 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-3] [CARD] payment request with id: 3 updated status to: FAILED
+2021-02-07 23:17:19,509 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] [CARD] payment request with id: 3 updated status to: FAILED
+2021-02-07 23:17:19,522 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Status of order request with id: 15 changed to: FAILED
+2021-02-07 23:17:30,629 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Creating order . . .
+2021-02-07 23:17:30,635 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Order with price: 89USD bought at Literary association 1at 07/02/2021 23:17:30, created and saved with status 'created'.
+2021-02-07 23:17:41,404 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] [CARD] Order with price: 89.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:18:04,691 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] Sending request to PCC . . .
+2021-02-07 23:18:04,697 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] PCC request created.
+2021-02-07 23:18:04,709 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-4] PCC accepted payment request from Aik Bank.
+2021-02-07 23:18:04,732 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] [CARD] payment request with id: 4updated status to: ERROR
+2021-02-07 23:18:04,743 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-7] Status of order request with id: 16 changed to: ERROR
+2021-02-07 23:18:32,312 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Creating order . . .
+2021-02-07 23:18:32,318 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Order with price: 89USD bought at Literary association 1at 07/02/2021 23:18:32, created and saved with status 'created'.
+2021-02-07 23:18:41,611 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-4] [CARD] Order with price: 89.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:19:01,080 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] [CARD] payment request with id: 5 updated status to: SUSCCESSFUL
+2021-02-07 23:19:01,092 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-4] Status of order request with id: 17 changed to: SUSCCESSFUL
+2021-02-07 23:19:18,253 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Creating order . . .
+2021-02-07 23:19:18,259 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Order with price: 41USD bought at Literary association 1at 07/02/2021 23:19:18, created and saved with status 'created'.
+2021-02-07 23:19:28,651 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-8] [CARD] Order with price: 41.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:19:52,271 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] Sending request to PCC . . .
+2021-02-07 23:19:52,275 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] PCC request created.
+2021-02-07 23:19:52,283 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-6] PCC accepted payment request from Aik Bank.
+2021-02-07 23:19:52,293 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] [CARD] payment request with id: 6updated status to: ERROR
+2021-02-07 23:19:52,303 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Status of order request with id: 18 changed to: ERROR
+2021-02-07 23:22:15,828 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 1924 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 23:22:15,836 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 23:22:28,776 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 14.679 seconds (JVM running for 16.995)
+2021-02-07 23:23:01,607 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Creating order . . .
+2021-02-07 23:23:01,697 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Order with price: 41USD bought at Literary association 1at 07/02/2021 23:23:01, created and saved with status 'created'.
+2021-02-07 23:23:06,289 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-6] [CARD] Order with price: 41.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:23:39,823 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] [CARD] payment request with id: 1 updated status to: FAILED
+2021-02-07 23:23:39,894 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Status of order request with id: 19 changed to: FAILED
+2021-02-07 23:26:36,452 INFO org.springframework.boot.StartupInfoLogger [main] Starting AikBankApplication on DESKTOP-VGVTA2M with PID 7404 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 23:26:36,464 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 23:26:49,069 INFO org.springframework.boot.StartupInfoLogger [main] Started AikBankApplication in 14.039 seconds (JVM running for 16.254)
+2021-02-07 23:28:14,510 INFO org.springframework.boot.StartupInfoLogger [main] Starting PccApplication on DESKTOP-VGVTA2M with PID 8724 (C:\Users\Korisnik\Documents\SEP_UPP_UDD\PCC\target\classes started by Korisnik in C:\Users\Korisnik\Documents\SEP_UPP_UDD\AikBank)
+2021-02-07 23:28:14,522 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 23:28:40,688 INFO org.springframework.boot.StartupInfoLogger [main] Started PccApplication in 27.984 seconds (JVM running for 31.413)
+2021-02-07 23:28:53,721 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-02-07 23:29:30,843 INFO org.springframework.boot.StartupInfoLogger [main] Started SellerServiceApplication in 48.148 seconds (JVM running for 54.619)
+2021-02-07 23:31:16,592 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Creating order . . .
+2021-02-07 23:31:16,899 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Order with price: 18USD bought at Literary association 1at 07/02/2021 23:31:16, created and saved with status 'created'.
+2021-02-07 23:31:40,597 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] [CARD] Order with price: 18.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:31:58,337 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-4] [CARD] payment request with id: 1 updated status to: SUSCCESSFUL
+2021-02-07 23:31:58,424 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-10] Status of order request with id: 1 changed to: SUSCCESSFUL
+2021-02-07 23:32:16,242 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Creating order . . .
+2021-02-07 23:32:16,250 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-1] Order with price: 59USD bought at Literary association 1at 07/02/2021 23:32:16, created and saved with status 'created'.
+2021-02-07 23:32:19,857 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] [CARD] Order with price: 59.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:32:44,706 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] [CARD] payment request with id: 2 updated status to: FAILED
+2021-02-07 23:32:44,722 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-8] Status of order request with id: 2 changed to: FAILED
+2021-02-07 23:32:56,203 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Creating order . . .
+2021-02-07 23:32:56,209 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Order with price: 59USD bought at Literary association 1at 07/02/2021 23:32:56, created and saved with status 'created'.
+2021-02-07 23:33:01,610 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-9] [CARD] Order with price: 59.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:33:29,877 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-7] Card payment request with id: 3 updated status to: ERROR
+2021-02-07 23:33:29,887 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Status of order request with id: 3 changed to: ERROR
+2021-02-07 23:33:43,115 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Creating order . . .
+2021-02-07 23:33:43,122 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-6] Order with price: 23USD bought at Literary association 1at 07/02/2021 23:33:43, created and saved with status 'created'.
+2021-02-07 23:33:46,514 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-8] [CARD] Order with price: 23.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:34:13,056 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] Sending request to PCC . . .
+2021-02-07 23:34:13,081 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] PCC request created.
+2021-02-07 23:34:14,943 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-1] PCC accepted payment request from Aik Bank.
+2021-02-07 23:34:18,856 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-1] PCC send request to Erste Bank.
+2021-02-07 23:34:19,029 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-1] [CARD] payment request with id: 1 updated status to: SUSCCESSFUL
+2021-02-07 23:34:19,109 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-2] [CARD] payment request with id: 4 updated status to: SUSCCESSFUL
+2021-02-07 23:34:19,127 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Status of order request with id: 4 changed to: SUSCCESSFUL
+2021-02-07 23:34:24,869 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] Sending request to PCC . . .
+2021-02-07 23:34:24,873 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] PCC request created.
+2021-02-07 23:34:24,879 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-2] PCC accepted payment request from Aik Bank.
+2021-02-07 23:34:24,905 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-2] PCC send request to Erste Bank.
+2021-02-07 23:34:24,909 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-2] [CARD] payment request with id: 2 updated status to: SUSCCESSFUL
+2021-02-07 23:34:24,916 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-5] [CARD] payment request with id: 4 updated status to: SUSCCESSFUL
+2021-02-07 23:34:24,927 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-4] Status of order request with id: 4 changed to: SUSCCESSFUL
+2021-02-07 23:34:38,766 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Creating order . . .
+2021-02-07 23:34:38,770 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-5] Order with price: 41USD bought at Literary association 1at 07/02/2021 23:34:38, created and saved with status 'created'.
+2021-02-07 23:34:42,089 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-4] [CARD] Order with price: 41.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:35:06,333 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-10] Sending request to PCC . . .
+2021-02-07 23:35:06,339 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-10] PCC request created.
+2021-02-07 23:35:06,362 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-3] PCC accepted payment request from Aik Bank.
+2021-02-07 23:35:06,387 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-3] PCC send request to Erste Bank.
+2021-02-07 23:35:06,391 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-3] [CARD] payment request with id: 3 updated status to: FAILED
+2021-02-07 23:35:06,398 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-10] [CARD] payment request with id: 5 updated status to: FAILED
+2021-02-07 23:35:06,412 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-2] Status of order request with id: 5 changed to: FAILED
+2021-02-07 23:35:32,883 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Creating order . . .
+2021-02-07 23:35:32,891 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-3] Order with price: 64USD bought at Literary association 1at 07/02/2021 23:35:32, created and saved with status 'created'.
+2021-02-07 23:35:36,044 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-3] [CARD] Order with price: 64.0USD bought at Literary association null, created in CARD service and saved with status CREATED
+2021-02-07 23:36:00,324 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] Sending request to PCC . . .
+2021-02-07 23:36:00,328 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] PCC request created.
+2021-02-07 23:36:00,345 INFO com.project.pcc.service.PaymentService [http-nio-8092-exec-4] PCC accepted payment request from Aik Bank.
+2021-02-07 23:36:00,359 INFO com.project.aik_bank.service.PaymentService [https-jsse-nio-8090-exec-1] [CARD] payment request with id: 6updated status to: ERROR
+2021-02-07 23:36:00,371 INFO com.project.seller_service.service.OrderRequestService [http-nio-8082-exec-9] Status of order request with id: 6 changed to: ERROR
