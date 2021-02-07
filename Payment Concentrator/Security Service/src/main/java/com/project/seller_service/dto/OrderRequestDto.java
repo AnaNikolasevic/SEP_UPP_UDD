@@ -16,7 +16,15 @@ public class OrderRequestDto {
 	private String error_url;
 	private String payment_type;
 	private String status;
+	private Long paymentId;
+	private Long acquirerOrderId;
+	private String acquirerTimestamp;
 
+
+	public OrderRequestDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Long getSellerId() {
 		return sellerId;
@@ -94,10 +102,7 @@ public class OrderRequestDto {
 	}
 
 
-	public OrderRequestDto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+
 
 	public Long getId() {
 		return id;
@@ -113,5 +118,29 @@ public class OrderRequestDto {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public Long getAcquirerOrderId() {
+		return acquirerOrderId;
+	}
+
+	public void setAcquirerOrderId(Long acquirerOrderId) {
+		this.acquirerOrderId = acquirerOrderId;
+	}
+
+	public Long getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(Long paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public String getAcquirerTimestamp() {
+		return acquirerTimestamp;
+	}
+
+	public void setAcquirerTimestamp(String acquirerTimestamp) {
+		this.acquirerTimestamp = acquirerTimestamp;
 	}
 }

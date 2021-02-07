@@ -16,12 +16,6 @@ public class Payment {
     @Column
     private float amount;
     @Column
-    private String success_url;
-    @Column
-    private String failed_url;
-    @Column
-    private String error_url;
-    @Column
     private String status;
     @Column
     private String timestamp;
@@ -59,30 +53,6 @@ public class Payment {
 
     public void setAmount(float amount) {
         this.amount = amount;
-    }
-
-    public String getSuccess_url() {
-        return success_url;
-    }
-
-    public void setSuccess_url(String success_url) {
-        this.success_url = success_url;
-    }
-
-    public String getFailed_url() {
-        return failed_url;
-    }
-
-    public void setFailed_url(String failed_url) {
-        this.failed_url = failed_url;
-    }
-
-    public String getError_url() {
-        return error_url;
-    }
-
-    public void setError_url(String error_url) {
-        this.error_url = error_url;
     }
 
     public String getStatus() {

@@ -23,22 +23,29 @@ public class OrderRequest {
     @Column
     private String currency;
 	@Column
+	private String payment_type;
+	@Column
+	private String status;
+	//bank data
+	@Column
 	private String merchant_timestamp;
 	@Column
 	private String merchant_id;
 	@Column
 	private String merchant_password;
 	@Column
+	private Long paymentId;
+	@Column
+	private Long acquirerOrderId;
+	@Column
+	private String acquirerTimestamp;
+	@Column
 	private String success_url;
 	@Column
 	private String failed_url;
 	@Column
 	private String error_url;
-	@Column
-	private String payment_type;
-	@Column
 
-	private String status;
 
 
 	public OrderRequest() {
@@ -135,4 +142,27 @@ public class OrderRequest {
 		this.status = status;
 	}
 
+	public Long getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(Long paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public Long getAcquirerOrderId() {
+		return acquirerOrderId;
+	}
+
+	public void setAcquirerOrderId(Long acquirerOrderId) {
+		this.acquirerOrderId = acquirerOrderId;
+	}
+
+	public String getAcquirerTimestamp() {
+		return acquirerTimestamp;
+	}
+
+	public void setAcquirerTimestamp(String acquirerTimestamp) {
+		this.acquirerTimestamp = acquirerTimestamp;
+	}
 }

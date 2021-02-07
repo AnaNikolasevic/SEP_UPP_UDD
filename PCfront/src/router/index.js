@@ -24,17 +24,17 @@ const routes = [{
         component: AikBankForm
     },
     {
-        path: '/aikBank/success/:id',
+        path: '/aikBankSuccess',
         name: 'AikBankSuccess',
         component: AikBankSuccess
     },
     {
-        path: '/aikBank/failed/:id',
+        path: '/aikBankFailed',
         name: 'AikBankFailed',
         component: AikBankFailed
     },
     {
-        path: '/aikBank/error/:id',
+        path: '/aikBankError',
         name: 'AikBankError',
         component: AikBankError
     },

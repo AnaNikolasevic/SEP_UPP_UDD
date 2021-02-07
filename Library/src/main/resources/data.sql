@@ -74,20 +74,22 @@ insert into reader_genre_beta(users_id_seq, genre_beta_id)
 insert into reader_genre_beta(users_id_seq, genre_beta_id)
     values (317, 1);
 
-insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The Count of Monte Cristo', null, 112, 5, null, null);
 
-insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The song of ice and fire', null, 112, 6, null, null);
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id, path)
+    values (8, 'false', 'The classic story of an innocent man wrongly ', 'Hamlet', null, 112, 5, null, 215, 'https://firebasestorage.googleapis.com/v0/b/uppproject-5285f.appspot.com/o/hamlet.pdf?alt=media&token=30962088-1ec5-41fd-96c2-1182454ff945');
 
-insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Les Miserables', null, 112, 5, null, null);
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id, path)
+    values (8, 'false', 'The classic story of an innocent man wrongly', 'Utopia', null, 112, 6, null, 215, 'https://firebasestorage.googleapis.com/v0/b/uppproject-5285f.appspot.com/o/utopia.pdf?alt=media&token=7fb9212c-d25f-47ba-b490-f3b71bbba9a4');
 
-insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Hamlet', null, 112, 5, null, 215);
+insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id, path)
+    values (8, 'false', 'The classic story of an innocent man wrongly,', 'The diary of a young girl ', null, 112, 5, null, null, 'https://firebasestorage.googleapis.com/v0/b/uppproject-5285f.appspot.com/o/the_diary_of_a_young_girl.pdf?alt=media&token=3432439f-781b-46e4-986f-8ffd70daf1cb');
 
-insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'Utopia', null, 112, 6, null, 215);
 
-insert into book_prototype (book_status, plagiarism, synopsis, title, beta_reader_id, editor_id, genre_genre_id, lector_id, writer_id)
-    values (8, 'false', 'The classic story of an innocent man wrongly, but deliberately imprisoned and his brilliant strategy for revenge against those who betrayed him. Dashing young sailor Edmond Dantes  is a guileless and honest young man whose plans are suddenly destroyed.', 'The diary of a young girl ', null, 112, 5, null, null);
+insert into book (author, synopsis, title,  path, price)
+    values ( 'William Shakespeare', 'The classic story of an innocent man wrongly ', 'Hamlet',  'https://firebasestorage.googleapis.com/v0/b/uppproject-5285f.appspot.com/o/hamlet.pdf?alt=media&token=30962088-1ec5-41fd-96c2-1182454ff945', 12);
+
+insert into book (author, synopsis, title,  path, price)
+    values ('Sir Thomas More', 'The classic story of an innocent man wrongly', 'Utopia',  'https://firebasestorage.googleapis.com/v0/b/uppproject-5285f.appspot.com/o/utopia.pdf?alt=media&token=7fb9212c-d25f-47ba-b490-f3b71bbba9a4', 23);
+
+insert into book (author, synopsis, title,  path, price)
+    values ( 'Anne Frank', 'The classic story of an innocent man wrongly,', 'The diary of a young girl ', 'https://firebasestorage.googleapis.com/v0/b/uppproject-5285f.appspot.com/o/the_diary_of_a_young_girl.pdf?alt=media&token=3432439f-781b-46e4-986f-8ffd70daf1cb', 18);

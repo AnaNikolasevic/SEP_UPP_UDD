@@ -2,8 +2,12 @@ package com.project.online_library.controller;
 
 import com.project.online_library.dto.BookPrototypeDTO;
 import com.project.online_library.dto.FormFieldsDto;
+import com.project.online_library.enums.BookStatus;
+import com.project.online_library.model.Book;
 import com.project.online_library.model.BookPrototype;
 import com.project.online_library.model.Editor;
+import com.project.online_library.repository.BookPrototypeRepository;
+import com.project.online_library.repository.BookRepository;
 import com.project.online_library.repository.EditorRepository;
 import com.project.online_library.service.BookPrototypeService;
 import org.camunda.bpm.engine.FormService;
@@ -36,19 +40,14 @@ import java.util.List;
 public class BookPrototypeController {
 
     @Autowired
-    private BookPrototypeService bookPrototypeService;
+    BookRepository bookRepository;
 
-    @Autowired
-    private EditorRepository editorRepository;
+    @GetMapping("")
+    public ResponseEntity<List<Book>> getAll() {
 
-    @Autowired
-    private RuntimeService runtimeService;
+        return new ResponseEntity<List<Book>>( bookRepository.findAll(), HttpStatus.OK);
+    }
 
-    @Autowired
-    TaskService taskService;
-
-    @Autowired
-    FormService formService;
 
 
 }

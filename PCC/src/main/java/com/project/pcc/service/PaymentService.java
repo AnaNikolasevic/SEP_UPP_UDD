@@ -32,6 +32,7 @@ public class PaymentService {
             responseDTO.setAcquirerOrderId(pccRequestDTO.getAcquirerOrderId());
             responseDTO.setAcquirerTimestamp(pccRequestDTO.getAcquirerTimestamp());
             responseDTO.setStatus("ERROR");
+            return responseDTO;
         }
 
         Payment payment = new Payment();

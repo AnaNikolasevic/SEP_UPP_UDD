@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1>Your payment was successfull!</h1>
-    <v-btn text color="primary" @click="redirectToLU()">Return to LU</v-btn>
+    <v-btn text color="primary" @click="redirectToLU()">See your books</v-btn>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
 export default {
   data() {
     return {
@@ -15,20 +15,20 @@ export default {
   },
   methods: {
    redirectToLU() {
-      window.location = window.open("http://localhost:8084");
+      window.location = window.open("http://localhost:8084/purchasedBooks/successfull");
     }
   },
   mounted() {
-    this.orderId = this.$route.params.id;
-     axios
-          .put("http://localhost:8082/orderRequest/edit/" + this.orderId + "/" + "SUCCESS")
-          .then(() => {
-            console.log("USPESNOO");
+    // this.orderId = this.$route.params.id;
+    //  axios
+    //       .put("http://localhost:8082/orderRequest/edit/" + this.orderId + "/" + "SUCCESS")
+    //       .then(() => {
+    //         console.log("USPESNOO");
 
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
   }
 };
 </script>

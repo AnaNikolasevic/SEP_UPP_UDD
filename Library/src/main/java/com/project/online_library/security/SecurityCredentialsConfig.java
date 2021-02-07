@@ -40,6 +40,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/activationForm/*").permitAll()
                 .antMatchers("/activation/**").permitAll()
                 .antMatchers("/login/**").permitAll()
+                .antMatchers("/bookPrototype/**").permitAll()
                 // any other requests must be authenticated*/
                 //.antMatchers("/test/**").permitAll()
                 //.anyRequest().authenticated();
