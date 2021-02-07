@@ -10,6 +10,15 @@
       dense
       @change="setOrder()"
     ></v-combobox>
+    <v-combobox
+      v-model="choosenSubscriptionType"
+      :items="subscriptionTypes"
+      item-text="name"
+      label="Choose payment type"
+      outlined
+      dense
+      @change="setOrder()"
+    ></v-combobox>
     <v-btn text color="primary" @click="proceed()">Proceed</v-btn>
   </div>
 </template>
@@ -26,6 +35,8 @@ export default {
         },
       ],
       choosenType: "",
+      choosenSubscriptionType: "",
+      subscriptionTypes: ["monthly", "yearly"],
       token: "",
       proba: {},
       orderRequest: {
@@ -33,13 +44,26 @@ export default {
       },
       subscriptionRequestDTO: {
         sellerId: 1,
-        name: "subscription",
-        description: "description",
+        name: "mothlySubscription",
+        description: "mothlySubscription",
         type: "FIXED",
         frequency: "MONTH",
-        frequencyIntrval: "2",
-        cycles: "2",
+        frequencyIntrval: "1",
+        cycles: "12",
         amount: "20",
+        currency: "USD",
+        successURL: "http://localhost:8083/paypalSuccess/?orderId=1",
+        failureUrl: "AA",
+      },
+      subscriptionRequestDTO1: {
+        sellerId: 1,
+        name: "yearlySubscription",
+        description: "yearlySubscription",
+        type: "FIXED",
+        frequency: "YEAR",
+        frequencyIntrval: "1",
+        cycles: "1",
+        amount: "200",
         currency: "USD",
         successURL: "http://localhost:8083/paypalSuccess/?orderId=1",
         failureUrl: "AA",

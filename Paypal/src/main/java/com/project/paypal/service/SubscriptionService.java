@@ -156,8 +156,11 @@ public class SubscriptionService {
 
         //merchant_preferences
         MerchantPreferences merchantPreferences = new MerchantPreferences();
-        merchantPreferences.setSetupFee(currency);
-        System.out.println(merchantPreferences.getSetupFee() + "---------------------");
+        if(subscriptionRequestDTO.getFrequency().equals("MONTH")){
+            merchantPreferences.setSetupFee(currency);
+            System.out.println(merchantPreferences.getSetupFee() + "---------------------");
+        }
+
         merchantPreferences.setCancelUrl("http://www.cancel.com");
         merchantPreferences.setReturnUrl("http://www.return.com");
         //merchantPreferences.setMaxFailAttempts("0");
