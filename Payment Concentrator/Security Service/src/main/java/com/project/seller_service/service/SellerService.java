@@ -49,6 +49,8 @@ public class SellerService {
 			response = addBitcoin(sellerDTO);
 		} else if (paymentType.getName().equals("card")) {
 			response = addCard(sellerDTO);
+			seller.setMerchant_id(sellerDTO.getMerchantId());
+			seller.setMerchant_password(sellerDTO.getPassword());
 		}
 		System.out.println(response);
 		seller.getPaymentTypes().add(paymentType);
@@ -56,9 +58,21 @@ public class SellerService {
 		return seller.getPaymentTypes();
 	}
 
-	private ResponseEntity addCard(SellerDTO sellerDTO) {
+	private ResponseEntity<String> addCard(SellerDTO sellerDTO) {
 		// TODO Auto-generated method stub
-		return null;
+		String url = "http://localhost:8090/seller";
+		JSONObject map = new JSONObject();
+		map.put("merchantId", sellerDTO.getMerchantId() + "");
+		map.put("password", sellerDTO.getPassword() + "");
+		map.put("pan", sellerDTO.getPAN());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		System.out.println("Sending seller card request to card service ...");
+		RestTemplate restClient = new RestTemplate();
+		HttpEntity<String> request = new HttpEntity<String>(map.toString(), headers);
+		ResponseEntity<String> response = restClient.postForEntity(url, request, String.class);
+		return response;
 	}
 
 	private ResponseEntity<String> addBitcoin(SellerDTO sellerDTO) {

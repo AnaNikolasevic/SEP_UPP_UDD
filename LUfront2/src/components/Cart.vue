@@ -87,7 +87,7 @@ export default {
       orderRequest: {
         price: "",
         currency: "USD",
-        sellerId: "1",
+        sellerId: "2",
       },
       totalPrice: 0,
       currencies: ["USD", "EUR", "HUF"],
@@ -112,7 +112,7 @@ export default {
           /*this.snackbarSuccess = true;
           this.$store.commit("deleteAll");
           this.emptyBasket = true;*/
-          window.open("http://localhost:8083/?idSeller=1&id=" + response.data.id);
+          window.open("http://localhost:8083/?idSeller=2&id=" + response.data.id);
         })
         .catch((error) => {
           console.log(error);

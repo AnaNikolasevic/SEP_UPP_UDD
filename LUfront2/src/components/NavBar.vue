@@ -14,7 +14,7 @@
     <!-- gornji toolbar -->
     <v-toolbar flat class="mx-12">
       <v-toolbar-title>
-        <span color="orange-text">Literary association 1</span>
+        <span color="orange-text">Literary association 2</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="mx-2">
@@ -218,7 +218,7 @@ export default {
       this.$router.push("/mandatoryBooks");
     },
     openKP() {
-      window.open("http://localhost:8083/addPayment/?idLU=" + 1);
+      window.open("http://localhost:8083/addPayment/?idLU=" + 2);
     },
     openBookPreview() {
       this.$router.push("/bookPreview");

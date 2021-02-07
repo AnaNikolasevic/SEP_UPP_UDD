@@ -111,4 +111,21 @@ public class Customer {
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+	public Customer(Long id, String merchantId, String password, double availableFunds, double reservedFunds,
+			String currency, String pAN, long creditCardSecurityNumber, String cardHolderName, String expirationDate) {
+		super();
+		this.id = id;
+		this.merchantId = merchantId;
+		this.password = password;
+		this.availableFunds = availableFunds;
+		this.reservedFunds = reservedFunds;
+		this.currency = currency;
+		PAN = pAN;
+		this.creditCardSecurityNumber = creditCardSecurityNumber;
+		this.cardHolderName = cardHolderName;
+		this.expirationDate = expirationDate;
+	}
+    
+    
 }
