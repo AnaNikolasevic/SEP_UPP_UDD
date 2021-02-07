@@ -31,19 +31,6 @@ export default {
       orderRequest: {
         currency: "",
       },
-      subscriptionRequestDTO: {
-        sellerId: 1,
-        name: "subscription",
-        description: "description",
-        type: "FIXED",
-        frequency: "MONTH",
-        frequencyIntrval: "2",
-        cycles: "2",
-        amount: "20",
-        currency: "USD",
-        successURL: "http://localhost:8083/paypalSuccess/?orderId=1",
-        failureUrl: "AA",
-      },
     };
   },
   methods: {
@@ -51,15 +38,17 @@ export default {
       if (this.choosenType.name == "paypal") {
         axios
           .post(
-            "http://localhost:8081/createSubscription",
-            this.subscriptionRequestDTO
+            "http://localhost:8081/pay",
+            { action: "dashboard" },
+            {
+              headers: {
+                Authorization: this.$store.state.token,
+              },
+            }
           )
           .then((response) => {
             console.log(response);
-            window.location.href = response.data.paymentUrl;
-            //this.executeSubscription(response.data.token);
-
-            //window.location.href = response.data;
+            window.location.href = response.data;
           })
           .catch((error) => {
             console.log(error);
@@ -139,25 +128,16 @@ export default {
           console.log(error);
         });
     },
-    executeSubscription(token) {
-      axios
-        .post("http://localhost:8081/executeSubscription/" + token + "/1")
-        .then((response) => {
-          console.log(response);
-          //window.location.href = response.data.paymentUrl;
-          //window.location.href = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
   },
   mounted() {
     this.$store.commit("removeToken");
 
     //dobavljanje liste nacina placanje, nekog selera!
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const idSeller = urlParams.get("idSeller");
     axios
-      .get("http://localhost:8082/seller/paymentTypes/" + 1)
+      .get("http://localhost:8082/seller/paymentTypes/" + idSeller)
       .then((response) => {
         console.log(response.data);
         this.paymentTypes = response.data;
