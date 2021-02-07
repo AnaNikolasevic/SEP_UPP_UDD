@@ -106,8 +106,9 @@ export default {
       this.payeerFrom.expirationDate = '01-' + this.expireMonth + '-' + this.expireYear;
       this.payeerFrom.paymentId = this.$route.params.id;
       console.log(this.payeerFrom);
+      //DODAR HTTPS
       axios
-        .put("http://localhost:8090/pay", this.payeerFrom)
+        .put("https://localhost:8090/pay", this.payeerFrom)
         .then((response) => {
             console.log(response.data);
             window.open(response.data);

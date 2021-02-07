@@ -15,9 +15,6 @@
                     <v-btn title="Open" color="primary" :href="book.path" download>
                     <v-icon>mdi-file</v-icon>
                     </v-btn>
-                    <v-btn :href="book.path">
-                    <v-icon>mdi-file</v-icon>
-                  </v-btn>
                 </div>
               </v-card-text>       
             </div>

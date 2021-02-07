@@ -74,9 +74,10 @@ export default {
       } else if (this.choosenType.name == "card") {
         console.log("ovo je token u proceed metodi");
         console.log(this.$store.state.token);
+        //DODAT HTTPS 
         axios
           .post(
-            "http://localhost:8090/pay",
+            "https://localhost:8090/pay",
             { action: "dashboard" },
             {
               headers: {
